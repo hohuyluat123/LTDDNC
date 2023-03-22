@@ -1,51 +1,19 @@
+
 import 'package:flutter/material.dart';
-import 'package:ltddnc_nhom04_k19/SignUp.dart';
-import 'package:ltddnc_nhom04_k19/user/user.dart';
-void main() {
-  runApp(const MyApp());
-}
+import 'package:ltddnc_nhom04_k19/main.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+class SignUp extends StatelessWidget {
+  const SignUp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,   //new line
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text('Sign up'),
       ),
+      backgroundColor: Colors.grey,
+
       body: Center(
         child: Column(
           // Column is also a layout widget. It takes a list of children and
@@ -64,22 +32,21 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-
-            new Image.asset(
-              'assets/images/laptopbrand.png',
-              width: 450.0,
-              height: 250.0,
-              fit: BoxFit.fill,
-            ),
             const Text(
-              'Hệ thống bán lẻ laptop, máy tính',
+              'Hệ thống bán lẻ laptop, máy tính, PC',
               textAlign: TextAlign.center,
               selectionColor: Colors.lightBlue,
               textScaleFactor: 2.5,
             ),
+            new Image.asset(
+              'assets/images/laptop.png',
+              width: 450.0,
+              height: 200.0,
+              fit: BoxFit.fill,
+            ),
             const Text(''),
             SizedBox( // <-- SEE HERE
-                width: 300, child: TextField(
+                width: 400, child: TextField(
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -100,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
             )),
             const Text(''),
             SizedBox( // <-- SEE HERE
-                width: 300, child: TextField(
+                width: 400, child: TextField(
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -121,6 +88,28 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             )),
             const Text(''),
+            SizedBox( // <-- SEE HERE
+                width: 400, child: TextField(
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+
+              ),
+              obscureText: true, // ẩn pass word
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: "Enter repassword",
+                icon: Icon(Icons.face_unlock_outlined,color: Colors.lightGreenAccent,),
+                labelText: 'RePassword',
+                floatingLabelAlignment: FloatingLabelAlignment.start,
+                floatingLabelStyle: TextStyle(
+                  color: Colors.amber,
+                  fontSize: 16,
+                ),
+
+              ),
+            )),
+            const Text(''),
             ButtonBar(
               alignment: MainAxisAlignment.center,
               buttonPadding:EdgeInsets.symmetric(
@@ -130,37 +119,20 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 ElevatedButton(  child: Row (
                   children: [
-                    Icon(Icons.login),
+                    Icon(Icons.logo_dev_sharp),
                     SizedBox(width: 50, height: 30,),
-                    Text("Login"),
+                    Text("Sign up"),
 
                   ],
                 ) ,
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const UserApp()),
+                      MaterialPageRoute(builder: (context) => const MyApp()),
                     );
                   },)],
             ),
-            Row(
-              children: <Widget>[
-                const Text('Does not have account?'),
-                TextButton(
-                  child: const Text(
-                    'Sign in',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const SignUp()),
-                    );
-                  },
-                )
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
-            )
+
             // Text(
             //   textDemo,
             //   style: Theme.of(context).textTheme.headlineMedium,
@@ -172,3 +144,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
