@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'dart:js_util';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import '../main.dart';
 
 void main() {
   runApp(const SellerMain());
@@ -68,12 +71,27 @@ class SellerMain extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  User currentLogin = newObject();
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentLogin();
+  }
+
+  Future<void> getCurrentLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      currentLogin =
+          User.fromJson(jsonDecode(prefs.getString("currentUser").toString()));
+      print(currentLogin.accessToken);
+    });
+  }
 
   List<Laptop> parseLaptops(String responseBody) {
     final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
@@ -85,12 +103,10 @@ class _MyHomePageState extends State<MyHomePage> {
       final response = await client
           .get(Uri.parse("https://localhost:8000/product/electronics/phone"));
       return compute(parseLaptops, response.body);
-    }
-    catch (e) {
+    } catch (e) {
       print(e);
       return <Laptop>[];
     }
-
   }
 
   @override
@@ -108,59 +124,143 @@ class _MyHomePageState extends State<MyHomePage> {
               children: <Widget>[
                 Container(
                   child: const Text(
-                    'List of Photo',
+                    'List of Product',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                   ),
                 ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 70, 0),
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.green, // background
+                        foregroundColor: Colors.white, // foreground
+                      ),
+                      child: Icon(Icons.add),
+                      onPressed: () {
+                        //TODO: Call Add Product API
+                      },
+                    ),
+                  ),
+                ),
                 Container(
                   child: DataTable(
+                      dataRowHeight: 75,
                       showCheckboxColumn: false,
                       columns: const <DataColumn>[
                         DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              'Album ID',
-                              style: TextStyle(fontStyle: FontStyle.italic),
+                          label: Center(
+                            child: Expanded(
+                              child: Text(
+                                'Product ID',
+                                style: TextStyle(fontStyle: FontStyle.italic),
+                              ),
                             ),
                           ),
                         ),
                         DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              'ID',
-                              style: TextStyle(fontStyle: FontStyle.italic),
+                          label: Center(
+                            child: Expanded(
+                              child: Text(
+                                'Name',
+                                style: TextStyle(fontStyle: FontStyle.italic),
+                              ),
                             ),
                           ),
                         ),
                         DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              'Tittle',
-                              style: TextStyle(fontStyle: FontStyle.italic),
+                          label: Center(
+                            child: Expanded(
+                              child: Text(
+                                'Brand',
+                                style: TextStyle(fontStyle: FontStyle.italic),
+                              ),
                             ),
                           ),
                         ),
                         DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              'Thumbnai Url',
-                              style: TextStyle(fontStyle: FontStyle.italic),
+                          label: Center(
+                            child: Expanded(
+                              child: Text(
+                                'Image',
+                                style: TextStyle(fontStyle: FontStyle.italic),
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Center(
+                            child: Expanded(
+                              child: Text(
+                                'Price',
+                                style: TextStyle(fontStyle: FontStyle.italic),
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Center(
+                            child: Expanded(
+                              child: Text(
+                                'Action',
+                                style: TextStyle(fontStyle: FontStyle.italic),
+                              ),
                             ),
                           ),
                         ),
                       ],
                       rows: snapshot.data
-                          ?.map(
-                            (laptop) => DataRow(
-                          cells: <DataCell>[
-                            DataCell(Text(laptop.phoneId.toString())),
-                            DataCell(Text(laptop.brand)),
-                            DataCell(Text(laptop.color)),
-                            DataCell(Image.network(laptop.image)),
-                          ],
-                        ),
-                      ).toList() ?? []),
+                              ?.map(
+                                (laptop) => DataRow(
+                                  cells: <DataCell>[
+                                    DataCell(Expanded(child: Text(laptop.phoneId.toString()))),
+                                    DataCell(Expanded(child: Text(laptop.name))),
+                                    DataCell(Expanded(child: Text(laptop.brand))),
+                                    DataCell(Image.network(laptop.image, width: 50,)),
+                                    DataCell(Expanded(child: Text(laptop.price.toString()))),
+                                    DataCell(
+                                      Expanded(
+                                        child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
+                                              child: TextButton(
+                                                style: TextButton.styleFrom(
+                                                  backgroundColor: Colors.lightBlueAccent, // background
+                                                  foregroundColor: Colors.white, // foreground
+                                                ),
+                                                child: Icon(Icons.edit),
+                                                onPressed: () {
+                                                  //TODO: Call Edit Product API
+                                                },
+                                              ),
+                                            ),
+                                            Container(
+                                              padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
+                                              child: TextButton(
+                                                style: TextButton.styleFrom(
+                                                  backgroundColor: Colors.red, // background
+                                                  foregroundColor: Colors.white, // foreground
+                                                ),
+                                                child: Icon(Icons.delete),
+                                                onPressed: () {
+                                                  //TODO: Call Delete Product API
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                              .toList() ??
+                          []),
                 ),
               ],
             );
