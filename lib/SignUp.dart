@@ -1,91 +1,19 @@
+
 import 'package:flutter/material.dart';
-import 'package:ltddnc_nhom04_k19/SignUp.dart';
-import 'package:ltddnc_nhom04_k19/user/user.dart';
-void main() {
-  runApp(const MyApp());
-}
+import 'package:ltddnc_nhom04_k19/main.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const LoginPage(),
-    );
-  }
-}
-
-class User {
-  //TODO: Add role in Database
-  final int accountId;
-  final String name;
-  final String accessToken;
-  final String refreshToken;
-
-  User({
-    required this.accountId,
-    required this.name,
-    required this.accessToken,
-    required this.refreshToken,
-  });
-
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      accountId: json['currentAccount']['id'] as int,
-      name: json['currentAccount']['name'] as String,
-      accessToken: json['accessToken'] as String,
-      refreshToken: json['refreshToken'] as String,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      "accessToken": this.accessToken,
-      "refreshToken": this.refreshToken,
-      "currentAccount": {
-        "id": this.accountId,
-        "name": this.name
-      }
-    };
-  }
-}
-
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
-
-  Future<User> getCurrentLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    return User.fromJson(jsonDecode(prefs.getString("currentUser").toString()));
-  }
-
-  Future<void> setCurrentLogin(User user) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString("currentUser", jsonEncode(user));
-  }
-
-  Future<User> login(String email, String password) async {
-    final dio = Dio();
-    final response = await dio.post("https://localhost:8000/auth/login",
-        data: '{ "email": "$email", "password": "$password" }',);
-    return User.fromJson(response.data);
-  }
+class SignUp extends StatelessWidget {
+  const SignUp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    String email = "";
-    String password = "";
     return Scaffold(
-      resizeToAvoidBottomInset: false,   //new line
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text('Sign up'),
       ),
+      backgroundColor: Colors.white,
+
       body: Center(
         child: Column(
           // Column is also a layout widget. It takes a list of children and
@@ -104,18 +32,17 @@ class LoginPage extends StatelessWidget {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-
+            const Text(
+              'Hệ thống bán lẻ laptop, máy tính, PC',
+              textAlign: TextAlign.center,
+              selectionColor: Colors.lightBlue,
+              textScaleFactor: 2.5,
+            ),
             new Image.asset(
               'assets/images/laptopbrand.png',
               width: 450.0,
               height: 200.0,
               fit: BoxFit.fill,
-            ),
-            const Text(
-              'Hệ thống bán lẻ laptop, máy tính',
-              textAlign: TextAlign.center,
-              selectionColor: Colors.lightBlue,
-              textScaleFactor: 2.5,
             ),
             const Text(''),
             SizedBox( // <-- SEE HERE
@@ -161,6 +88,28 @@ class LoginPage extends StatelessWidget {
               ),
             )),
             const Text(''),
+            SizedBox( // <-- SEE HERE
+                width: 300, child: TextField(
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+
+              ),
+              obscureText: true, // ẩn pass word
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: "Enter repassword",
+                icon: Icon(Icons.lock,color: Colors.lightGreenAccent,),
+                labelText: 'RePassword',
+                floatingLabelAlignment: FloatingLabelAlignment.start,
+                floatingLabelStyle: TextStyle(
+                  color: Colors.amber,
+                  fontSize: 16,
+                ),
+
+              ),
+            )),
+            const Text(''),
             ButtonBar(
               alignment: MainAxisAlignment.center,
               buttonPadding:EdgeInsets.symmetric(
@@ -170,36 +119,19 @@ class LoginPage extends StatelessWidget {
               children: [
                 ElevatedButton(  child: Row (
                   children: [
-                    Icon(Icons.login),
-                    Text("Login"),
+                    Icon(Icons.logo_dev_sharp),
+                    Text("Sign up"),
 
                   ],
                 ) ,
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const UserApp()),
+                      MaterialPageRoute(builder: (context) => const MyApp()),
                     );
                   },)],
             ),
-            Row(
-              children: <Widget>[
-                const Text('Does not have account?'),
-                TextButton(
-                  child: const Text(
-                    'Sign up',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const SignUp()),
-                    );
-                  },
-                )
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
-            )
+
             // Text(
             //   textDemo,
             //   style: Theme.of(context).textTheme.headlineMedium,
@@ -211,3 +143,4 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
+
