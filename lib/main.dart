@@ -17,31 +17,70 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const LoginPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class User {
+  //TODO: Add role in Database
+  final int accountId;
+  final String name;
+  final String accessToken;
+  final String refreshToken;
 
-  final String title;
+  User({
+    required this.accountId,
+    required this.name,
+    required this.accessToken,
+    required this.refreshToken,
+  });
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      accountId: json['currentAccount']['id'] as int,
+      name: json['currentAccount']['name'] as String,
+      accessToken: json['accessToken'] as String,
+      refreshToken: json['refreshToken'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "accessToken": this.accessToken,
+      "refreshToken": this.refreshToken,
+      "currentAccount": {
+        "id": this.accountId,
+        "name": this.name
+      }
+    };
+  }
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  Future<User> getCurrentLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    return User.fromJson(jsonDecode(prefs.getString("currentUser").toString()));
+  }
+
+  Future<void> setCurrentLogin(User user) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString("currentUser", jsonEncode(user));
+  }
+
+  Future<User> login(String email, String password) async {
+    final dio = Dio();
+    final response = await dio.post("https://localhost:8000/auth/login",
+        data: '{ "email": "$email", "password": "$password" }',);
+    return User.fromJson(response.data);
   }
 
   @override
   Widget build(BuildContext context) {
+    String email = "";
+    String password = "";
     return Scaffold(
       resizeToAvoidBottomInset: false,   //new line
       appBar: AppBar(
