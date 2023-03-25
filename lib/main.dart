@@ -3,7 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 import './seller/seller.dart';
-import './user/user.dart';
 import 'package:dio/dio.dart';
 
 void main() {
