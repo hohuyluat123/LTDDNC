@@ -155,7 +155,7 @@ class _ProductViewState extends State<ProductView> {
                                           : bgWhite,
                                       borderRadius:
                                           BorderRadius.circular(16.0)),
-                                  child: Image.asset("assets/shows/laptopDetail1.png"),
+                                  child: Image.asset("assets/shows/laptopDetail.png"),
                                 ),
                               ),
                               const SizedBox(
@@ -176,7 +176,7 @@ class _ProductViewState extends State<ProductView> {
                                           : bgWhite,
                                       borderRadius:
                                           BorderRadius.circular(16.0)),
-                                  child: Image.asset("assets/shows/laptopDetail2.png"),
+                                  child: Image.asset("assets/shows/laptopDetail.png"),
                                 ),
                               ),
                               const SizedBox(

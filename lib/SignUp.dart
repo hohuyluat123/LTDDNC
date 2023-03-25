@@ -12,7 +12,7 @@ class SignUp extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Sign up'),
       ),
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.white,
 
       body: Center(
         child: Column(
@@ -39,14 +39,14 @@ class SignUp extends StatelessWidget {
               textScaleFactor: 2.5,
             ),
             new Image.asset(
-              'assets/images/laptop.png',
+              'assets/images/laptopbrand.png',
               width: 450.0,
               height: 200.0,
               fit: BoxFit.fill,
             ),
             const Text(''),
             SizedBox( // <-- SEE HERE
-                width: 400, child: TextField(
+                width: 300, child: TextField(
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -67,7 +67,7 @@ class SignUp extends StatelessWidget {
             )),
             const Text(''),
             SizedBox( // <-- SEE HERE
-                width: 400, child: TextField(
+                width: 300, child: TextField(
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -89,7 +89,7 @@ class SignUp extends StatelessWidget {
             )),
             const Text(''),
             SizedBox( // <-- SEE HERE
-                width: 400, child: TextField(
+                width: 300, child: TextField(
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -99,7 +99,7 @@ class SignUp extends StatelessWidget {
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: "Enter repassword",
-                icon: Icon(Icons.face_unlock_outlined,color: Colors.lightGreenAccent,),
+                icon: Icon(Icons.lock,color: Colors.lightGreenAccent,),
                 labelText: 'RePassword',
                 floatingLabelAlignment: FloatingLabelAlignment.start,
                 floatingLabelStyle: TextStyle(
@@ -120,7 +120,6 @@ class SignUp extends StatelessWidget {
                 ElevatedButton(  child: Row (
                   children: [
                     Icon(Icons.logo_dev_sharp),
-                    SizedBox(width: 50, height: 30,),
                     Text("Sign up"),
 
                   ],

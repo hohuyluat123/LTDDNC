@@ -299,7 +299,7 @@ class _HomePageState extends State<HomePage> {
                                           )),
                                       Expanded(
                                           child: Image.asset(
-                                            "assets/shows/laptopDetail2.png",
+                                            "assets/shows/laptopDetail.png",
                                             width: double.infinity,
                                             height: double.infinity,
                                             fit: BoxFit.cover,

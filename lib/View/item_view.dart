@@ -47,7 +47,7 @@ class _ItemViewState extends State<ItemView> {
                       height: double.infinity,
                       child: widget.currentIndex % 2 == 0
                           ? Image.asset("assets/shows/laptopDetail.png")
-                          : Image.asset("assets/shows/laptopDetail1.png"))),
+                          : Image.asset("assets/shows/laptopDetail.png"))),
               Expanded(
                   flex: 2,
                   child: SizedBox(

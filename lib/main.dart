@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -68,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
             new Image.asset(
               'assets/images/laptopbrand.png',
               width: 450.0,
-              height: 250.0,
+              height: 200.0,
               fit: BoxFit.fill,
             ),
             const Text(
@@ -131,7 +132,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ElevatedButton(  child: Row (
                   children: [
                     Icon(Icons.login),
-                    SizedBox(width: 50, height: 30,),
                     Text("Login"),
 
                   ],
@@ -148,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 const Text('Does not have account?'),
                 TextButton(
                   child: const Text(
-                    'Sign in',
+                    'Sign up',
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {

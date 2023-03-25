@@ -49,10 +49,15 @@ class _BrandsState extends State<Brands> {
                   setState(() {});
                 },
                 duration: const Duration(milliseconds: 200),
-                child: Image.asset(
-                  "assets/logos/dell.png",
-                  width: currentIndex == 0 ? 34.0 : 44.0,
-                  height: currentIndex == 0 ? 34.0 : 44.0,
+                child:
+                CircleAvatar(
+                  radius: 17,
+                  backgroundColor: Colors.white,
+                  child: Image.asset(
+                    "assets/logos/dell.png",
+                    width: currentIndex == 0 ? 24.0 : 24.0,
+                    height: currentIndex == 0 ? 24.0 : 34.0,
+                  ),
                 ),
               ),
             ),
@@ -88,10 +93,15 @@ class _BrandsState extends State<Brands> {
                   setState(() {});
                 },
                 duration: const Duration(milliseconds: 200),
-                child: Image.asset(
-                  "assets/logos/asus.png",
-                  width: currentIndex == 1 ? 34.0 : 44.0,
-                  height: currentIndex == 1 ? 34.0 : 44.0,
+                child:
+                CircleAvatar(
+                  radius: 17,
+                  backgroundColor: Colors.white,
+                  child: Image.asset(
+                    "assets/logos/asus.png",
+                    width: currentIndex == 1 ? 24.0 : 24.0,
+                    height: currentIndex == 1 ? 24.0 : 34.0,
+                  ),
                 ),
               ),
             ),
@@ -127,10 +137,15 @@ class _BrandsState extends State<Brands> {
                   setState(() {});
                 },
                 duration: const Duration(milliseconds: 200),
-                child: Image.asset(
-                  "assets/logos/acer.png",
-                  width: currentIndex == 2 ? 34.0 : 44.0,
-                  height: currentIndex == 2 ? 34.0 : 44.0,
+                child:
+                CircleAvatar(
+                  radius: 17,
+                  backgroundColor: Colors.white,
+                  child: Image.asset(
+                    "assets/logos/acer.png",
+                    width: currentIndex == 2 ? 24.0 : 24.0,
+                    height: currentIndex == 2 ? 24.0 : 34.0,
+                  ),
                 ),
               ),
             ),
@@ -166,10 +181,15 @@ class _BrandsState extends State<Brands> {
                   setState(() {});
                 },
                 duration: const Duration(milliseconds: 200),
-                child: Image.asset(
-                  "assets/logos/HP.png",
-                  width: currentIndex == 3 ? 34.0 : 44.0,
-                  height: currentIndex == 3 ? 34.0 : 44.0,
+                child:
+                CircleAvatar(
+                  radius: 17,
+                  backgroundColor: Colors.black,
+                  child: Image.asset(
+                    "assets/logos/HP.png",
+                    width: currentIndex == 3 ? 24.0 : 24.0,
+                    height: currentIndex == 3 ? 24.0 : 24.0,
+                  ),
                 ),
               ),
             ),
@@ -205,10 +225,15 @@ class _BrandsState extends State<Brands> {
                   setState(() {});
                 },
                 duration: const Duration(milliseconds: 200),
-                child: Image.asset(
-                  "assets/logos/mac.png",
-                  width: currentIndex == 4 ? 34.0 : 44.0,
-                  height: currentIndex == 4 ? 34.0 : 44.0,
+                child:
+                CircleAvatar(
+                  radius: 17,
+                  backgroundColor: Colors.white,
+                  child: Image.asset(
+                    "assets/logos/mac.png",
+                    width: currentIndex == 4 ? 24.0 : 24.0,
+                    height: currentIndex == 4 ? 24.0 : 34.0,
+                  ),
                 ),
               ),
             ),

@@ -35,7 +35,7 @@ class MenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff1A2530),
+      backgroundColor: const Color(0xff6ef8d9),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +74,7 @@ class MenuScreen extends StatelessWidget {
                         bottom: 25,
                         left: 5,
                         child: Text(
-                          'Hey, 👋',
+                          'Xin chào, 👋',
                           style: TextStyle(
                               color: Color(0xff707B81),
                               fontSize: 15,
