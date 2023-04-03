@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../Styles/font_styles.dart';
+
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({Key? key}) : super(key: key);
 
@@ -58,6 +60,76 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               ],
             ),
           ),
+          Expanded(
+              child: Padding(
+                  padding: const EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
+                  child: SingleChildScrollView(
+                      child: Column(
+                          children: [
+                            Column(
+                              children: [
+                                for (int i = 0; i < 5; i++)
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 5.0),
+                                    child: InkWell(
+                                      onTap: () {},
+                                      child: Container(
+                                        width: double.infinity,
+                                        height: 150,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(16.0),
+                                            color: Colors.cyan),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(15.0),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        "Asus core i5",
+                                                        style: textStyle4,
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Text(
+                                                        "Số lượng: 1",
+                                                        style: textStyle6,
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text(
+                                                        "15.990.000 VNĐ",
+                                                        style: textStyle4,
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text(
+                                                        "Tình trạng: Chờ xác nhận",
+                                                        style: textStyle4,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )),
+                                            Expanded(
+                                                child: Image.asset(
+                                                  "assets/shows/laptopDetail.png",
+                                                  width: double.infinity,
+                                                  height: double.infinity,
+                                                  fit: BoxFit.cover,
+                                                )),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                              ],
+                            )]))))
         ]));
   }
 }
