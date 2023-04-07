@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:js_util';
+
 import 'package:flutter/material.dart';
 import 'package:ltddnc_nhom04_k19/SignUp.dart';
 import 'package:ltddnc_nhom04_k19/seller/seller.dart';
@@ -5,6 +8,7 @@ import 'package:ltddnc_nhom04_k19/user/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
+import 'model/User.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,41 +31,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class User {
-  //TODO: Add role in Database
-  final int accountId;
-  final String name;
-  final String accessToken;
-  final String refreshToken;
-
-  User({
-    required this.accountId,
-    required this.name,
-    required this.accessToken,
-    required this.refreshToken,
-  });
-
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      accountId: json['currentAccount']['id'] as int,
-      name: json['currentAccount']['name'] as String,
-      accessToken: json['accessToken'] as String,
-      refreshToken: json['refreshToken'] as String,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      "accessToken": accessToken,
-      "refreshToken": refreshToken,
-      "currentAccount": {"id": accountId, "name": name}
-    };
-  }
-}
-
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   Future<User> getCurrentLogin() async {
     final prefs = await SharedPreferences.getInstance();
     return User.fromJson(jsonDecode(prefs.getString("currentUser").toString()));
@@ -73,12 +50,17 @@ class LoginPage extends StatelessWidget {
   }
 
   Future<User> login(String email, String password) async {
-    final dio = Dio();
-    final response = await dio.post(
-      "https://localhost:8000/auth/login",
-      data: '{ "email": "$email", "password": "$password" }',
-    );
-    return User.fromJson(response.data);
+    try {
+      final dio = Dio();
+      final response = await dio.post(
+        "http://localhost:8000/auth/login",
+        data: '{ "email": "$email", "password": "$password" }',
+      );
+      return User.fromJson(response.data);
+    } on Exception catch (e) {
+      print(e);
+      return newObject();
+    }
   }
 
   @override

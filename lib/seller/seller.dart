@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:js_util';
 
 import 'package:flutter/foundation.dart';
@@ -7,50 +8,11 @@ import 'package:http/http.dart' as http;
 import 'package:ltddnc_nhom04_k19/appBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../main.dart';
+import '../model/Laptop.dart';
+import '../model/User.dart';
 
 void main() {
   runApp(const SellerMain());
-}
-
-class Laptop {
-  final int phoneId;
-  final String brand;
-  final String capacity;
-  final String color;
-  final bool isDelete;
-  final String name;
-  final int price;
-  final int seller;
-  final int status;
-  final String image;
-
-  Laptop({
-    required this.phoneId,
-    required this.brand,
-    required this.capacity,
-    required this.color,
-    required this.isDelete,
-    required this.name,
-    required this.price,
-    required this.seller,
-    required this.status,
-    required this.image,
-  });
-
-  factory Laptop.fromJson(Map<String, dynamic> json) {
-    return Laptop(
-      phoneId: json['phoneId'] as int,
-      brand: json['brand'] as String,
-      capacity: json['capacity'] as String,
-      color: json['color'] as String,
-      isDelete: json['isDelete'] as bool,
-      name: json['name'] as String,
-      price: json['price'] as int,
-      seller: json['seller'] as int,
-      status: json['status'] as int,
-      image: json['image'] as String,
-    );
-  }
 }
 
 class SellerMain extends StatelessWidget {
@@ -82,7 +44,8 @@ class _MyHomePageState extends State<MyHomePage> {
       accountId: -1,
       name: "name",
       accessToken: "accessToken",
-      refreshToken: "refreshToken");
+      refreshToken: "refreshToken",
+      isSeller: false);
 
   @override
   void initState() {
@@ -107,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<List<Laptop>> fetchLaptop(http.Client client) async {
     try {
       final response = await client
-          .get(Uri.parse("https://localhost:8000/product/electronics/phone"));
+          .get(Uri.parse("http://localhost:8000/product/laptop"));
       return compute(parseLaptops, response.body);
     } catch (e) {
       print(e);
