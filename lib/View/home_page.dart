@@ -5,6 +5,7 @@ import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:ltddnc_nhom04_k19/View/profile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ltddnc_nhom04_k19/View/search_sreen.dart';
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
 import 'brands.dart';
@@ -12,6 +13,7 @@ import 'card_screen.dart';
 import 'favourite_screen.dart';
 import 'item_view.dart';
 import 'notifications_screen.dart';
+import 'package:like_button/like_button.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -27,7 +29,7 @@ class _HomePageState extends State<HomePage> {
       navigationIndex = index;
     });
   }
-
+  // Icons _icon = Icons as Icons;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -212,7 +214,11 @@ class _HomePageState extends State<HomePage> {
                               style: textStyle4,
                             ),
                             TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => const SearchScreen()),
+                                  );},
                                 child: Text(
                                   "Xem tất cả",
                                   style: textStyle5,
@@ -246,7 +252,12 @@ class _HomePageState extends State<HomePage> {
                               style: textStyle4,
                             ),
                             TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => const SearchScreen()),
+                                  );
+                                },
                                 child: Text(
                                   "Xem tất cả",
                                   style: textStyle5,
@@ -263,7 +274,7 @@ class _HomePageState extends State<HomePage> {
                                 onTap: () {},
                                 child: Container(
                                   width: double.infinity,
-                                  height: 120,
+                                  height: 160,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(16.0),
                                       color: Colors.white),
@@ -294,6 +305,50 @@ class _HomePageState extends State<HomePage> {
                                                   "15.990.000 VNĐ",
                                                   style: textStyle4,
                                                 ),
+                                                Text(''),
+                                                LikeButton(
+                                                  size: 16,
+                                                  circleColor:
+                                                  CircleColor(start: Color(0xff00ddff), end: Color(0xff0099cc)),
+                                                  bubblesColor: BubblesColor(
+                                                    dotPrimaryColor: Color(0xff33b5e5),
+                                                    dotSecondaryColor: Color(0xff0099cc),
+                                                  ),
+                                                  likeBuilder: (bool isLiked) {
+                                                    return Icon(
+                                                      Icons.favorite,
+                                                      color: isLiked ? Colors.deepOrange : Colors.grey,
+                                                      size: 16,
+                                                    );
+                                                  },
+                                                  likeCount: 0,
+                                                  countBuilder: ( count, bool isLiked, String text) {
+                                                    var color = isLiked ? Colors.deepOrange : Colors.grey;
+                                                    Widget result;
+                                                    if (count == 0) {
+                                                      result = Text(
+                                                        "love",
+                                                        style: textStyle4,
+                                                      );
+                                                    } else
+                                                      result = Text(
+                                                        text,
+                                                        style: textStyle5,
+                                                      );
+                                                    return result;
+                                                  },
+                                                ),
+                                                // RadioListTile(
+                                                //   title: Text("Favourite"),
+                                                //   value: Icons.favorite,
+                                                //   groupValue: _icon,
+                                                //   onChanged: (value){
+                                                //     setState(() {
+                                                //       // _icon = value.toString();
+                                                //     });
+                                                //   },
+                                                //   secondary: Icon(Icons.radio_button_unchecked),
+                                                // ),
                                               ],
                                             ),
                                           )),

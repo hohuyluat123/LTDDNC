@@ -7,7 +7,16 @@ TextStyle textStyle1 = TextStyle(
     fontSize: 12.0,
     fontWeight: FontWeight.w600,
     fontFamily: "airbnb");
-
+TextStyle textStyle11 = TextStyle(
+    color: Colors.amber,
+    fontSize: 12.0,
+    fontWeight: FontWeight.w600,
+    fontFamily: "airbnb");
+TextStyle textStyle12 = TextStyle(
+    color: Colors.deepOrange,
+    fontSize: 12.0,
+    fontWeight: FontWeight.w600,
+    fontFamily: "airbnb");
 TextStyle textStyle8 = const TextStyle(
     color: Colors.white,
     fontSize: 12.0,
