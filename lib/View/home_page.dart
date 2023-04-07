@@ -1,12 +1,16 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:ltddnc_nhom04_k19/View/profile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ltddnc_nhom04_k19/controller/LaptopController.dart';
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
+import '../main.dart';
+import '../model/Laptop.dart';
 import 'brands.dart';
 import 'card_screen.dart';
 import 'favourite_screen.dart';
@@ -22,6 +26,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int navigationIndex = 0;
+
   setBottomBarIndex(index) {
     setState(() {
       navigationIndex = index;
@@ -121,8 +126,7 @@ class _HomePageState extends State<HomePage> {
                       hintText: "Tìm kiếm",
                       prefixIcon: Padding(
                         padding: const EdgeInsets.all(15.0),
-                        child:
-                        Image.asset("assets/icons/search_ic.png"),
+                        child: Image.asset("assets/icons/search_ic.png"),
                       ),
                       hintStyle: textStyle1,
                       enabledBorder: OutlineInputBorder(
@@ -161,7 +165,9 @@ class _HomePageState extends State<HomePage> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
-                                image: NetworkImage(("https://phuochungcomputer.com/wp-content/uploads/2021/06/banner-dell-m4800-phuochung.png").replaceAll('"', '')),
+                                image: NetworkImage(
+                                    ("https://phuochungcomputer.com/wp-content/uploads/2021/06/banner-dell-m4800-phuochung.png")
+                                        .replaceAll('"', '')),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -171,7 +177,9 @@ class _HomePageState extends State<HomePage> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
-                                image: NetworkImage(("https://phuochungcomputer.com/wp-content/uploads/2023/02/mtqn.png").replaceAll('"', '')),
+                                image: NetworkImage(
+                                    ("https://phuochungcomputer.com/wp-content/uploads/2023/02/mtqn.png")
+                                        .replaceAll('"', '')),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -181,7 +189,9 @@ class _HomePageState extends State<HomePage> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
-                                image: NetworkImage(("https://hacom.vn/media/news/2409_0924-BannerConsumer_HNC_800x450.jpg").replaceAll('"', '')),
+                                image: NetworkImage(
+                                    ("https://hacom.vn/media/news/2409_0924-BannerConsumer_HNC_800x450.jpg")
+                                        .replaceAll('"', '')),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -191,10 +201,11 @@ class _HomePageState extends State<HomePage> {
                           height: 160.0,
                           enlargeCenterPage: true,
                           autoPlay: true,
-                          aspectRatio: 10/ 4,
+                          aspectRatio: 10 / 4,
                           autoPlayCurve: Curves.fastOutSlowIn,
                           enableInfiniteScroll: true,
-                          autoPlayAnimationDuration: Duration(milliseconds: 800),
+                          autoPlayAnimationDuration:
+                              Duration(milliseconds: 800),
                           viewportFraction: 1,
                         ),
                       ),
@@ -203,10 +214,13 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Container(
                         color: Colors.amberAccent,
-                        child:  Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(Icons.shopping_cart_outlined, color: Colors.black,),
+                            Icon(
+                              Icons.shopping_cart_outlined,
+                              color: Colors.black,
+                            ),
                             Text(
                               "TOP SELLER",
                               style: textStyle4,
@@ -222,25 +236,44 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(
                         height: 200.0,
-                        child: ListView.builder(
-                            itemCount: 10,
-                            scrollDirection: Axis.horizontal,
-                            padding: EdgeInsets.zero,
-                            itemBuilder: (context, index) {
-                              return ItemView(
-                                currentIndex: index,
+                        child: FutureBuilder<List<Laptop>>(
+                          future:
+                              LaptopController.fetchLaptopByOrder("dateAdded"),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return Center(
+                                child: Text("${snapshot.error}"),
                               );
-                            }),
+                            } else if (snapshot.hasData) {
+                              return ListView.builder(
+                                  itemCount: 5,
+                                  scrollDirection: Axis.horizontal,
+                                  padding: EdgeInsets.zero,
+                                  itemBuilder: (context, index) {
+                                    final item = snapshot.data![index];
+                                    return ItemView(
+                                      currentIndex: index,
+                                      laptop: item,
+                                    );
+                                  });
+                            } else {
+                              return CircularProgressIndicator();
+                            }
+                          },
+                        ),
                       ),
                       const SizedBox(
                         height: 10.0,
                       ),
                       Container(
                         color: Colors.amberAccent,
-                        child:  Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(Icons.newspaper, color: Colors.black,),
+                            Icon(
+                              Icons.newspaper,
+                              color: Colors.black,
+                            ),
                             Text(
                               "Sản phẩm mới",
                               style: textStyle4,
@@ -254,63 +287,82 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                      Column(
-                        children: [
-                          for (int i = 0; i < 5; i++)
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 5.0),
-                              child: InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 120,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(16.0),
-                                      color: Colors.white),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(15.0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "BEST CHOISE",
-                                                  style: textStyle6,
+                      FutureBuilder<List<Laptop>>(
+                        future:
+                            LaptopController.fetchLaptopByOrder("dateAdded"),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Center(
+                              child: Text("${snapshot.error}"),
+                            );
+                          } else if (snapshot.hasData) {
+                            return Column(
+                              children: snapshot.data
+                                      ?.map<Widget>((laptop) => Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 5.0),
+                                            child: InkWell(
+                                              onTap: () {},
+                                              child: Container(
+                                                width: double.infinity,
+                                                height: 120,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16.0),
+                                                    color: Colors.white),
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                        child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              15.0),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            "BEST CHOISE",
+                                                            style: textStyle6,
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                          Text(
+                                                            laptop.name,
+                                                            style: textStyle4,
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                          Text(
+                                                            "${laptop.price} VNĐ",
+                                                            style: textStyle4,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )),
+                                                    Expanded(
+                                                        child: SizedBox(
+                                                          width: double.infinity,
+                                                          height: double.infinity,
+                                                      child: Image.network(laptop.image),
+                                                    )),
+                                                  ],
                                                 ),
-                                                const SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Text(
-                                                  "Asus core i5",
-                                                  style: textStyle4,
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(
-                                                  "15.990.000 VNĐ",
-                                                  style: textStyle4,
-                                                ),
-                                              ],
+                                              ),
                                             ),
-                                          )),
-                                      Expanded(
-                                          child: Image.asset(
-                                            "assets/shows/laptopDetail.png",
-                                            width: double.infinity,
-                                            height: double.infinity,
-                                            fit: BoxFit.cover,
-                                          )),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            )
-                        ],
-                      )
+                                          ))
+                                      .toList() ??
+                                  [],
+                            );
+                          } else {
+                            return CircularProgressIndicator();
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),

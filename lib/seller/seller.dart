@@ -1,11 +1,10 @@
-import 'dart:js_util';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ltddnc_nhom04_k19/appBar.dart';
 import '../controller/UserController.dart';
+import '../main.dart';
 import '../model/Laptop.dart';
-import '../model/User.dart';
 
 void main() {
   runApp(const SellerMain());
@@ -38,28 +37,16 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final userController = Get.find<UserController>(tag: "userController");
 
-  List<Laptop> parseLaptops(List<dynamic> responseBody) {
-    try {
-      List<Laptop> listLaptop = (responseBody)
-          .map((dynamic item) => Laptop.fromJson(item))
-          .toList();
-      return listLaptop;
-    } catch (e) {
-      print(e);
-      return [];
-    }
-  }
 
   Future<List<Laptop>> fetchLaptop() async {
-    print(userController.currentUser.value);
     try {
       final dio = Dio();
       dio.options.headers["Authorization"] = "Bearer ${userController.currentUser.value.accessToken}";
-      final response = await dio.post("http://localhost:8000/product/laptop/seller/");
-      return parseLaptops(response.data);
+      final response = await dio.post("http://$HOST_URL:8000/product/laptop/seller/");
+      return Laptop.parseLaptops(response.data);
     } on Exception catch (e) {
       print(e);
-      return newObject();
+      return [];
     }
   }
 

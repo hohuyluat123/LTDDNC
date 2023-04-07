@@ -26,7 +26,6 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return ZoomDrawer(
       slideWidth: 240,
-      style: DrawerStyle.Style1,
       mainScreen: getScreen(),
       menuScreen: Builder(builder: (context) {
         return MenuScreen(

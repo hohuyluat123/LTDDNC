@@ -8,12 +8,15 @@ import 'package:ltddnc_nhom04_k19/View/product_view.dart';
 
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
+import '../model/Laptop.dart';
 
 class ItemView extends StatefulWidget {
   int currentIndex;
+  Laptop laptop;
   ItemView({
     super.key,
     required this.currentIndex,
+    required this.laptop,
   });
 
   @override
@@ -28,7 +31,7 @@ class _ItemViewState extends State<ItemView> {
       child: Bounce(
         onPressed: () {
           Navigator.push(context,
-              CupertinoPageRoute(builder: (context) => const ProductView()));
+              CupertinoPageRoute(builder: (context) =>  ProductView(productId: widget.laptop.productId,)));
         },
         duration: const Duration(milliseconds: 500),
         child: Container(
@@ -45,9 +48,7 @@ class _ItemViewState extends State<ItemView> {
                   child: SizedBox(
                       width: double.infinity,
                       height: double.infinity,
-                      child: widget.currentIndex % 2 == 0
-                          ? Image.asset("assets/shows/laptopDetail.png")
-                          : Image.asset("assets/shows/laptopDetail.png"))),
+                      child:  Image.network(widget.laptop.image))),
               Expanded(
                   flex: 2,
                   child: SizedBox(
@@ -69,14 +70,14 @@ class _ItemViewState extends State<ItemView> {
                                 height: 2.0,
                               ),
                               Text(
-                                "Dell",
+                                widget.laptop.name,
                                 style: textStyle4,
                               ),
                               const SizedBox(
                                 height: 5.0,
                               ),
                               Text(
-                                "20.000.000 VNĐ",
+                                "${widget.laptop.price} VNĐ",
                                 style: textStyle4,
                               ),
                             ],

@@ -1,5 +1,3 @@
-import 'dart:js_util';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -9,6 +7,9 @@ import 'package:ltddnc_nhom04_k19/seller/seller.dart';
 import 'package:ltddnc_nhom04_k19/user/user.dart';
 import 'package:dio/dio.dart';
 import 'model/User.dart';
+
+// final HOST_URL = "10.0.2.2";
+final HOST_URL = "localhost";
 
 void main() {
   runApp(const MyApp());
@@ -53,13 +54,18 @@ class _LoginPageState extends State<LoginPage> {
     try {
       final dio = Dio();
       final response = await dio.post(
-        "http://localhost:8000/auth/login",
+        "http://$HOST_URL:8000/auth/login",
         data: '{ "email": "$email", "password": "$password" }',
       );
       return User.fromJson(response.data);
     } on Exception catch (e) {
       print(e);
-      return newObject();
+      return User(
+          accountId: -1,
+          name: "name",
+          accessToken: "accessToken",
+          refreshToken: "refreshToken",
+          isSeller: false);
     }
   }
 
@@ -163,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                             builder: (context) => const SellerMain()),
                       );
                     }
-                    else {
+                    else if (user.accountId != -1) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
