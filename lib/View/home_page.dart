@@ -7,6 +7,9 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:ltddnc_nhom04_k19/View/profile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ltddnc_nhom04_k19/controller/LaptopController.dart';
+
+import 'package:ltddnc_nhom04_k19/View/search_sreen.dart';
+
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
 import '../main.dart';
@@ -16,6 +19,7 @@ import 'card_screen.dart';
 import 'favourite_screen.dart';
 import 'item_view.dart';
 import 'notifications_screen.dart';
+import 'package:like_button/like_button.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -33,6 +37,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  // Icons _icon = Icons as Icons;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -226,7 +231,14 @@ class _HomePageState extends State<HomePage> {
                               style: textStyle4,
                             ),
                             TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SearchScreen()),
+                                  );
+                                },
                                 child: Text(
                                   "Xem tất cả",
                                   style: textStyle5,
@@ -279,7 +291,14 @@ class _HomePageState extends State<HomePage> {
                               style: textStyle4,
                             ),
                             TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SearchScreen()),
+                                  );
+                                },
                                 child: Text(
                                   "Xem tất cả",
                                   style: textStyle5,
@@ -297,67 +316,72 @@ class _HomePageState extends State<HomePage> {
                             );
                           } else if (snapshot.hasData) {
                             return Column(
-                              children: snapshot.data
-                                      ?.map<Widget>((laptop) => Padding(
+                                children: snapshot.data
+                                        ?.map<Widget>((laptop) => Padding(
                                             padding: const EdgeInsets.only(
                                                 bottom: 5.0),
                                             child: InkWell(
-                                              onTap: () {},
-                                              child: Container(
-                                                width: double.infinity,
-                                                height: 120,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            16.0),
-                                                    color: Colors.white),
-                                                child: Row(
-                                                  children: [
-                                                    Expanded(
-                                                        child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              15.0),
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            "BEST CHOISE",
-                                                            style: textStyle6,
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 5,
-                                                          ),
-                                                          Text(
-                                                            laptop.name,
-                                                            style: textStyle4,
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 10,
-                                                          ),
-                                                          Text(
-                                                            "${laptop.price} VNĐ",
-                                                            style: textStyle4,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    )),
-                                                    Expanded(
-                                                        child: SizedBox(
-                                                          width: double.infinity,
-                                                          height: double.infinity,
-                                                      child: Image.network(laptop.image),
-                                                    )),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ))
-                                      .toList() ??
-                                  [],
-                            );
+                                                onTap: () {},
+                                                child: Container(
+                                                    width: double.infinity,
+                                                    height: 160,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:BorderRadius.circular(16.0),
+                                                        color: Colors.white),
+                                                    child: Row(children: [
+                                                      Expanded(
+                                                          child: Padding(
+                                                        padding:const EdgeInsets.all(15.0),
+                                                        child: Column(
+                                                            crossAxisAlignment:CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text("BEST CHOISE",
+                                                                style:textStyle6,),
+                                                              const SizedBox(height: 5,),
+                                                              Text(laptop.name,
+                                                                style:textStyle4,
+                                                              ),
+                                                              const SizedBox(height: 10,),
+                                                              Text("${laptop.price} VNĐ",
+                                                                style:textStyle4,
+                                                              ),
+                                                              Text(''),
+                                                              LikeButton(
+                                                                size: 16,
+                                                                circleColor: CircleColor(start: Color(0xff00ddff),end: Color(0xff0099cc)),
+                                                                bubblesColor:BubblesColor(dotPrimaryColor:Color(0xff33b5e5),dotSecondaryColor:Color(0xff0099cc),
+                                                                ),
+                                                                likeBuilder: (bool isLiked) {
+                                                                  return Icon(
+                                                                    Icons.favorite,
+                                                                    color: isLiked ? Colors.deepOrange: Colors.grey,
+                                                                    size: 16,
+                                                                  );
+                                                                },
+                                                                likeCount: 0,
+                                                                countBuilder: (count, bool isLiked, String text) {
+                                                                  var color = isLiked ? Colors.deepOrange : Colors.grey;
+                                                                  Widget result;
+                                                                  if (count == 0) {
+                                                                    result = Text("Love",
+                                                                      style:textStyle4,);
+                                                                  } else
+                                                                    result = Text(text,
+                                                                      style:textStyle5,
+                                                                    );
+                                                                  return result;
+                                                                },
+                                                              ),
+                                                            ]),
+                                                      )),
+                                                      Expanded(
+                                                          child: SizedBox(
+                                                              width: double.infinity,
+                                                              height: double.infinity,
+                                                              child: Image.network(laptop.image))),
+                                                    ])))))
+                                        .toList() ??
+                                    []);
                           } else {
                             return CircularProgressIndicator();
                           }
