@@ -1,5 +1,5 @@
 class Laptop {
-  final int phoneId;
+  final int productId;
   final String brand;
   final String diskType;
   final String capacity;
@@ -15,7 +15,7 @@ class Laptop {
   final String image;
 
   Laptop({
-    required this.phoneId,
+    required this.productId,
     required this.brand,
     required this.capacity,
     required this.color,
@@ -34,7 +34,7 @@ class Laptop {
   factory Laptop.fromJson(Map<String, dynamic> json) {
     print(json);
     return Laptop(
-      phoneId: json['productId'] as int,
+      productId: json['productId'] as int,
       brand: json['brand'] as String,
       diskType: json['diskType'] as String,
       capacity: json['capacity'] as String,

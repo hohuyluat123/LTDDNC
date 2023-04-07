@@ -1,13 +1,9 @@
-import 'dart:convert';
-import 'dart:io';
 import 'dart:js_util';
-
-import 'package:flutter/foundation.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
 import 'package:ltddnc_nhom04_k19/appBar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../main.dart';
+import '../controller/UserController.dart';
 import '../model/Laptop.dart';
 import '../model/User.dart';
 
@@ -40,41 +36,30 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  User currentLogin = User(
-      accountId: -1,
-      name: "name",
-      accessToken: "accessToken",
-      refreshToken: "refreshToken",
-      isSeller: false);
+  final userController = Get.find<UserController>(tag: "userController");
 
-  @override
-  void initState() {
-    super.initState();
-    getCurrentLogin();
-  }
-
-  Future<void> getCurrentLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      currentLogin =
-          User.fromJson(jsonDecode(prefs.getString("currentUser").toString()));
-      print(currentLogin.accessToken);
-    });
-  }
-
-  List<Laptop> parseLaptops(String responseBody) {
-    final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-    return parsed.map<Laptop>((json) => Laptop.fromJson(json)).toList();
-  }
-
-  Future<List<Laptop>> fetchLaptop(http.Client client) async {
+  List<Laptop> parseLaptops(List<dynamic> responseBody) {
     try {
-      final response = await client
-          .get(Uri.parse("http://localhost:8000/product/laptop"));
-      return compute(parseLaptops, response.body);
+      List<Laptop> listLaptop = (responseBody)
+          .map((dynamic item) => Laptop.fromJson(item))
+          .toList();
+      return listLaptop;
     } catch (e) {
       print(e);
-      return <Laptop>[];
+      return [];
+    }
+  }
+
+  Future<List<Laptop>> fetchLaptop() async {
+    print(userController.currentUser.value);
+    try {
+      final dio = Dio();
+      dio.options.headers["Authorization"] = "Bearer ${userController.currentUser.value.accessToken}";
+      final response = await dio.post("http://localhost:8000/product/laptop/seller/");
+      return parseLaptops(response.data);
+    } on Exception catch (e) {
+      print(e);
+      return newObject();
     }
   }
 
@@ -82,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder<List<Laptop>>(
-        future: fetchLaptop(http.Client()),
+        future: fetchLaptop(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Center(
@@ -90,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
             );
           } else if (snapshot.hasData) {
             return Scaffold(
-              appBar: Header(id: currentLogin.accountId, username: currentLogin.name),
+              appBar: Header(id: userController.currentUser.value.accountId, username: userController.currentUser.value.name),
               body: ListView(
                 children: <Widget>[
                   Container(
@@ -189,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     cells: <DataCell>[
                                       DataCell(Expanded(
                                           child:
-                                              Text(laptop.phoneId.toString()))),
+                                              Text(laptop.productId.toString()))),
                                       DataCell(
                                           Expanded(child: Text(laptop.name))),
                                       DataCell(

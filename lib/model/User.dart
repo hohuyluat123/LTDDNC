@@ -30,4 +30,9 @@ class User {
       "currentAccount": {"id": accountId, "name": name, "isSeller": isSeller}
     };
   }
+
+  @override
+  String toString() {
+    return 'User{accountId: $accountId, name: $name, accessToken: $accessToken, refreshToken: $refreshToken, isSeller: $isSeller}';
+  }
 }

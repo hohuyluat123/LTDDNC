@@ -1,13 +1,13 @@
-import 'dart:io';
 import 'dart:js_util';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ltddnc_nhom04_k19/SignUp.dart';
+import 'package:ltddnc_nhom04_k19/controller/UserController.dart';
 import 'package:ltddnc_nhom04_k19/seller/seller.dart';
 import 'package:ltddnc_nhom04_k19/user/user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
-import 'dart:convert';
 import 'model/User.dart';
 
 void main() {
@@ -39,14 +39,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  Future<User> getCurrentLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    return User.fromJson(jsonDecode(prefs.getString("currentUser").toString()));
+  final userController = Get.put(UserController(), tag: "userController");
+
+  User getCurrentLogin() {
+    return userController.currentUser.value;
   }
 
-  Future<void> setCurrentLogin(User user) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString("currentUser", jsonEncode(user));
+  void setCurrentLogin(User user)  {
+    userController.currentUser.value = user;
   }
 
   Future<User> login(String email, String password) async {
@@ -155,13 +155,21 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   onPressed: () async {
                     User user = await login(email, password);
-                    await setCurrentLogin(user);
-                    User savedUser = await getCurrentLogin();
-                    //TODO: Route to sutable main page
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const SellerMain()),
-                    );
+                    setCurrentLogin(user);
+                    if (user.isSeller == true) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SellerMain()),
+                      );
+                    }
+                    else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const UserApp()),
+                      );
+                    }
                   },
 
                 )
