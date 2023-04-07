@@ -1,10 +1,14 @@
+import 'dart:js_util';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ltddnc_nhom04_k19/SignUp.dart';
+import 'package:ltddnc_nhom04_k19/controller/UserController.dart';
 import 'package:ltddnc_nhom04_k19/seller/seller.dart';
 import 'package:ltddnc_nhom04_k19/user/user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
-import 'dart:convert';
+import 'model/User.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,58 +31,36 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class User {
-  //TODO: Add role in Database
-  final int accountId;
-  final String name;
-  final String accessToken;
-  final String refreshToken;
-
-  User({
-    required this.accountId,
-    required this.name,
-    required this.accessToken,
-    required this.refreshToken,
-  });
-
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      accountId: json['currentAccount']['id'] as int,
-      name: json['currentAccount']['name'] as String,
-      accessToken: json['accessToken'] as String,
-      refreshToken: json['refreshToken'] as String,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      "accessToken": accessToken,
-      "refreshToken": refreshToken,
-      "currentAccount": {"id": accountId, "name": name}
-    };
-  }
-}
-
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
-  Future<User> getCurrentLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    return User.fromJson(jsonDecode(prefs.getString("currentUser").toString()));
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final userController = Get.put(UserController(), tag: "userController");
+
+  User getCurrentLogin() {
+    return userController.currentUser.value;
   }
 
-  Future<void> setCurrentLogin(User user) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString("currentUser", jsonEncode(user));
+  void setCurrentLogin(User user)  {
+    userController.currentUser.value = user;
   }
 
   Future<User> login(String email, String password) async {
-    final dio = Dio();
-    final response = await dio.post(
-      "https://localhost:8000/auth/login",
-      data: '{ "email": "$email", "password": "$password" }',
-    );
-    return User.fromJson(response.data);
+    try {
+      final dio = Dio();
+      final response = await dio.post(
+        "http://localhost:8000/auth/login",
+        data: '{ "email": "$email", "password": "$password" }',
+      );
+      return User.fromJson(response.data);
+    } on Exception catch (e) {
+      print(e);
+      return newObject();
+    }
   }
 
   @override
@@ -173,13 +155,21 @@ class LoginPage extends StatelessWidget {
                   ),
                   onPressed: () async {
                     User user = await login(email, password);
-                    await setCurrentLogin(user);
-                    User savedUser = await getCurrentLogin();
-                    //TODO: Route to sutable main page
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const SellerMain()),
-                    );
+                    setCurrentLogin(user);
+                    if (user.isSeller == true) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SellerMain()),
+                      );
+                    }
+                    else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const UserApp()),
+                      );
+                    }
                   },
 
                 )
