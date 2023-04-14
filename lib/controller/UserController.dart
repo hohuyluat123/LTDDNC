@@ -20,7 +20,6 @@ class UserController extends GetxController {
     dio.options.headers["Authorization"] = "Bearer ${currentUser.value.accessToken}";
     final response = await dio.get(
         "http://$HOST_URL:8000/account/${currentUser.value.accountId}");
-    print(response.data);
     currentCart.value = List.castFrom<dynamic, String>(response.data['cart']);
   }
 }

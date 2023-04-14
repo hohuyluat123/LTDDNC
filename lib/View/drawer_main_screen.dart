@@ -14,7 +14,7 @@ class MenuItems {
   static const notification = MenuItemClass(Icons.person_outline,
       'Notification', 'assets/icons/notify_ic.png', false);
   static const signout =
-      MenuItemClass(Icons.logout_outlined, 'Sign Out', '', true);
+      MenuItemClass(Icons.logout_outlined, 'Sign Out', '', true,);
 
   static const all = <MenuItemClass>[
     profile,
