@@ -269,7 +269,7 @@ class _HomePageState extends State<HomePage> {
                                     );
                                   });
                             } else {
-                              return CircularProgressIndicator();
+                              return LinearProgressIndicator();
                             }
                           },
                         ),
@@ -383,7 +383,7 @@ class _HomePageState extends State<HomePage> {
                                         .toList() ??
                                     []);
                           } else {
-                            return CircularProgressIndicator();
+                            return LinearProgressIndicator();
                           }
                         },
                       ),

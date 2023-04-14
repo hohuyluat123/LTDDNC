@@ -6,6 +6,7 @@ import 'package:ltddnc_nhom04_k19/controller/UserController.dart';
 import 'package:ltddnc_nhom04_k19/seller/seller.dart';
 import 'package:ltddnc_nhom04_k19/user/user.dart';
 import 'package:dio/dio.dart';
+import 'controller/OrderController.dart';
 import 'model/User.dart';
 
 // final HOST_URL = "10.0.2.2";
@@ -41,12 +42,13 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final userController = Get.put(UserController(), tag: "userController");
+  final orderController = Get.put(OrderController(), tag: "orderController");
 
   User getCurrentLogin() {
     return userController.currentUser.value;
   }
 
-  void setCurrentLogin(User user)  {
+  void setCurrentLogin(User user) {
     userController.currentUser.value = user;
   }
 
@@ -67,6 +69,26 @@ class _LoginPageState extends State<LoginPage> {
           refreshToken: "refreshToken",
           isSeller: false);
     }
+  }
+
+  void _showAlertDialog(String message) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: Text(message),
+          actions: [
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -96,11 +118,11 @@ class _LoginPageState extends State<LoginPage> {
                 // <-- SEE HERE
                 width: 300,
                 child: TextField(
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: "Enter username",
                     icon: Icon(
@@ -117,19 +139,18 @@ class _LoginPageState extends State<LoginPage> {
                   onChanged: (value) {
                     email = value;
                   },
-
                 )),
             const Text(''),
             SizedBox(
                 // <-- SEE HERE
                 width: 300,
                 child: TextField(
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
                   obscureText: true, // ẩn pass word
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: "Enter password",
                     icon: Icon(
@@ -150,7 +171,8 @@ class _LoginPageState extends State<LoginPage> {
             const Text(''),
             ButtonBar(
               alignment: MainAxisAlignment.center,
-              buttonPadding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              buttonPadding:
+                  const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               children: [
                 ElevatedButton(
                   child: Row(
@@ -161,23 +183,29 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   onPressed: () async {
                     User user = await login(email, password);
-                    setCurrentLogin(user);
-                    if (user.isSeller == true) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SellerMain()),
-                      );
-                    }
-                    else if (user.accountId != -1) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const UserApp()),
-                      );
+                    if (user.accountId == -1) {
+                      _showAlertDialog(
+                          "Cannot find this account, Please check your username and password");
+                    } else {
+                      setCurrentLogin(user);
+                      if (user.isSeller == true) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SellerMain()),
+                        );
+                      } else {
+                        await orderController.fetchUserOrders();
+                        await userController.fetchCartProductId();
+                        print(userController.currentCart);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const UserApp()),
+                        );
+                      }
                     }
                   },
-
                 )
               ],
             ),
