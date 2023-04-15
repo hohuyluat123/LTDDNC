@@ -197,7 +197,6 @@ class _LoginPageState extends State<LoginPage> {
                       } else {
                         await orderController.fetchUserOrders();
                         await userController.fetchCartProductId();
-                        print(userController.currentCart);
                         Navigator.push(
                           context,
                           MaterialPageRoute(

@@ -23,7 +23,6 @@ class LaptopController extends GetxController {
       final dio = Dio();
       final response = await dio.get(
           "http://$HOST_URL:8000/product/laptop/$productId");
-      print(response.data);
       return Laptop.fromJson(response.data);
   }
 }
