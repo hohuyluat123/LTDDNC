@@ -91,7 +91,7 @@ class MenuScreen extends StatelessWidget {
                          userController.currentUser.value.name,
                           style: const TextStyle(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontSize: 15,
                               fontWeight: FontWeight.w500),
                         ))
                   ],

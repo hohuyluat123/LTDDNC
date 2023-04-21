@@ -3,10 +3,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bounce/flutter_bounce.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ltddnc_nhom04_k19/controller/LaptopController.dart';
 
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
+import '../controller/UserController.dart';
 import '../model/Laptop.dart';
 
 class ProductView extends StatefulWidget {
@@ -26,6 +29,28 @@ class _ProductViewState extends State<ProductView> {
   int countryIndext = 0;
   int sizeIndex = 0;
   late Laptop laptop;
+
+  final userController = Get.find<UserController>(tag: "userController");
+
+  void _showAlertDialog(String message) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Thêm sản phẩm'),
+          content: Text(message),
+          actions: [
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -447,13 +472,31 @@ class _ProductViewState extends State<ProductView> {
                                 color: customBlue,
                               )
                             ]),
-                        child: const Text(
-                          "Thêm vào giỏ hàng",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                              fontFamily: "airbnb"),
-                        ),
+                        child:
+                          TextButton(
+                            child: const Text(
+                              "Thêm vào giỏ hàng",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                  fontFamily: "airbnb"),
+                            ),
+                            onPressed: () async {
+                              int? statusCode = await userController.addToCart(laptop.productId, 1);
+                              if (statusCode == 200) {
+                                _showAlertDialog(
+                                    "Thêm sản phẩm thành công");
+                              }
+                              else if (statusCode == 409) {
+                                _showAlertDialog(
+                                    "Sản phẩm đã có trong giỏ hàng");
+                              }
+                              else {
+                                _showAlertDialog(
+                                    "Thêm sản phẩm thất bại");
+                              }
+                            },
+                          )
                       ),
                     )
                   ],

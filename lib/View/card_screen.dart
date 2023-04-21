@@ -30,7 +30,9 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color(0xffF8F9FA),
-        body: Column(children: [
+        body: Column(
+            children: [
+              Obx(() =>
           // Padding(
           //   padding: const EdgeInsets.symmetric(horizontal: 10),
           //   child: Row(
@@ -114,7 +116,7 @@ class _CartScreenState extends State<CartScreen> {
                                           onTap: () {},
                                           child: Container(
                                             width: double.infinity,
-                                            height: 180,
+                                            height: 200,
                                             decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(16.0),
@@ -122,7 +124,8 @@ class _CartScreenState extends State<CartScreen> {
                                             child: FutureBuilder<Laptop>(
                                               future: LaptopController
                                                   .fetchLaptopByProductId(
-                                                  jsonDecode(cartItem)['productId']),
+                                                      jsonDecode(cartItem)[
+                                                          'productId']),
                                               builder: (context, snapshot) {
                                                 if (snapshot.hasError) {
                                                   return Center(
@@ -188,28 +191,56 @@ class _CartScreenState extends State<CartScreen> {
                                                                         milliseconds:
                                                                             500),
                                                                 child:
-                                                                    Container(
-                                                                  width: 34.0,
-                                                                  height: 34.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color:
-                                                                        customBlue,
-                                                                    borderRadius: const BorderRadius
-                                                                            .only(
-                                                                        topLeft:
-                                                                            Radius.circular(
-                                                                                20.0),
-                                                                        bottomRight:
-                                                                            Radius.circular(16.0)),
-                                                                  ),
-                                                                  child:
-                                                                      const Icon(
-                                                                    Icons.add,
-                                                                    color: Colors
-                                                                        .white,
-                                                                  ),
-                                                                ),
+                                                                    SizedBox(
+                                                                        height:
+                                                                            45.0,
+                                                                        child:
+                                                                            Row(
+                                                                          children: [
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.only( left: 5.0,),
+                                                                              child: TextButton(
+                                                                                style: TextButton.styleFrom(
+                                                                                  backgroundColor: Colors.blueAccent,
+                                                                                  // background
+                                                                                  foregroundColor: Colors.white, // foreground
+                                                                                ),
+                                                                                child: Icon(Icons.remove),
+                                                                                onPressed: () async {
+                                                                                  await userController.updateCart(jsonDecode(cartItem)['productId'], jsonDecode(cartItem)['quantity'] - 1);
+                                                                                },
+                                                                              ),
+                                                                            ),
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.only( left: 5.0,),
+                                                                              child: TextButton(
+                                                                                style: TextButton.styleFrom(
+                                                                                  backgroundColor: Colors.blueAccent,
+                                                                                  // background
+                                                                                  foregroundColor: Colors.white, // foreground
+                                                                                ),
+                                                                                child: Icon(Icons.add),
+                                                                                onPressed: () async {
+                                                                                  await userController.updateCart(jsonDecode(cartItem)['productId'], jsonDecode(cartItem)['quantity'] + 1);
+                                                                                },
+                                                                              ),
+                                                                            ),
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.only( left: 5.0,),
+                                                                              child: TextButton(
+                                                                                style: TextButton.styleFrom(
+                                                                                  backgroundColor: Colors.redAccent,
+                                                                                  // background
+                                                                                  foregroundColor: Colors.white, // foreground
+                                                                                ),
+                                                                                child: Icon(Icons.delete_forever),
+                                                                                onPressed: () async {
+                                                                                  await userController.deleteFromCart(jsonDecode(cartItem)['productId']);
+                                                                                },
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        )),
                                                               ),
                                                             )
                                                           ],
@@ -805,6 +836,6 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                     ),
                   )))
-        ]));
+              )]));
   }
 }

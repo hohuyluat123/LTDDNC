@@ -46,11 +46,11 @@ class _HomePageState extends State<HomePage> {
         height: double.infinity,
         color: bgWhite,
         child: Padding(
-          padding: const EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
+          padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
           child: Column(
             children: [
               SizedBox(
-                height: 55,
+                height: 40,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -131,7 +131,22 @@ class _HomePageState extends State<HomePage> {
                       hintText: "Tìm kiếm",
                       prefixIcon: Padding(
                         padding: const EdgeInsets.all(15.0),
-                        child: Image.asset("assets/icons/search_ic.png"),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.white, // background
+                            foregroundColor: Colors.grey, // foreground
+                          ),
+                          child: Icon(Icons.search),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SearchScreen()),
+                            );
+                          },
+                        )
+                        //Image.asset("assets/icons/search_ic.png"),
+
                       ),
                       hintStyle: textStyle1,
                       enabledBorder: OutlineInputBorder(
