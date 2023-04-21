@@ -1,11 +1,10 @@
-import 'dart:js_util';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ltddnc_nhom04_k19/appBar.dart';
 import '../controller/UserController.dart';
+import '../main.dart';
 import '../model/Laptop.dart';
-import '../model/User.dart';
 
 void main() {
   runApp(const SellerMain());
@@ -38,28 +37,16 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final userController = Get.find<UserController>(tag: "userController");
 
-  List<Laptop> parseLaptops(List<dynamic> responseBody) {
-    try {
-      List<Laptop> listLaptop = (responseBody)
-          .map((dynamic item) => Laptop.fromJson(item))
-          .toList();
-      return listLaptop;
-    } catch (e) {
-      print(e);
-      return [];
-    }
-  }
 
   Future<List<Laptop>> fetchLaptop() async {
-    print(userController.currentUser.value);
     try {
       final dio = Dio();
       dio.options.headers["Authorization"] = "Bearer ${userController.currentUser.value.accessToken}";
-      final response = await dio.post("http://localhost:8000/product/laptop/seller/");
-      return parseLaptops(response.data);
+      final response = await dio.post("http://$HOST_URL:8000/product/laptop/seller/");
+      return Laptop.parseLaptops(response.data);
     } on Exception catch (e) {
       print(e);
-      return newObject();
+      return [];
     }
   }
 
@@ -109,61 +96,49 @@ class _MyHomePageState extends State<MyHomePage> {
                         columns: const <DataColumn>[
                           DataColumn(
                             label: Center(
-                              child: Expanded(
-                                child: Text(
-                                  'Product ID',
-                                  style: TextStyle(fontStyle: FontStyle.italic),
-                                ),
+                              child: Text(
+                                'Product ID',
+                                style: TextStyle(fontStyle: FontStyle.italic),
                               ),
                             ),
                           ),
                           DataColumn(
                             label: Center(
-                              child: Expanded(
-                                child: Text(
-                                  'Name',
-                                  style: TextStyle(fontStyle: FontStyle.italic),
-                                ),
+                              child: Text(
+                                'Name',
+                                style: TextStyle(fontStyle: FontStyle.italic),
                               ),
                             ),
                           ),
                           DataColumn(
                             label: Center(
-                              child: Expanded(
-                                child: Text(
-                                  'Brand',
-                                  style: TextStyle(fontStyle: FontStyle.italic),
-                                ),
+                              child: Text(
+                                'Brand',
+                                style: TextStyle(fontStyle: FontStyle.italic),
                               ),
                             ),
                           ),
                           DataColumn(
                             label: Center(
-                              child: Expanded(
-                                child: Text(
-                                  'Image',
-                                  style: TextStyle(fontStyle: FontStyle.italic),
-                                ),
+                              child: Text(
+                                'Image',
+                                style: TextStyle(fontStyle: FontStyle.italic),
                               ),
                             ),
                           ),
                           DataColumn(
                             label: Center(
-                              child: Expanded(
-                                child: Text(
-                                  'Price',
-                                  style: TextStyle(fontStyle: FontStyle.italic),
-                                ),
+                              child: Text(
+                                'Price',
+                                style: TextStyle(fontStyle: FontStyle.italic),
                               ),
                             ),
                           ),
                           DataColumn(
                             label: Center(
-                              child: Expanded(
-                                child: Text(
-                                  'Action',
-                                  style: TextStyle(fontStyle: FontStyle.italic),
-                                ),
+                              child: Text(
+                                'Action',
+                                style: TextStyle(fontStyle: FontStyle.italic),
                               ),
                             ),
                           ),
@@ -172,65 +147,59 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ?.map(
                                   (laptop) => DataRow(
                                     cells: <DataCell>[
-                                      DataCell(Expanded(
-                                          child:
-                                              Text(laptop.productId.toString()))),
+                                      DataCell(Text(laptop.productId.toString())),
                                       DataCell(
-                                          Expanded(child: Text(laptop.name))),
+                                          Text(laptop.name)),
                                       DataCell(
-                                          Expanded(child: Text(laptop.brand))),
+                                          Text(laptop.brand)),
                                       DataCell(Image.network(
                                         laptop.image,
                                         width: 50,
                                       )),
-                                      DataCell(Expanded(
-                                          child:
-                                              Text(laptop.price.toString()))),
+                                      DataCell(Text(laptop.price.toString())),
                                       DataCell(
-                                        Expanded(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        5, 5, 0, 0),
-                                                child: TextButton(
-                                                  style: TextButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.lightBlueAccent,
-                                                    // background
-                                                    foregroundColor: Colors
-                                                        .white, // foreground
-                                                  ),
-                                                  child: Icon(Icons.edit),
-                                                  onPressed: () {
-                                                    //TODO: Call Edit Product API
-                                                  },
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      5, 5, 0, 0),
+                                              child: TextButton(
+                                                style: TextButton.styleFrom(
+                                                  backgroundColor:
+                                                      Colors.lightBlueAccent,
+                                                  // background
+                                                  foregroundColor: Colors
+                                                      .white, // foreground
                                                 ),
+                                                child: Icon(Icons.edit),
+                                                onPressed: () {
+                                                  //TODO: Call Edit Product API
+                                                },
                                               ),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        5, 5, 0, 0),
-                                                child: TextButton(
-                                                  style: TextButton.styleFrom(
-                                                    backgroundColor: Colors.red,
-                                                    // background
-                                                    foregroundColor: Colors
-                                                        .white, // foreground
-                                                  ),
-                                                  child: Icon(Icons.delete),
-                                                  onPressed: () {
-                                                    //TODO: Call Delete Product API
-                                                  },
+                                            ),
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      5, 5, 0, 0),
+                                              child: TextButton(
+                                                style: TextButton.styleFrom(
+                                                  backgroundColor: Colors.red,
+                                                  // background
+                                                  foregroundColor: Colors
+                                                      .white, // foreground
                                                 ),
+                                                child: Icon(Icons.delete),
+                                                onPressed: () {
+                                                  //TODO: Call Delete Product API
+                                                },
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                                       )
                                     ],

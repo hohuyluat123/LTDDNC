@@ -1,16 +1,22 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ltddnc_nhom04_k19/main.dart';
+
+import 'controller/UserController.dart';
+import 'model/User.dart';
 
 class Header extends StatelessWidget implements PreferredSizeWidget {
+  String username;
 
-   String username;
+  int id;
 
-   int id;
+  final userController = Get.find<UserController>(tag: "userController");
 
-  Header({Key? key, required this.id, required this.username}): preferredSize = Size.fromHeight(kToolbarHeight),
+  Header({Key? key, required this.id, required this.username})
+      : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
-   @override
-   final Size preferredSize;
+  @override
+  final Size preferredSize;
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +28,17 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
           icon: const Icon(Icons.logout),
           tooltip: 'Logout',
           onPressed: () {
-            Navigator.popUntil(context, (route) => route.isFirst);
+            userController.currentUser.value = User(
+                accountId: -1,
+                name: "name",
+                accessToken: "accessToken",
+                refreshToken: "refreshToken",
+                isSeller: false);
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => LoginPage()));
           },
         ),
       ],
     );
   }
-
 }

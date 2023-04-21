@@ -3,17 +3,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ltddnc_nhom04_k19/View/product_view.dart';
 
 
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
+import '../controller/UserController.dart';
+import '../model/Laptop.dart';
 
 class ItemView extends StatefulWidget {
   int currentIndex;
+  Laptop laptop;
   ItemView({
     super.key,
     required this.currentIndex,
+    required this.laptop,
   });
 
   @override
@@ -21,6 +27,28 @@ class ItemView extends StatefulWidget {
 }
 
 class _ItemViewState extends State<ItemView> {
+  final userController = Get.find<UserController>(tag: "userController");
+
+  void _showAlertDialog(String message) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Thêm sản phẩm'),
+          content: Text(message),
+          actions: [
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,7 +56,7 @@ class _ItemViewState extends State<ItemView> {
       child: Bounce(
         onPressed: () {
           Navigator.push(context,
-              CupertinoPageRoute(builder: (context) => const ProductView()));
+              CupertinoPageRoute(builder: (context) =>  ProductView(productId: widget.laptop.productId,)));
         },
         duration: const Duration(milliseconds: 500),
         child: Container(
@@ -45,9 +73,7 @@ class _ItemViewState extends State<ItemView> {
                   child: SizedBox(
                       width: double.infinity,
                       height: double.infinity,
-                      child: widget.currentIndex % 2 == 0
-                          ? Image.asset("assets/shows/laptopDetail.png")
-                          : Image.asset("assets/shows/laptopDetail.png"))),
+                      child:  Image.network(widget.laptop.image))),
               Expanded(
                   flex: 2,
                   child: SizedBox(
@@ -69,14 +95,14 @@ class _ItemViewState extends State<ItemView> {
                                 height: 2.0,
                               ),
                               Text(
-                                "Dell",
+                                widget.laptop.name,
                                 style: textStyle4,
                               ),
                               const SizedBox(
                                 height: 5.0,
                               ),
                               Text(
-                                "20.000.000 VNĐ",
+                                "${widget.laptop.price} VNĐ",
                                 style: textStyle4,
                               ),
                             ],
@@ -97,10 +123,28 @@ class _ItemViewState extends State<ItemView> {
                                     topLeft: Radius.circular(20.0),
                                     bottomRight: Radius.circular(16.0)),
                               ),
-                              child: const Icon(
-                                Icons.add,
-                                color: Colors.white,
-                              ),
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.blueAccent, // background
+                                  foregroundColor: Colors.white, // foreground
+                                ),
+                                child: Icon(Icons.add),
+                                onPressed: () async {
+                                  int? statusCode = await userController.addToCart(widget.laptop.productId, 1);
+                                  if (statusCode == 200) {
+                                    _showAlertDialog(
+                                        "Thêm sản phẩm thành công");
+                                  }
+                                  else if (statusCode == 409) {
+                                    _showAlertDialog(
+                                        "Sản phẩm đã có trong giỏ hàng");
+                                  }
+                                  else {
+                                    _showAlertDialog(
+                                        "Thêm sản phẩm thất bại");
+                                  }
+                                },
+                              )
                             ),
                           ),
                         )

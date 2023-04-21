@@ -1,13 +1,19 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:ltddnc_nhom04_k19/View/profile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ltddnc_nhom04_k19/controller/LaptopController.dart';
+
 import 'package:ltddnc_nhom04_k19/View/search_sreen.dart';
+
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
+import '../main.dart';
+import '../model/Laptop.dart';
 import 'brands.dart';
 import 'card_screen.dart';
 import 'favourite_screen.dart';
@@ -24,11 +30,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int navigationIndex = 0;
+
   setBottomBarIndex(index) {
     setState(() {
       navigationIndex = index;
     });
   }
+
   // Icons _icon = Icons as Icons;
   @override
   Widget build(BuildContext context) {
@@ -38,11 +46,11 @@ class _HomePageState extends State<HomePage> {
         height: double.infinity,
         color: bgWhite,
         child: Padding(
-          padding: const EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
+          padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
           child: Column(
             children: [
               SizedBox(
-                height: 55,
+                height: 40,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -123,8 +131,22 @@ class _HomePageState extends State<HomePage> {
                       hintText: "Tìm kiếm",
                       prefixIcon: Padding(
                         padding: const EdgeInsets.all(15.0),
-                        child:
-                        Image.asset("assets/icons/search_ic.png"),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.white, // background
+                            foregroundColor: Colors.grey, // foreground
+                          ),
+                          child: Icon(Icons.search),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SearchScreen()),
+                            );
+                          },
+                        )
+                        //Image.asset("assets/icons/search_ic.png"),
+
                       ),
                       hintStyle: textStyle1,
                       enabledBorder: OutlineInputBorder(
@@ -163,7 +185,9 @@ class _HomePageState extends State<HomePage> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
-                                image: NetworkImage(("https://phuochungcomputer.com/wp-content/uploads/2021/06/banner-dell-m4800-phuochung.png").replaceAll('"', '')),
+                                image: NetworkImage(
+                                    ("https://phuochungcomputer.com/wp-content/uploads/2021/06/banner-dell-m4800-phuochung.png")
+                                        .replaceAll('"', '')),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -173,7 +197,9 @@ class _HomePageState extends State<HomePage> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
-                                image: NetworkImage(("https://phuochungcomputer.com/wp-content/uploads/2023/02/mtqn.png").replaceAll('"', '')),
+                                image: NetworkImage(
+                                    ("https://phuochungcomputer.com/wp-content/uploads/2023/02/mtqn.png")
+                                        .replaceAll('"', '')),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -183,7 +209,9 @@ class _HomePageState extends State<HomePage> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
-                                image: NetworkImage(("https://hacom.vn/media/news/2409_0924-BannerConsumer_HNC_800x450.jpg").replaceAll('"', '')),
+                                image: NetworkImage(
+                                    ("https://hacom.vn/media/news/2409_0924-BannerConsumer_HNC_800x450.jpg")
+                                        .replaceAll('"', '')),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -193,10 +221,11 @@ class _HomePageState extends State<HomePage> {
                           height: 160.0,
                           enlargeCenterPage: true,
                           autoPlay: true,
-                          aspectRatio: 10/ 4,
+                          aspectRatio: 10 / 4,
                           autoPlayCurve: Curves.fastOutSlowIn,
                           enableInfiniteScroll: true,
-                          autoPlayAnimationDuration: Duration(milliseconds: 800),
+                          autoPlayAnimationDuration:
+                              Duration(milliseconds: 800),
                           viewportFraction: 1,
                         ),
                       ),
@@ -205,10 +234,13 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Container(
                         color: Colors.amberAccent,
-                        child:  Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(Icons.shopping_cart_outlined, color: Colors.black,),
+                            Icon(
+                              Icons.shopping_cart_outlined,
+                              color: Colors.black,
+                            ),
                             Text(
                               "TOP SELLER",
                               style: textStyle4,
@@ -217,45 +249,9 @@ class _HomePageState extends State<HomePage> {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => const SearchScreen()),
-                                  );},
-                                child: Text(
-                                  "Xem tất cả",
-                                  style: textStyle5,
-                                ))
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 200.0,
-                        child: ListView.builder(
-                            itemCount: 10,
-                            scrollDirection: Axis.horizontal,
-                            padding: EdgeInsets.zero,
-                            itemBuilder: (context, index) {
-                              return ItemView(
-                                currentIndex: index,
-                              );
-                            }),
-                      ),
-                      const SizedBox(
-                        height: 10.0,
-                      ),
-                      Container(
-                        color: Colors.amberAccent,
-                        child:  Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Icon(Icons.newspaper, color: Colors.black,),
-                            Text(
-                              "Sản phẩm mới",
-                              style: textStyle4,
-                            ),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => const SearchScreen()),
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SearchScreen()),
                                   );
                                 },
                                 child: Text(
@@ -265,107 +261,147 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                      Column(
-                        children: [
-                          for (int i = 0; i < 5; i++)
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 5.0),
-                              child: InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 160,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(16.0),
-                                      color: Colors.white),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(15.0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "BEST CHOISE",
-                                                  style: textStyle6,
-                                                ),
-                                                const SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Text(
-                                                  "Asus core i5",
-                                                  style: textStyle4,
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(
-                                                  "15.990.000 VNĐ",
-                                                  style: textStyle4,
-                                                ),
-                                                Text(''),
-                                                LikeButton(
-                                                  size: 16,
-                                                  circleColor:
-                                                  CircleColor(start: Color(0xff00ddff), end: Color(0xff0099cc)),
-                                                  bubblesColor: BubblesColor(
-                                                    dotPrimaryColor: Color(0xff33b5e5),
-                                                    dotSecondaryColor: Color(0xff0099cc),
-                                                  ),
-                                                  likeBuilder: (bool isLiked) {
-                                                    return Icon(
-                                                      Icons.favorite,
-                                                      color: isLiked ? Colors.deepOrange : Colors.grey,
-                                                      size: 16,
-                                                    );
-                                                  },
-                                                  likeCount: 0,
-                                                  countBuilder: ( count, bool isLiked, String text) {
-                                                    var color = isLiked ? Colors.deepOrange : Colors.grey;
-                                                    Widget result;
-                                                    if (count == 0) {
-                                                      result = Text(
-                                                        "love",
-                                                        style: textStyle4,
-                                                      );
-                                                    } else
-                                                      result = Text(
-                                                        text,
-                                                        style: textStyle5,
-                                                      );
-                                                    return result;
-                                                  },
-                                                ),
-                                                // RadioListTile(
-                                                //   title: Text("Favourite"),
-                                                //   value: Icons.favorite,
-                                                //   groupValue: _icon,
-                                                //   onChanged: (value){
-                                                //     setState(() {
-                                                //       // _icon = value.toString();
-                                                //     });
-                                                //   },
-                                                //   secondary: Icon(Icons.radio_button_unchecked),
-                                                // ),
-                                              ],
-                                            ),
-                                          )),
-                                      Expanded(
-                                          child: Image.asset(
-                                            "assets/shows/laptopDetail.png",
-                                            width: double.infinity,
-                                            height: double.infinity,
-                                            fit: BoxFit.cover,
-                                          )),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            )
-                        ],
-                      )
+                      SizedBox(
+                        height: 200.0,
+                        child: FutureBuilder<List<Laptop>>(
+                          future:
+                              LaptopController.fetchLaptopByOrder("dateAdded"),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return Center(
+                                child: Text("${snapshot.error}"),
+                              );
+                            } else if (snapshot.hasData) {
+                              return ListView.builder(
+                                  itemCount: 5,
+                                  scrollDirection: Axis.horizontal,
+                                  padding: EdgeInsets.zero,
+                                  itemBuilder: (context, index) {
+                                    final item = snapshot.data![index];
+                                    return ItemView(
+                                      currentIndex: index,
+                                      laptop: item,
+                                    );
+                                  });
+                            } else {
+                              return LinearProgressIndicator();
+                            }
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        color: Colors.amberAccent,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Icon(
+                              Icons.newspaper,
+                              color: Colors.black,
+                            ),
+                            Text(
+                              "Sản phẩm mới",
+                              style: textStyle4,
+                            ),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SearchScreen()),
+                                  );
+                                },
+                                child: Text(
+                                  "Xem tất cả",
+                                  style: textStyle5,
+                                ))
+                          ],
+                        ),
+                      ),
+                      FutureBuilder<List<Laptop>>(
+                        future:
+                            LaptopController.fetchLaptopByOrder("dateAdded"),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Center(
+                              child: Text("${snapshot.error}"),
+                            );
+                          } else if (snapshot.hasData) {
+                            return Column(
+                                children: snapshot.data
+                                        ?.map<Widget>((laptop) => Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 5.0),
+                                            child: InkWell(
+                                                onTap: () {},
+                                                child: Container(
+                                                    width: double.infinity,
+                                                    height: 160,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:BorderRadius.circular(16.0),
+                                                        color: Colors.white),
+                                                    child: Row(children: [
+                                                      Expanded(
+                                                          child: Padding(
+                                                        padding:const EdgeInsets.all(15.0),
+                                                        child: Column(
+                                                            crossAxisAlignment:CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text("BEST CHOISE",
+                                                                style:textStyle6,),
+                                                              const SizedBox(height: 5,),
+                                                              Text(laptop.name,
+                                                                style:textStyle4,
+                                                              ),
+                                                              const SizedBox(height: 10,),
+                                                              Text("${laptop.price} VNĐ",
+                                                                style:textStyle4,
+                                                              ),
+                                                              Text(''),
+                                                              LikeButton(
+                                                                size: 16,
+                                                                circleColor: CircleColor(start: Color(0xff00ddff),end: Color(0xff0099cc)),
+                                                                bubblesColor:BubblesColor(dotPrimaryColor:Color(0xff33b5e5),dotSecondaryColor:Color(0xff0099cc),
+                                                                ),
+                                                                likeBuilder: (bool isLiked) {
+                                                                  return Icon(
+                                                                    Icons.favorite,
+                                                                    color: isLiked ? Colors.deepOrange: Colors.grey,
+                                                                    size: 16,
+                                                                  );
+                                                                },
+                                                                likeCount: 0,
+                                                                countBuilder: (count, bool isLiked, String text) {
+                                                                  var color = isLiked ? Colors.deepOrange : Colors.grey;
+                                                                  Widget result;
+                                                                  if (count == 0) {
+                                                                    result = Text("Love",
+                                                                      style:textStyle4,);
+                                                                  } else
+                                                                    result = Text(text,
+                                                                      style:textStyle5,
+                                                                    );
+                                                                  return result;
+                                                                },
+                                                              ),
+                                                            ]),
+                                                      )),
+                                                      Expanded(
+                                                          child: SizedBox(
+                                                              width: double.infinity,
+                                                              height: double.infinity,
+                                                              child: Image.network(laptop.image))),
+                                                    ])))))
+                                        .toList() ??
+                                    []);
+                          } else {
+                            return LinearProgressIndicator();
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),

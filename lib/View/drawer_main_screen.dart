@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
+import '../controller/UserController.dart';
 import '../generated/menu_item.dart';
 
 class MenuItems {
@@ -14,7 +17,7 @@ class MenuItems {
   static const notification = MenuItemClass(Icons.person_outline,
       'Notification', 'assets/icons/notify_ic.png', false);
   static const signout =
-      MenuItemClass(Icons.logout_outlined, 'Sign Out', '', true);
+      MenuItemClass(Icons.logout_outlined, 'Sign Out', '', true,);
 
   static const all = <MenuItemClass>[
     profile,
@@ -34,6 +37,7 @@ class MenuScreen extends StatelessWidget {
       {super.key, required this.currentItem, required this.onSelectedItem});
   @override
   Widget build(BuildContext context) {
+    UserController userController = Get.find<UserController>(tag: "userController");
     return Scaffold(
       backgroundColor: const Color(0xff6ef8d9),
       body: SafeArea(
@@ -80,14 +84,14 @@ class MenuScreen extends StatelessWidget {
                               fontSize: 15,
                               fontWeight: FontWeight.bold),
                         )),
-                    const Positioned(
+                    Positioned(
                         bottom: 0,
                         left: 5,
                         child: Text(
-                          'Alisson becker',
-                          style: TextStyle(
+                         userController.currentUser.value.name,
+                          style: const TextStyle(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontSize: 15,
                               fontWeight: FontWeight.w500),
                         ))
                   ],
