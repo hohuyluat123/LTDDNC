@@ -44,5 +44,5 @@ class Assets {
   static const String showsS7 = 'assets/shows/s7.png';
   static const String showsS8 = 'assets/shows/s8.png';
   static const String showsS9 = 'assets/shows/s9.png';
-
+  static const String iconStatisticIc ='assets/icons/stats_ic.png';
 }

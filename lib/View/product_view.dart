@@ -8,6 +8,7 @@ import 'package:ltddnc_nhom04_k19/controller/LaptopController.dart';
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
 import '../model/Laptop.dart';
+import 'home_page.dart';
 
 class ProductView extends StatefulWidget {
   int productId;
@@ -52,16 +53,27 @@ class _ProductViewState extends State<ProductView> {
                       ),
                       Row(
                         children: [
-                          Bounce(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              duration: const Duration(milliseconds: 500),
-                              child: Image.network(
-                                "assets/icons/back_ic.png",
-                                width: 44.0,
-                                height: 44.0,
-                              )),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const HomePage()),
+                              );
+                            },
+                            child: Container(
+                              width: 45,
+                              height: 45,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(30.0),
+                                image: const DecorationImage(
+                                  image: AssetImage("assets/icons/back_ic.png"),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ),
                           const Spacer(),
                           Text(
                             "Hệ thống bán lẻ laptop",

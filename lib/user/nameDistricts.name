@@ -1,0 +1,43 @@
+import 'package:ltddnc_nhom04_k19/user/nameWard.dart';
+
+class DistrictName{
+  final String name;
+  final int code;
+  final String division_type;
+  final String codename;
+  final int province_code;
+  final List<dynamic> wards;
+
+  DistrictName({
+    required this.name,
+    required this.code,
+    required this.division_type,
+    required this.codename,
+    required this.province_code,
+    required this.wards
+
+  });
+
+  factory DistrictName.fromJson(Map<String, dynamic> json) {
+    return DistrictName(
+        name: json['name'] as String,
+        code: json['code'] as int,
+        division_type: json['division_type'] as String,
+        codename: json['codename'] as String,
+        province_code: json['province_code'] as int,
+        wards: json['wards'] as List<dynamic>
+    );
+  }
+
+  static List<DistrictName> parseAddress(List<dynamic> responseBody) {
+    try {
+      List<DistrictName> listAddress = (responseBody)
+          .map((dynamic item) =>DistrictName.fromJson(item))
+          .toList();
+      return listAddress;
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
+}

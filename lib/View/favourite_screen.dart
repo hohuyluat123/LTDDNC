@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
+import 'home_page.dart';
 
 class FavouriteScreen extends StatefulWidget {
   const FavouriteScreen({super.key});
@@ -26,7 +27,11 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomePage()),
+                    );
                   },
                   child: Container(
                     width: 45,
