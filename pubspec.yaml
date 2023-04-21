@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.2 <3.0.0'
+  sdk: '^2.19.1'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -58,7 +58,9 @@ dev_dependencies:
   like_button: ^2.0.5
   image_picker: ^0.8.7+2
   syncfusion_flutter_datepicker: ^21.1.39
+  syncfusion_flutter_charts: ^21.1.41
   fl_chart: ^0.61.0
+  intl: ^0.17.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
