@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
+import 'package:ltddnc_nhom04_k19/View/home_page.dart';
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
 import 'home_page.dart';
@@ -27,11 +28,8 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomePage()),
-                    );
+                    Navigator.pushReplacement(
+                        context, MaterialPageRoute(builder: (context) => HomePage()));
                   },
                   child: Container(
                     width: 45,
