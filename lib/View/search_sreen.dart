@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
 import 'brands.dart';
+import 'home_page.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -27,7 +28,11 @@ class _SearchScreenState extends State<SearchScreen> {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomePage()),
+                    );
                   },
                   child: Container(
                     width: 45,

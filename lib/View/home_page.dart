@@ -55,14 +55,27 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Bounce(
-                        onPressed: () => ZoomDrawer.of(context)!.toggle(),
-                        duration: const Duration(milliseconds: 500),
-                        child: Image.asset(
-                          "assets/icons/menu_ic.png",
-                          width: 44,
-                          height: 44,
-                        )),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage()),
+                        );
+                      },
+                      child: Container(
+                        width: 45,
+                        height: 45,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30.0),
+                          image: const DecorationImage(
+                            image: AssetImage("assets/icons/back_ic.png"),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
                     const Spacer(),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,

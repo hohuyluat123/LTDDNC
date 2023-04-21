@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../Styles/font_styles.dart';
+import 'home_page.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({Key? key}) : super(key: key);
@@ -25,7 +26,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomePage()),
+                    );
                   },
                   child: Container(
                     width: 45,
