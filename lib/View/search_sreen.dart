@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ltddnc_nhom04_k19/View/price.dart';
 
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
@@ -114,6 +115,14 @@ class _SearchScreenState extends State<SearchScreen> {
               width: double.infinity,
               height: 50.0,
               child: Brands(),
+            ),
+            const SizedBox(
+              height: 20.0,
+            ),
+            const SizedBox(
+              width: double.infinity,
+              height: 50.0,
+              child: Price(),
             ),
             // RangeSlider(
             //   min: 0.0,
