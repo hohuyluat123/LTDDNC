@@ -15,7 +15,9 @@ class Brands extends StatefulWidget {
 
 class _BrandsState extends State<Brands> {
   int currentIndex = 0;
-
+  double _startValue =5;
+  double _endValue =25;
+  final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -238,6 +240,9 @@ class _BrandsState extends State<Brands> {
               ),
             ),
           ],
+        ),
+        const SizedBox(
+          height: 20.0,
         ),
 
       ],

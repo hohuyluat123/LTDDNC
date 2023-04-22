@@ -6,6 +6,7 @@ import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:ltddnc_nhom04_k19/View/price.dart';
 import 'package:ltddnc_nhom04_k19/View/profile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ltddnc_nhom04_k19/controller/LaptopController.dart';
@@ -186,6 +187,14 @@ class _HomePageState extends State<HomePage> {
                 width: double.infinity,
                 height: 50.0,
                 child: Brands(),
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              const SizedBox(
+                width: double.infinity,
+                height: 50.0,
+                child: Price(),
               ),
               const SizedBox(
                 height: 20.0,
