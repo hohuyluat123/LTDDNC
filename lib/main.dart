@@ -6,6 +6,7 @@ import 'package:ltddnc_nhom04_k19/controller/UserController.dart';
 import 'package:ltddnc_nhom04_k19/seller/seller.dart';
 import 'package:ltddnc_nhom04_k19/user/user.dart';
 import 'package:dio/dio.dart';
+import 'controller/LaptopController.dart';
 import 'controller/OrderController.dart';
 import 'model/User.dart';
 
@@ -43,6 +44,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final userController = Get.put(UserController(), tag: "userController");
   final orderController = Get.put(OrderController(), tag: "orderController");
+  final laptopController = Get.put(LaptopController(), tag: "laptopController");
 
   User getCurrentLogin() {
     return userController.currentUser.value;
@@ -189,6 +191,7 @@ class _LoginPageState extends State<LoginPage> {
                     } else {
                       setCurrentLogin(user);
                       if (user.isSeller == true) {
+                        await laptopController.fetchLaptopOfSeller();
                         Navigator.push(
                           context,
                           MaterialPageRoute(

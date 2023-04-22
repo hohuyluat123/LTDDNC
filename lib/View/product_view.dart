@@ -32,6 +32,7 @@ class _ProductViewState extends State<ProductView> {
   late Laptop laptop;
 
   final userController = Get.find<UserController>(tag: "userController");
+  final laptopController = Get.find<LaptopController>(tag: "laptopController");
 
   void _showAlertDialog(String message) async {
     showDialog(
@@ -56,7 +57,7 @@ class _ProductViewState extends State<ProductView> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Laptop>(
-      future: LaptopController.fetchLaptopByProductId(widget.productId),
+      future: laptopController.fetchLaptopByProductId(widget.productId),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Center(
