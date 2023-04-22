@@ -13,6 +13,8 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  double _startValue =5;
+  double _endValue =10;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,6 +115,22 @@ class _SearchScreenState extends State<SearchScreen> {
               height: 50.0,
               child: Brands(),
             ),
+            // RangeSlider(
+            //   min: 0.0,
+            //   max: 100.0,
+            //   divisions: 10,
+            //   labels: RangeLabels(
+            //     _startValue.round().toString() + 'Triệu',
+            //     _endValue.round().toString() + 'Triệu',
+            //   ),
+            //   values: RangeValues(_startValue , _endValue ),
+            //   onChanged: (values) {
+            //     setState(() {
+            //       _startValue = values.start ;
+            //       _endValue = values.end ;
+            //     });
+            //   },
+            // ),
             Container(
               color: Colors.amberAccent,
               child:  Row(
