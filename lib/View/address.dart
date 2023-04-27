@@ -1,7 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ltddnc_nhom04_k19/View/EditAddress.dart';
+import 'package:ltddnc_nhom04_k19/controller/AddressController.dart';
 
 import '../Styles/font_styles.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const AddressScreen(),
+    );
+  }
+}
 
 class AddressScreen extends StatefulWidget {
   const AddressScreen({Key? key}) : super(key: key);
@@ -11,31 +35,24 @@ class AddressScreen extends StatefulWidget {
 }
 
 class _AddressScreenState extends State<AddressScreen> {
-  int _counter = 0;
+  final addressController = Get.put(AddressController(), tag: "addressController");
   bool isChecked = false;
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+
+  Color getColor(Set<MaterialState> states) {
+    const Set<MaterialState> interactiveStates = <MaterialState>{
+      MaterialState.pressed,
+      MaterialState.hovered,
+      MaterialState.focused,
+    };
+    if (states.any(interactiveStates.contains)) {
+      return Colors.blue;
+    }
+    return Colors.red;
   }
+
   @override
   Widget build(BuildContext context) {
-    Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
-      };
-      if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
-      }
-      return Colors.red;
-    }
+
     return Scaffold(
         backgroundColor: const Color(0xffF8F9FA),
         body: Column(children: [
@@ -198,13 +215,14 @@ class _AddressScreenState extends State<AddressScreen> {
           )
         ]),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
+          onPressed: () async {
+            await addressController.fetchProvicesAddress();
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const EditAddressScreen()),
             );
           } ,
-          tooltip: 'Increment',
+          tooltip: 'Thêm địa chỉ',
           child: const Icon(Icons.add),
         ));
   }

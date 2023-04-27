@@ -8,6 +8,7 @@ import 'UserController.dart';
 class LaptopController extends GetxController {
   final userController = Get.find<UserController>(tag: "userController");
   var sellerList = <Laptop>[].obs;
+  var productList = <Laptop>[].obs;
 
   Future<void> fetchLaptopOfSeller() async {
     try {

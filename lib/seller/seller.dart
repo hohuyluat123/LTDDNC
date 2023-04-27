@@ -731,61 +731,49 @@ class _MyHomePageState extends State<MyHomePage> {
                       columns: const <DataColumn>[
                         DataColumn(
                           label: Center(
-                            child: Expanded(
-                              child: Text(
-                                'Product ID',
-                                style: TextStyle(fontStyle: FontStyle.italic),
-                              ),
+                            child: Text(
+                              'Product ID',
+                              style: TextStyle(fontStyle: FontStyle.italic),
                             ),
                           ),
                         ),
                         DataColumn(
                           label: Center(
-                            child: Expanded(
-                              child: Text(
-                                'Name',
-                                style: TextStyle(fontStyle: FontStyle.italic),
-                              ),
+                            child: Text(
+                              'Name',
+                              style: TextStyle(fontStyle: FontStyle.italic),
                             ),
                           ),
                         ),
                         DataColumn(
                           label: Center(
-                            child: Expanded(
-                              child: Text(
-                                'Brand',
-                                style: TextStyle(fontStyle: FontStyle.italic),
-                              ),
+                            child: Text(
+                              'Brand',
+                              style: TextStyle(fontStyle: FontStyle.italic),
                             ),
                           ),
                         ),
                         DataColumn(
                           label: Center(
-                            child: Expanded(
-                              child: Text(
-                                'Image',
-                                style: TextStyle(fontStyle: FontStyle.italic),
-                              ),
+                            child: Text(
+                              'Image',
+                              style: TextStyle(fontStyle: FontStyle.italic),
                             ),
                           ),
                         ),
                         DataColumn(
                           label: Center(
-                            child: Expanded(
-                              child: Text(
-                                'Price',
-                                style: TextStyle(fontStyle: FontStyle.italic),
-                              ),
+                            child: Text(
+                              'Price',
+                              style: TextStyle(fontStyle: FontStyle.italic),
                             ),
                           ),
                         ),
                         DataColumn(
                           label: Center(
-                            child: Expanded(
-                              child: Text(
-                                'Action',
-                                style: TextStyle(fontStyle: FontStyle.italic),
-                              ),
+                            child: Text(
+                              'Action',
+                              style: TextStyle(fontStyle: FontStyle.italic),
                             ),
                           ),
                         ),
@@ -795,16 +783,15 @@ class _MyHomePageState extends State<MyHomePage> {
                             (laptop) =>
                             DataRow(
                               cells: <DataCell>[
-                                DataCell(Expanded(
-                                    child: Text(laptop.productId.toString()))),
-                                DataCell(Expanded(child: Text(laptop.name))),
-                                DataCell(Expanded(child: Text(laptop.brand))),
-                                DataCell(Image.network(
+                                DataCell(Text(laptop.productId.toString().trim())),
+                                DataCell(Expanded(child: Text(laptop.name.trim()))),
+                                DataCell(Expanded(child: Text(laptop.brand.trim()))),
+                                DataCell( laptop.image == "" ? Container() : Image.network(
                                   laptop.image,
-                                  width: 50,
+                                  width: MediaQuery.of(context).size.width * 10/100,
                                 )),
                                 DataCell(Expanded(
-                                    child: Text(laptop.price.toString()))),
+                                    child: Text(laptop.price.toString().trim()))),
                                 DataCell(
                                   Expanded(
                                     child: Column(

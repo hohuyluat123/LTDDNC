@@ -193,7 +193,7 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(
                 width: double.infinity,
-                height: 50.0,
+                height: 150.0,
                 child: Price(),
               ),
               const SizedBox(
