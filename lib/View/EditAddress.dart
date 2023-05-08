@@ -24,12 +24,33 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
   bool isChecked = false;
   int proviceCode = -1;
   int districtCode = -1;
+  String houseNumber = "";
   var selectedProvice =  "Chọn tỉnh thành".obs;
   var  selectedDistrict = "Chọn quận huyện".obs;
   var  selectedWard = "Chọn phường xã".obs;
+
+  void _showDialog(String tittle, String message, BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(tittle),
+          content: Text(message),
+          actions: [
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    // List<AddressName> listAddress =  dio.get("https://provinces.open-api.vn/api/p/");
     Color getColor(Set<MaterialState> states) {
       const Set<MaterialState> interactiveStates = <MaterialState>{
         MaterialState.pressed,
@@ -95,8 +116,10 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
-
             ),
+            onChanged: (value) {
+              houseNumber = value;
+            },
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText: "Nhập số nhà",
@@ -314,8 +337,10 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
 
                 ],
               ) ,
-                onPressed: () {
-
+                onPressed: () async{
+                    await addressController.addNewAddress("$houseNumber, $selectedWard, $selectedDistrict, $selectedProvice");
+                    await addressController.fetchAddressList();
+                    _showDialog("Success", "Đã thêm địa chỉ mới", context);
                 },),
 
             ])

@@ -35,7 +35,8 @@ class AddressScreen extends StatefulWidget {
 }
 
 class _AddressScreenState extends State<AddressScreen> {
-  final addressController = Get.put(AddressController(), tag: "addressController");
+  final addressController =
+      Get.find<AddressController>(tag: "addressController");
   bool isChecked = false;
 
   Color getColor(Set<MaterialState> states) {
@@ -52,176 +53,128 @@ class _AddressScreenState extends State<AddressScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         backgroundColor: const Color(0xffF8F9FA),
-        body: Column(children: [
-          const SizedBox(
-            height: 50,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: 45,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30.0),
-                      image: const DecorationImage(
-                        image: AssetImage("assets/icons/back_ic.png"),
-                        fit: BoxFit.cover,
+        body: Column(
+          children: [
+            const SizedBox(
+              height: 50,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      width: 45,
+                      height: 45,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30.0),
+                        image: const DecorationImage(
+                          image: AssetImage("assets/icons/back_ic.png"),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const Text(
-                  'Địa chỉ',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500),
-                ),
-                InkWell(
-                  child: Container(
-                    width: 45,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30.0),
+                  const Text(
+                    'Địa chỉ',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  InkWell(
+                    child: Container(
+                      width: 45,
+                      height: 45,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 5.0),
-            child: InkWell(
-              onTap: () {},
-              child: Container(
-                width: double.infinity,
-                height: 150,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16.0),
-                    color: Colors.white),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Địa chỉ",
-                                style: textStyle6,
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                "12/A , Phạm Ngũ Lão, phường 6, quận 5, TP.HCM",
-                                style: textStyle4,
-                              ),
-                            ],
-                          ),
-                        )),
-                    Expanded(
-                      child:  ListTile(
-                        selectedTileColor: Colors.black26,
-                        minLeadingWidth: 25,
-                        leading: Checkbox(
-                          checkColor: Colors.white,
-                          fillColor: MaterialStateProperty.resolveWith(getColor),
-                          value: isChecked,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              isChecked = value!;
-                            });
-                          },
-                        ),
-                        title:Text('Mặc định'),
-
-                      ),
-                    )
-                  ],
-                ),
+                ],
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 5.0),
-            child: InkWell(
-              onTap: () {},
-              child: Container(
-                width: double.infinity,
-                height: 150,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16.0),
-                    color: Colors.white),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Địa chỉ",
-                                style: textStyle6,
+            Obx(() => Column(
+                children: List<Widget>.from(addressController.addressList.value
+                    .map((address) => [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 5.0),
+                            child: InkWell(
+                              onTap: () {},
+                              child: Container(
+                                width: double.infinity,
+                                height: 150,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16.0),
+                                    color: Colors.white),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Địa chỉ",
+                                            style: textStyle6,
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                            address,
+                                            style: textStyle4,
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                                    Expanded(
+                                      child: ListTile(
+                                        selectedTileColor: Colors.black26,
+                                        minLeadingWidth: 25,
+                                        leading: Checkbox(
+                                          checkColor: Colors.white,
+                                          fillColor:
+                                              MaterialStateProperty.resolveWith(
+                                                  getColor),
+                                          value: isChecked,
+                                          onChanged: (bool? value) {
+                                            setState(() {
+                                              isChecked = value!;
+                                            });
+                                          },
+                                        ),
+                                        title: Text('Mặc định'),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                "Đường số 4 , khu phoos6, phường Linh Trung, TP.Thủ Đức, TP.HCM",
-                                style: textStyle4,
-                              ),
-                            ],
+                            ),
                           ),
-                        )),
-                    Expanded(
-                      child:  ListTile(
-                        selectedTileColor: Colors.black26,
-                        minLeadingWidth: 25,
-                        leading: Checkbox(
-                          checkColor: Colors.white,
-                          fillColor: MaterialStateProperty.resolveWith(getColor),
-                          value: isChecked,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              isChecked = value!;
-                            });
-                          },
-                        ),
-                        title:Text('Mặc định'),
-
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          )
-        ]),
+                        ])
+                    .expand((i) => i)))),
+          ],
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             await addressController.fetchProvicesAddress();
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const EditAddressScreen()),
+              MaterialPageRoute(
+                  builder: (context) => const EditAddressScreen()),
             );
-          } ,
+          },
           tooltip: 'Thêm địa chỉ',
           child: const Icon(Icons.add),
         ));
