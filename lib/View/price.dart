@@ -20,12 +20,12 @@ class _PriceState extends State<Price> {
   final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return  ListView(
       scrollDirection: Axis.horizontal,
       children: [
         SizedBox(
           // <-- SEE HERE
-            width: 200,
+            width: 150,
             height: 20,
             child: TextFormField(
                 readOnly: true,
@@ -47,10 +47,10 @@ class _PriceState extends State<Price> {
                 )
             )),
         Container(
-          width: 500,
+          width: 200,
           child: RangeSlider(
             min: 0.0,
-            max: 50.0,
+            max: 30.0,
             divisions: 5,
             labels: RangeLabels(
               _startValue.round().toString() + 'Triệu',
@@ -66,19 +66,6 @@ class _PriceState extends State<Price> {
             },
           ),
         ),
-        const SizedBox(
-          height: 20.0,
-        ),
-        ElevatedButton(  child: Row (
-          children: [
-            Icon(Icons.search_off_rounded),
-            Text("Lọc sản phẩm"),
-
-          ],
-        ) ,
-          onPressed: () {
-
-          },)
       ],
     );
   }

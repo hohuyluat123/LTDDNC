@@ -96,6 +96,7 @@ class _LoginPageState extends State<LoginPage> {
     String email = "";
     String password = "";
     return Scaffold(
+      backgroundColor: Colors.white70,
       resizeToAvoidBottomInset: false, //new line
       body: Center(
         child: Column(
@@ -103,15 +104,16 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             Image.asset(
               'assets/images/laptopbrand.png',
-              width: 450.0,
+              width: 300.0,
               height: 200.0,
               fit: BoxFit.fill,
             ),
+            const Text(''),
             const Text(
-              'Hệ thống bán lẻ laptop, máy tính',
+              'HỆ THỐNG BÁN LẺ MÁY TÍNH, LAPTOP',
+              style: TextStyle(fontSize: 20, color: Colors.lightBlue),
               textAlign: TextAlign.center,
               selectionColor: Colors.lightBlue,
-              textScaleFactor: 2.5,
             ),
             const Text(''),
             SizedBox(
@@ -127,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                     hintText: "Enter username",
                     icon: Icon(
                       Icons.account_box,
-                      color: Colors.lightGreenAccent,
+                      color: Colors.lightBlue,
                     ),
                     labelText: 'Username',
                     floatingLabelAlignment: FloatingLabelAlignment.start,
@@ -155,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                     hintText: "Enter password",
                     icon: Icon(
                       Icons.lock,
-                      color: Colors.lightGreenAccent,
+                      color: Colors.lightBlue,
                     ),
                     labelText: 'Password',
                     floatingLabelAlignment: FloatingLabelAlignment.start,

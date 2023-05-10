@@ -33,14 +33,15 @@ class SignUp extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'Hệ thống bán lẻ laptop, máy tính, PC',
+              'HỆ THỐNG BÁN LẺ MÁY TÍNH, LAPTOP',
+              style: TextStyle(fontSize: 20, color: Colors.lightBlue),
               textAlign: TextAlign.center,
               selectionColor: Colors.lightBlue,
-              textScaleFactor: 2.5,
             ),
+            const Text(''),
             new Image.asset(
               'assets/images/laptopbrand.png',
-              width: 450.0,
+              width: 300.0,
               height: 200.0,
               fit: BoxFit.fill,
             ),
@@ -55,7 +56,7 @@ class SignUp extends StatelessWidget {
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: "Enter username",
-                icon: Icon(Icons.account_box,color: Colors.lightGreenAccent,),
+                icon: Icon(Icons.account_box,color: Colors.lightBlue,),
                 labelText: 'Username',
                 floatingLabelAlignment: FloatingLabelAlignment.start,
                 floatingLabelStyle: TextStyle(
@@ -77,7 +78,7 @@ class SignUp extends StatelessWidget {
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: "Enter password",
-                icon: Icon(Icons.lock,color: Colors.lightGreenAccent,),
+                icon: Icon(Icons.lock,color: Colors.lightBlue,),
                 labelText: 'Password',
                 floatingLabelAlignment: FloatingLabelAlignment.start,
                 floatingLabelStyle: TextStyle(
@@ -99,7 +100,7 @@ class SignUp extends StatelessWidget {
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: "Enter repassword",
-                icon: Icon(Icons.lock,color: Colors.lightGreenAccent,),
+                icon: Icon(Icons.lock,color: Colors.lightBlue,),
                 labelText: 'RePassword',
                 floatingLabelAlignment: FloatingLabelAlignment.start,
                 floatingLabelStyle: TextStyle(

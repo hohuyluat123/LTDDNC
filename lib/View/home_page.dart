@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               SizedBox(
-                height: 40,
+                height: 20,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -193,8 +193,22 @@ class _HomePageState extends State<HomePage> {
                 height: 50.0,
                 child: Price(),
               ),
-              const SizedBox(
-                height: 20.0,
+              ButtonBar(
+                alignment: MainAxisAlignment.start,
+                buttonPadding:
+                const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                children: [
+                  ElevatedButton(  child: Row (
+                    children: [
+                      Icon(Icons.search_off_rounded),
+                      Text("Lọc sản phẩm"),
+
+                    ],
+                  ) ,
+                    onPressed: () {
+
+                    },)
+                ],
               ),
               Expanded(
                 child: SingleChildScrollView(
@@ -255,7 +269,7 @@ class _HomePageState extends State<HomePage> {
                         height: 10.0,
                       ),
                       Container(
-                        color: Colors.amberAccent,
+                        color: Colors.lightBlueAccent,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -315,7 +329,7 @@ class _HomePageState extends State<HomePage> {
                         height: 10.0,
                       ),
                       Container(
-                        color: Colors.amberAccent,
+                        color: Colors.lightBlueAccent,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

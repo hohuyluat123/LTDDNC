@@ -243,8 +243,7 @@ class _BrandsState extends State<Brands> {
         ),
         const SizedBox(
           height: 20.0,
-        ),
-
+        )
       ],
     );
   }
