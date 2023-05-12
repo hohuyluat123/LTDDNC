@@ -81,7 +81,7 @@ class SignUp extends StatelessWidget {
                         hintText: "Enter your name",
                         icon: Icon(
                           Icons.account_box,
-                          color: Colors.lightGreenAccent,
+                          color: Colors.lightBlue,
                         ),
                         labelText: 'Name',
                         floatingLabelAlignment: FloatingLabelAlignment.start,
@@ -114,7 +114,7 @@ class SignUp extends StatelessWidget {
                         hintText: "Enter your email",
                         icon: Icon(
                           Icons.email,
-                          color: Colors.lightGreenAccent,
+                          color: Colors.lightBlue,
                         ),
                         labelText: 'Email',
                         floatingLabelAlignment: FloatingLabelAlignment.start,
@@ -149,7 +149,7 @@ class SignUp extends StatelessWidget {
                         hintText: "Enter password",
                         icon: Icon(
                           Icons.lock,
-                          color: Colors.lightGreenAccent,
+                          color: Colors.lightBlue,
                         ),
                         labelText: 'Password',
                         floatingLabelAlignment: FloatingLabelAlignment.start,
@@ -184,7 +184,7 @@ class SignUp extends StatelessWidget {
                         hintText: "Enter repassword",
                         icon: Icon(
                           Icons.lock,
-                          color: Colors.lightGreenAccent,
+                          color: Colors.lightBlue,
                         ),
                         labelText: 'RePassword',
                         floatingLabelAlignment: FloatingLabelAlignment.start,
@@ -217,7 +217,7 @@ class SignUp extends StatelessWidget {
                         hintText: "Enter phone number",
                         icon: Icon(
                           Icons.phone_android,
-                          color: Colors.lightGreenAccent,
+                          color: Colors.lightBlue,
                         ),
                         labelText: 'Phone Number',
                         floatingLabelAlignment: FloatingLabelAlignment.start,

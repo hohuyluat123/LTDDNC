@@ -518,7 +518,15 @@ class _ProductViewState extends State<ProductView> {
             ),
           );
         } else {
-          return CircularProgressIndicator();
+          return const Center(
+              child: SizedBox(
+                height: 10,
+                width: 10,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                ),
+              )
+          );
         }
       },
     );

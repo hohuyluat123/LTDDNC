@@ -46,7 +46,9 @@ class _LoginPageState extends State<LoginPage> {
   final userController = Get.put(UserController(), tag: "userController");
   final orderController = Get.put(OrderController(), tag: "orderController");
   final laptopController = Get.put(LaptopController(), tag: "laptopController");
-  final addressController = Get.put(AddressController(), tag: "addressController");
+  final addressController =
+      Get.put(AddressController(), tag: "addressController");
+  final _formKey = GlobalKey<FormState>();
 
   User getCurrentLogin() {
     return userController.currentUser.value;
@@ -120,61 +122,80 @@ class _LoginPageState extends State<LoginPage> {
               selectionColor: Colors.lightBlue,
             ),
             const Text(''),
-            SizedBox(
-                // <-- SEE HERE
-                width: 300,
-                child: TextField(
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Enter username",
-                    icon: Icon(
-                      Icons.account_box,
-                      color: Colors.lightBlue,
-                    ),
-                    labelText: 'Username',
-                    floatingLabelAlignment: FloatingLabelAlignment.start,
-                    floatingLabelStyle: TextStyle(
-                      color: Colors.amber,
-                      fontSize: 16,
-                    ),
-                  ),
-                  onChanged: (value) {
-                    email = value;
-                  },
-                )),
-            const Text(''),
-            SizedBox(
-                // <-- SEE HERE
-                width: 300,
-                child: TextField(
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  obscureText: true, // ẩn pass word
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Enter password",
-                    icon: Icon(
-                      Icons.lock,
-                      color: Colors.lightBlue,
-                    ),
-                    labelText: 'Password',
-                    floatingLabelAlignment: FloatingLabelAlignment.start,
-                    floatingLabelStyle: TextStyle(
-                      color: Colors.amber,
-                      fontSize: 16,
-                    ),
-                  ),
-                  onChanged: (value) {
-                    password = value;
-                  },
-                )),
-            const Text(''),
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  SizedBox(
+                      // <-- SEE HERE
+                      width: 300,
+                      child: TextFormField(
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "Enter username",
+                          icon: Icon(
+                            Icons.account_box,
+                            color: Colors.lightBlue,
+                          ),
+                          labelText: 'Username',
+                          floatingLabelAlignment: FloatingLabelAlignment.start,
+                          floatingLabelStyle: TextStyle(
+                            color: Colors.amber,
+                            fontSize: 16,
+                          ),
+                        ),
+                        onChanged: (value) {
+                          email = value;
+                        },
+                        validator: (value) {
+                          if (value?.isEmpty ?? true) {
+                            return 'Please enter your email';
+                          }
+                          return null;
+                        },
+                      )),
+                  const Text(''),
+                  SizedBox(
+                      // <-- SEE HERE
+                      width: 300,
+                      child: TextFormField(
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        obscureText: true,
+                        // ẩn pass word
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "Enter password",
+                          icon: Icon(
+                            Icons.lock,
+                            color: Colors.lightBlue,
+                          ),
+                          labelText: 'Password',
+                          floatingLabelAlignment: FloatingLabelAlignment.start,
+                          floatingLabelStyle: TextStyle(
+                            color: Colors.amber,
+                            fontSize: 16,
+                          ),
+                        ),
+                        onChanged: (value) {
+                          password = value;
+                        },
+                        validator: (value) {
+                          if (value?.isEmpty ?? true) {
+                            return 'Please enter your password';
+                          }
+                          return null;
+                        },
+                      )),
+                ],
+              ),
+            ),
             ButtonBar(
               alignment: MainAxisAlignment.center,
               buttonPadding:
@@ -188,28 +209,31 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                   onPressed: () async {
-                    User user = await login(email, password);
-                    if (user.accountId == -1) {
-                      _showAlertDialog(
-                          "Cannot find this account, Please check your username and password");
-                    } else {
-                      setCurrentLogin(user);
-                      if (user.isSeller == true) {
-                        await laptopController.fetchLaptopOfSeller();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SellerMain()),
-                        );
+                    if (_formKey.currentState!.validate()) {
+                      User user = await login(email, password);
+                      if (user.accountId == -1) {
+                        _showAlertDialog(
+                            "Cannot find this account, Please check your username and password");
                       } else {
-                        await orderController.fetchUserOrders();
-                        await userController.fetchCartProductId();
-                        await addressController.fetchAddressList();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const UserApp()),
-                        );
+                        setCurrentLogin(user);
+                        if (user.isSeller == true) {
+                          await laptopController.fetchLaptopOfSeller();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SellerMain()),
+                          );
+                        } else {
+                          await orderController.fetchUserOrders();
+                          await userController.fetchCartProductId();
+                          await addressController.fetchAddressList();
+                          await userController.fetchFavoriteList();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const UserApp()),
+                          );
+                        }
                       }
                     }
                   },

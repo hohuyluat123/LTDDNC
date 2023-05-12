@@ -7,6 +7,7 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ltddnc_nhom04_k19/View/price.dart';
+import 'package:ltddnc_nhom04_k19/View/product_view.dart';
 import 'package:ltddnc_nhom04_k19/View/profile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ltddnc_nhom04_k19/controller/LaptopController.dart';
@@ -15,6 +16,7 @@ import 'package:ltddnc_nhom04_k19/View/search_sreen.dart';
 
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
+import '../controller/UserController.dart';
 import '../main.dart';
 import '../model/Laptop.dart';
 import 'brands.dart';
@@ -34,6 +36,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int navigationIndex = 0;
   final laptopController = Get.find<LaptopController>(tag: "laptopController");
+  final userController = Get.find<UserController>(tag: "userController");
 
   setBottomBarIndex(index) {
     setState(() {
@@ -90,20 +93,6 @@ class _HomePageState extends State<HomePage> {
                           style: textStyle1,
                           selectionColor: Colors.cyan,
                         ),
-
-                        // Row(
-                        //   children: [
-                        //     Image.asset(
-                        //       "assets/icons/location_ic.png",
-                        //       width: 14,
-                        //       height: 14.0,
-                        //     ),
-                        //     const SizedBox(
-                        //       width: 5.0,
-                        //     ),
-                        //     Text("Mondolibug, Sylhet", style: textStyle2),
-                        //   ],
-                        // )
                       ],
                     ),
                     const Spacer(),
@@ -193,7 +182,7 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(
                 width: double.infinity,
-                height: 150.0,
+                height: 50.0,
                 child: Price(),
               ),
               ButtonBar(
@@ -203,7 +192,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   ElevatedButton(  child: Row (
                     children: [
-                      Icon(Icons.search_off_rounded),
+                      Icon(Icons.filter_alt),
                       Text("Lọc sản phẩm"),
 
                     ],
@@ -323,7 +312,12 @@ class _HomePageState extends State<HomePage> {
                                     );
                                   });
                             } else {
-                              return LinearProgressIndicator();
+                              return const Center(
+                                  child: SizedBox(
+                                    height: 7,
+                                    child: LinearProgressIndicator(),
+                                  )
+                              );
                             }
                           },
                         ),
@@ -375,7 +369,10 @@ class _HomePageState extends State<HomePage> {
                                             padding: const EdgeInsets.only(
                                                 bottom: 5.0),
                                             child: InkWell(
-                                                onTap: () {},
+                                                onTap: () {
+                                                    Navigator.push(context,
+                                                        MaterialPageRoute(builder: (context) =>  ProductView(productId: laptop.productId)));
+                                                },
                                                 child: Container(
                                                     width: double.infinity,
                                                     height: 160,
@@ -400,7 +397,7 @@ class _HomePageState extends State<HomePage> {
                                                                 style:textStyle4,
                                                               ),
                                                               Text(''),
-                                                              LikeButton(
+                                                              Obx(() =>  LikeButton(
                                                                 size: 16,
                                                                 circleColor: CircleColor(start: Color(0xff00ddff),end: Color(0xff0099cc)),
                                                                 bubblesColor:BubblesColor(dotPrimaryColor:Color(0xff33b5e5),dotSecondaryColor:Color(0xff0099cc),
@@ -412,20 +409,18 @@ class _HomePageState extends State<HomePage> {
                                                                     size: 16,
                                                                   );
                                                                 },
-                                                                likeCount: 0,
-                                                                countBuilder: (count, bool isLiked, String text) {
-                                                                  var color = isLiked ? Colors.deepOrange : Colors.grey;
-                                                                  Widget result;
-                                                                  if (count == 0) {
-                                                                    result = Text("Love",
-                                                                      style:textStyle4,);
-                                                                  } else
-                                                                    result = Text(text,
-                                                                      style:textStyle5,
-                                                                    );
-                                                                  return result;
+                                                                isLiked: userController.currentFavorite.value.contains(laptop.productId),
+                                                                onTap: (bool isLiked) async {
+                                                                  if (isLiked){
+                                                                    await userController.deleteFromFavorite(laptop.productId);
+                                                                    await userController.fetchFavoriteList();
+                                                                  }
+                                                                  else{
+                                                                    await userController.addToFavorite(laptop.productId);
+                                                                    await userController.fetchFavoriteList();
+                                                                  }
                                                                 },
-                                                              ),
+                                                              )),
                                                             ]),
                                                       )),
                                                       Expanded(
@@ -437,7 +432,12 @@ class _HomePageState extends State<HomePage> {
                                         .toList() ??
                                     []);
                           } else {
-                            return LinearProgressIndicator();
+                            return const Center(
+                                child: SizedBox(
+                                  height: 7,
+                                  child: LinearProgressIndicator(),
+                                )
+                            );
                           }
                         },
                       ),
