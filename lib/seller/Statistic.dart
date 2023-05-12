@@ -2,23 +2,19 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:ltddnc_nhom04_k19/controller/UserController.dart';
-import '../Styles/color.dart';
-import '../Styles/font_styles.dart';
-import 'package:flutter_bounce/flutter_bounce.dart';
-
-import '../View/buy-item.dart';
-import '../controller/LaptopController.dart';
-import '../controller/OrderController.dart';
-import '../model/Laptop.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class StatisticScreen extends StatefulWidget {
   const StatisticScreen({Key? key}) : super(key: key);
 
   @override
   State<StatisticScreen> createState() => _StatisticScreenState();
+}
+
+class ChartData {
+  ChartData(this.x, this.y);
+  final String x;
+  final double? y;
 }
 
 class _StatisticScreenState extends State<StatisticScreen> {
@@ -38,8 +34,17 @@ class _StatisticScreenState extends State<StatisticScreen> {
     return FlSpot(index.toDouble(), index * Random().nextDouble());
   });
 
+
   @override
   Widget build(BuildContext context) {
+    TooltipBehavior? _tooltipBehavior;
+
+    @override
+    void initState(){
+      _tooltipBehavior =  TooltipBehavior(enable: true);
+      super.initState();
+    }
+
     return Scaffold(
         backgroundColor: const Color(0xffF8F9FA),
         body: Column(children: [
@@ -87,7 +92,10 @@ class _StatisticScreenState extends State<StatisticScreen> {
                 ),
               ],
             ),
-          ),
+          ),       Expanded(
+        child: SingleChildScrollView(
+        child: Column(
+        children: [
           SizedBox( // <-- SEE HERE
               width: 300, child: TextField(
             style: TextStyle(
@@ -168,16 +176,49 @@ class _StatisticScreenState extends State<StatisticScreen> {
               },)],
         ),
           const Text(''),
-        PieChart(PieChartData(
-            centerSpaceRadius: 5,
-            borderData: FlBorderData(show: false),
-            sectionsSpace: 2,
-            sections: [
-              PieChartSectionData(value: 35, color: Colors.purple, radius: 100),
-              PieChartSectionData(value: 40, color: Colors.amber, radius: 100),
-              PieChartSectionData(value: 55, color: Colors.green, radius: 100),
-              PieChartSectionData(value: 70, color: Colors.orange, radius: 100),
-            ]))
+            Center(
+            child: Container(
+                child:
+          SfCartesianChart(
+            // Enables the tooltip for all the series in chart
+              tooltipBehavior: _tooltipBehavior,
+              // Initialize category axis
+              primaryXAxis: CategoryAxis(),
+              series: <ChartSeries>[
+                // Initialize line series
+                LineSeries<ChartData, String>(
+                  // Enables the tooltip for individual series
+                    enableTooltip: true,
+                    dataSource: [
+                      // Bind data source
+                      ChartData('Jan', 35),
+                      ChartData('Feb', 28),
+                      ChartData('Mar', 34),
+                      ChartData('Apr', 32),
+                      ChartData('May', 40),
+                      ChartData('June', 35),
+                      ChartData('July', 28),
+                      ChartData('Aug', 34),
+                      ChartData('Sep', 32),
+                      ChartData('Oct', 40),
+                      ChartData('Nov', 32),
+                      ChartData('Dec', 40)
+                    ],
+                    xValueMapper: (ChartData data, _) => data.x,
+                    yValueMapper: (ChartData data, _) => data.y
+                )
+              ]
+   ))),])))
+        // PieChart(PieChartData(
+        //     centerSpaceRadius: 5,
+        //     borderData: FlBorderData(show: false),
+        //     sectionsSpace: 2,
+        //     sections: [
+        //       PieChartSectionData(value: 35, color: Colors.purple, radius: 100),
+        //       PieChartSectionData(value: 40, color: Colors.amber, radius: 100),
+        //       PieChartSectionData(value: 55, color: Colors.green, radius: 100),
+        //       PieChartSectionData(value: 70, color: Colors.orange, radius: 100),
+        //     ]))
           // Expanded(
           //     child: Padding(
           //         padding:

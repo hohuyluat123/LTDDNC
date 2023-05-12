@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ltddnc_nhom04_k19/SignUp.dart';
+import 'package:ltddnc_nhom04_k19/controller/AddressController.dart';
 import 'package:ltddnc_nhom04_k19/controller/UserController.dart';
 import 'package:ltddnc_nhom04_k19/seller/seller.dart';
 import 'package:ltddnc_nhom04_k19/user/user.dart';
 import 'package:dio/dio.dart';
+import 'controller/LaptopController.dart';
 import 'controller/OrderController.dart';
 import 'model/User.dart';
 
@@ -43,6 +45,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final userController = Get.put(UserController(), tag: "userController");
   final orderController = Get.put(OrderController(), tag: "orderController");
+  final laptopController = Get.put(LaptopController(), tag: "laptopController");
+  final addressController = Get.put(AddressController(), tag: "addressController");
 
   User getCurrentLogin() {
     return userController.currentUser.value;
@@ -189,6 +193,7 @@ class _LoginPageState extends State<LoginPage> {
                     } else {
                       setCurrentLogin(user);
                       if (user.isSeller == true) {
+                        await laptopController.fetchLaptopOfSeller();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -197,6 +202,7 @@ class _LoginPageState extends State<LoginPage> {
                       } else {
                         await orderController.fetchUserOrders();
                         await userController.fetchCartProductId();
+                        await addressController.fetchAddressList();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -220,7 +226,7 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const SignUp()),
+                      MaterialPageRoute(builder: (context) => SignUp()),
                     );
                   },
                 )

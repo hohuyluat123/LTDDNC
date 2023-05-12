@@ -1,13 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ltddnc_nhom04_k19/user/districts.dart';
+import 'package:ltddnc_nhom04_k19/user/nameAddress.dart';
 
 import '../Styles/font_styles.dart';
+import '../controller/AddressController.dart';
 
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-
-import '../user/nameAddress.dart';
 
 class EditAddressScreen extends StatefulWidget {
   const EditAddressScreen({Key? key}) : super(key: key);
@@ -15,37 +16,41 @@ class EditAddressScreen extends StatefulWidget {
   @override
   State<EditAddressScreen> createState() => _EditAddressScreenState();
 }
-List<AddressName> parseAddress(String responseBody) {
-  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-  List<AddressName> x = parsed.map<AddressName>((json) => AddressName.fromJson(json)).toList();
-  print(x.elementAt(0).codename);
-  return parsed.map<AddressName>((json) => AddressName.fromJson(json)).toList();
-}
-
-// Districts parseDistrict(String responseBody) {
-//   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-//   Districts x = parsed.map<Districts>((json) => Districts.fromJson(json));
-//   print(x.codename);
-//   return x;
-// }
-
-
-Future<List<AddressName>> fetchAddress(http.Client client) async {
-  final response = await client
-      .get(Uri.parse('https://provinces.open-api.vn/api/p/'));
-  Future<List<AddressName>> x =  compute(parseAddress, response.body);
-
-  return x;
-}
 
 
 
 class _EditAddressScreenState extends State<EditAddressScreen> {
-
+  final addressController = Get.find<AddressController>(tag: "addressController");
   bool isChecked = false;
+  int proviceCode = -1;
+  int districtCode = -1;
+  String houseNumber = "";
+  var selectedProvice =  "Chọn tỉnh thành".obs;
+  var  selectedDistrict = "Chọn quận huyện".obs;
+  var  selectedWard = "Chọn phường xã".obs;
+
+  void _showDialog(String tittle, String message, BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(tittle),
+          content: Text(message),
+          actions: [
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    // List<AddressName> listAddress =  dio.get("https://provinces.open-api.vn/api/p/");
     Color getColor(Set<MaterialState> states) {
       const Set<MaterialState> interactiveStates = <MaterialState>{
         MaterialState.pressed,
@@ -57,55 +62,6 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
       }
       return Colors.red;
     }
-    // final response =  dio.post("https://provinces.open-api.vn/api/p/");
-    // print(response);
-    // List<AddressName> listAddress =[];
-    // Future<List<AddressName>> getAddress() async {
-    //   try {
-    //     final dio = Dio();
-    //     final response = await dio.post("https://provinces.open-api.vn/api/p/");
-    //     List<AddressName> listAddress = AddressName.parseAddress(response.data);
-    //     return listAddress;
-    //   } on Exception catch (e) {
-    //     print(e);
-    //     return [];
-    //   }
-    //
-    // }
-
-
-
-    String dropdownvalue = "An Giang";
-
-    // List of items in our dropdown menu
-    var items = [
-      'An Giang',
-      'Bắc Giang',
-      'Bến Tre',
-      'Cà Mau',
-      'Bạc Liêu',
-    ];
-
-    String dropdownvalueQ = "Quận 1";
-
-    // List of items in our dropdown menu
-    var itemsQ = [
-      'Quận 1',
-      'Quận 2',
-      'Quận 3',
-      'Quận 4',
-      'Quận 5',
-    ];
-    String dropdownvalueP = 'Phường 1';
-
-    // List of items in our dropdown menu
-    var itemsP = [
-      'Phường 1',
-      'Phường 2',
-      'Phường 3',
-      'Phường 4',
-      'Phường 5',
-    ];
 
     return Scaffold(
         backgroundColor: const Color(0xffF8F9FA),
@@ -160,8 +116,10 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
-
             ),
+            onChanged: (value) {
+              houseNumber = value;
+            },
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText: "Nhập số nhà",
@@ -202,30 +160,26 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                           ),
                         )),
                     Expanded(
-                      child:  DropdownButton(
-
-                        // Initial Value
-                        value: dropdownvalue,
-
-                        // Down Arrow Icon
-                        icon: const Icon(Icons.keyboard_arrow_down),
-
-                        // Array list of items
-                        items: items.map((String items) {
-                          return DropdownMenuItem(
-                            value: items,
-                            child: Text(items),
-                          );
-                        }).toList(),
-                        // After selecting the desired option,it will
-                        // change button value to selected value
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownvalue = newValue!;
+                      child: Obx(() => (  DropdownButton<AddressName>(
+                        hint: Text(selectedProvice.value),
+                        value: null,
+                        onChanged: (AddressName? value) {
+                          selectedProvice.value = value!.name;
+                          setState(() async {
+                            proviceCode = value!.code;
+                            await addressController.fetchDistrictsAddress(proviceCode);
                           });
                         },
-                      ),
-                    )
+                        icon: const Icon(Icons.keyboard_arrow_down),
+                        // Array list of items
+                        items: addressController.provinceList.value.map((items) {
+                          return DropdownMenuItem<AddressName>(
+                            value: items,
+                            child: Text(items.name),
+                          );
+                        }).toList(),
+                      )),
+                    ))
                   ],
                 ),
               ),
@@ -259,30 +213,26 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                           ),
                         )),
                     Expanded(
-                      child:  DropdownButton(
-
-                        // Initial Value
-                        value: dropdownvalueQ,
-
-                        // Down Arrow Icon
-                        icon: const Icon(Icons.keyboard_arrow_down),
-
-                        // Array list of items
-                        items: itemsQ.map((String itemsQ) {
-                          return DropdownMenuItem(
-                            value: itemsQ,
-                            child: Text(itemsQ),
-                          );
-                        }).toList(),
-                        // After selecting the desired option,it will
-                        // change button value to selected value
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownvalue = newValue!;
+                      child:  Obx(() => ( DropdownButton<AddressName>(
+                        hint: Text(selectedDistrict.value),
+                        value: null,
+                        onChanged: (AddressName? value) {
+                          selectedDistrict.value = value!.name;
+                          setState(() async {
+                            districtCode = value!.code;
+                            await addressController.fetchWardAddress(districtCode);
                           });
                         },
-                      ),
-                    )
+                        icon: const Icon(Icons.keyboard_arrow_down),
+                        // Array list of items
+                        items: addressController.districtList.value.map((items) {
+                          return DropdownMenuItem<AddressName>(
+                            value: items,
+                            child: Text(items.name),
+                          );
+                        }).toList(),
+                      ))
+                      )),
                   ],
                 ),
               ),
@@ -311,35 +261,27 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                 "Phường /xã: ",
                                 style: textStyle4,
                               ),
-
                             ],
                           ),
-                        )),
+                        )
+                    ),
                     Expanded(
-                      child:  DropdownButton(
-
-                        // Initial Value
-                        value: dropdownvalueP,
-
-                        // Down Arrow Icon
+                      child: Obx(() => ( DropdownButton<AddressName>(
+                        hint: Text(selectedWard.value),
+                        value: null,
+                        onChanged: (AddressName? value) {
+                          selectedWard.value = value!.name;
+                        },
                         icon: const Icon(Icons.keyboard_arrow_down),
-
                         // Array list of items
-                        items: itemsP.map((String itemsQ) {
-                          return DropdownMenuItem(
-                            value: itemsQ,
-                            child: Text(itemsQ),
+                        items: addressController.wardList.value.map((items) {
+                          return DropdownMenuItem<AddressName>(
+                            value: items,
+                            child: Text(items.name),
                           );
                         }).toList(),
-                        // After selecting the desired option,it will
-                        // change button value to selected value
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownvalue = newValue!;
-                          });
-                        },
-                      ),
-                    )
+                      )),
+                    ))
                   ],
                 ),
               ),
@@ -395,8 +337,10 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
 
                 ],
               ) ,
-                onPressed: () {
-
+                onPressed: () async{
+                    await addressController.addNewAddress("$houseNumber, $selectedWard, $selectedDistrict, $selectedProvice");
+                    await addressController.fetchAddressList();
+                    _showDialog("Success", "Đã thêm địa chỉ mới", context);
                 },),
 
             ])
