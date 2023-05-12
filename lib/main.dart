@@ -6,6 +6,7 @@ import 'package:ltddnc_nhom04_k19/controller/UserController.dart';
 import 'package:ltddnc_nhom04_k19/seller/seller.dart';
 import 'package:ltddnc_nhom04_k19/user/user.dart';
 import 'package:dio/dio.dart';
+import 'ForgetPassword.dart';
 import 'controller/OrderController.dart';
 import 'model/User.dart';
 
@@ -223,6 +224,24 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const SignUp()),
+                    );
+                  },
+                )
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text('Forget password ?'),
+                TextButton(
+                  child: const Text(
+                    'Trợ giúp',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ForgetPassword()),
                     );
                   },
                 )
