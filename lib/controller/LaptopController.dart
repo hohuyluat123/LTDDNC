@@ -10,6 +10,19 @@ class LaptopController extends GetxController {
   var sellerList = <Laptop>[].obs;
   var productList = <Laptop>[].obs;
 
+
+  Future<void> fetchLaptopByFilter(String keyword, String brand, String minPrice, String maxPrice) async {
+    try {
+      final dio = Dio();
+      dio.options.headers["Authorization"] = "Bearer ${userController.currentUser.value.accessToken}";
+      final response = await dio.post("http://$HOST_URL:8000/product/laptop/filter/",
+      data: '{ "name": "$keyword", "brand": "$brand", "minPrice": "$minPrice", "maxPrice": "$maxPrice" }',);
+      productList.value = Laptop.parseLaptops(response.data);
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
+
   Future<void> fetchLaptopOfSeller() async {
     try {
       final dio = Dio();
@@ -52,7 +65,7 @@ class LaptopController extends GetxController {
     dio.options.headers["Authorization"] = "Bearer ${userController.currentUser.value.accessToken}";
     final response = await dio.put(
         "http://$HOST_URL:8000/product/laptop/",
-        data: '{ "productId": "", "quantity": "" }');
+        data: laptop.toJson());
     await fetchLaptopOfSeller();
     return Laptop.fromJson(response.data);
   }

@@ -2,21 +2,23 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
+import '../controller/SearchController.dart';
 
 class Brands extends StatefulWidget {
   const Brands({Key? key}) : super(key: key);
 
   @override
-  State<Brands> createState() => _BrandsState();
+  State<Brands> createState() => BrandsState();
 }
 
-class _BrandsState extends State<Brands> {
+class BrandsState extends State<Brands> {
   int currentIndex = 0;
-  double _startValue =5;
-  double _endValue =25;
+  final searchController = Get.find<SearchController>(tag: "searchController");
   final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class _BrandsState extends State<Brands> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 45, right: 10),
                   child: Text(
-                    "DELL",
+                    "All",
                     style: textStyle3,
                   ),
                 ),
@@ -48,7 +50,53 @@ class _BrandsState extends State<Brands> {
               child: Bounce(
                 onPressed: () {
                   currentIndex = 0;
-                  setState(() {});
+                  setState(() {
+                    searchController.brandName.value = "";
+                  });
+                },
+                duration: const Duration(milliseconds: 200),
+                child:
+                CircleAvatar(
+                  radius: 17,
+                  backgroundColor: Colors.white,
+                  child: Image.asset(
+                    "logos/all.png",
+                    width: currentIndex == 0 ? 24.0 : 24.0,
+                    height: currentIndex == 0 ? 24.0 : 34.0,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        Stack(
+          children: [
+            Visibility(
+              visible: currentIndex == 1,
+              child: AnimatedContainer(
+                height: 44.0,
+                alignment: Alignment.centerRight,
+                decoration: BoxDecoration(
+                    color: customBlue,
+                    borderRadius: BorderRadius.circular(100.0)),
+                duration: const Duration(milliseconds: 1000),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 45, right: 10),
+                  child: Text(
+                    "DELL",
+                    style: textStyle3,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Bounce(
+                onPressed: () {
+                  currentIndex = 1;
+                  setState(() {
+                      searchController.brandName.value = "Dell";
+                  });
                 },
                 duration: const Duration(milliseconds: 200),
                 child:
@@ -71,7 +119,7 @@ class _BrandsState extends State<Brands> {
         Stack(
           children: [
             Visibility(
-              visible: currentIndex == 1,
+              visible: currentIndex == 2,
               child: Container(
                 height: 44.0,
                 alignment: Alignment.centerRight,
@@ -91,8 +139,10 @@ class _BrandsState extends State<Brands> {
               padding: const EdgeInsets.all(5.0),
               child: Bounce(
                 onPressed: () {
-                  currentIndex = 1;
-                  setState(() {});
+                  currentIndex = 2;
+                  setState(() {
+                    searchController.brandName.value = "Asus";
+                  });
                 },
                 duration: const Duration(milliseconds: 200),
                 child:
@@ -115,7 +165,7 @@ class _BrandsState extends State<Brands> {
         Stack(
           children: [
             Visibility(
-              visible: currentIndex == 2,
+              visible: currentIndex == 3,
               child: Container(
                 height: 44.0,
                 alignment: Alignment.centerRight,
@@ -135,8 +185,10 @@ class _BrandsState extends State<Brands> {
               padding: const EdgeInsets.all(5.0),
               child: Bounce(
                 onPressed: () {
-                  currentIndex = 2;
-                  setState(() {});
+                  currentIndex = 3;
+                  setState(() {
+                    searchController.brandName.value = "Acer";
+                  });
                 },
                 duration: const Duration(milliseconds: 200),
                 child:
@@ -159,7 +211,7 @@ class _BrandsState extends State<Brands> {
         Stack(
           children: [
             Visibility(
-              visible: currentIndex == 3,
+              visible: currentIndex == 4,
               child: Container(
                 height: 44.0,
                 alignment: Alignment.centerRight,
@@ -179,8 +231,10 @@ class _BrandsState extends State<Brands> {
               padding: const EdgeInsets.all(5.0),
               child: Bounce(
                 onPressed: () {
-                  currentIndex = 3;
-                  setState(() {});
+                  currentIndex = 4;
+                  setState(() {
+                    searchController.brandName.value = "HP";
+                  });
                 },
                 duration: const Duration(milliseconds: 200),
                 child:
@@ -203,7 +257,7 @@ class _BrandsState extends State<Brands> {
         Stack(
           children: [
             Visibility(
-              visible: currentIndex == 4,
+              visible: currentIndex == 5,
               child: Container(
                 height: 44.0,
                 alignment: Alignment.centerRight,
@@ -223,8 +277,10 @@ class _BrandsState extends State<Brands> {
               padding: const EdgeInsets.all(5.0),
               child: Bounce(
                 onPressed: () {
-                  currentIndex = 4;
-                  setState(() {});
+                  currentIndex = 5;
+                  setState(() {
+                    searchController.brandName.value = "Macbook";
+                  });
                 },
                 duration: const Duration(milliseconds: 200),
                 child:
