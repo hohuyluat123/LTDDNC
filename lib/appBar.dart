@@ -7,9 +7,7 @@ import 'model/User.dart';
 
 class Header extends StatelessWidget implements PreferredSizeWidget {
   String username;
-
   int id;
-
   final userController = Get.find<UserController>(tag: "userController");
 
   Header({Key? key, required this.id, required this.username})

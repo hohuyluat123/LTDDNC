@@ -1,20 +1,20 @@
 class Laptop {
-  final int productId;
-  final String brand;
-  final String diskType;
-  final String capacity;
-  final String color;
-  final String cpu;
-  final String gpu;
-  final String ram;
-  final bool isDelete;
-  final String name;
-  final int price;
-  final int seller;
-  final int sellNumber;
-  final String dateAdded;
-  final String image;
-  final String description;
+  int productId;
+  String brand;
+  String diskType;
+  String capacity;
+  String color;
+  String cpu;
+  String gpu;
+  String ram;
+  bool isDelete;
+  String name;
+  int price;
+  int seller;
+  int sellNumber;
+  String dateAdded;
+  String image;
+  String description;
 
   Laptop({
     required this.productId,
@@ -50,10 +50,13 @@ class Laptop {
       price: json['price'] as int,
       seller: json['seller'] as int,
       sellNumber: json['sellNumber'] as int,
-      dateAdded: json['dateAdded'] as String,
+      dateAdded: json['dateAdded'].toString() as String,
       image: json['image'] as String,
       description: json['description'] as String,
     );
+  }
+  String toJson() {
+    return '{ "brand": "$brand", "diskType": "$diskType", "capacity": "$capacity", "CPU": "$cpu", "GPU": "$gpu", "RAM": "$ram", "color": "$color", "name": "$name", "price": $price, "sellNumber": $sellNumber,"image": "$image","description": "$description"}';
   }
 
   static List<Laptop> parseLaptops(List<dynamic> responseBody) {

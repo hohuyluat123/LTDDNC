@@ -53,15 +53,15 @@ class _PriceState extends State<Price> {
             max: 30.0,
             divisions: 5,
             labels: RangeLabels(
-              _startValue.round().toString() + 'Triệu',
-              _endValue.round().toString() + 'Triệu',
+              _startValue.round().toString() + ' Triệu',
+              _endValue.round().toString() + ' Triệu',
             ),
             values: RangeValues(_startValue , _endValue ),
             onChanged: (values) {
               setState(() {
                 _startValue = values.start ;
                 _endValue = values.end ;
-                _controller.text = ' $_startValue Triệu - $_endValue Triệu';
+                _controller.text = ' $_startValue - $_endValue Triệu';
               });
             },
           ),
