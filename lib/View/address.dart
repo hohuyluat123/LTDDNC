@@ -147,7 +147,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                           fillColor:
                                               MaterialStateProperty.resolveWith(
                                                   getColor),
-                                          value: isChecked,
+                                          value: false,
                                           onChanged: (bool? value) {
                                             setState(() {
                                               isChecked = value!;
