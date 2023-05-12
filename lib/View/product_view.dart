@@ -138,7 +138,7 @@ class _ProductViewState extends State<ProductView> {
                           Image.network(
                             snapshot.data!.image,
                             width: double.infinity,
-                            height: 200,
+                            height: 100,
                           ),
                         ],
                       ),
