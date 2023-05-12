@@ -49,7 +49,7 @@ class _StatisticScreenState extends State<StatisticScreen> {
         backgroundColor: const Color(0xffF8F9FA),
         body: Column(children: [
           const SizedBox(
-            height: 50,
+            height: 20,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -146,7 +146,7 @@ class _StatisticScreenState extends State<StatisticScreen> {
                 value: value,
                 child: Text(
                   value,
-                  style: TextStyle(fontSize: 30),
+                  style: TextStyle(fontSize: 16),
                 ),
               );
             }).toList(),

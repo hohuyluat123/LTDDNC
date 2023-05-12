@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:ltddnc_nhom04_k19/View/home_page.dart';
+import 'package:ltddnc_nhom04_k19/View/profile.dart';
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
+import 'card_screen.dart';
 import 'home_page.dart';
+import 'notifications_screen.dart';
 
 class FavouriteScreen extends StatefulWidget {
   const FavouriteScreen({super.key});
@@ -13,16 +16,23 @@ class FavouriteScreen extends StatefulWidget {
 }
 
 class _FavouriteScreenState extends State<FavouriteScreen> {
+  int navigationIndex = 0;
+
+  setBottomBarIndex(index) {
+    setState(() {
+      navigationIndex = index;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color(0xffF8F9FA),
         body: Column(children: [
           const SizedBox(
-            height: 50,
+            height: 10,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+          SizedBox(
+            height: 20,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -66,7 +76,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
           ),
           Expanded(
               child: Padding(
-                  padding: const EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
+                  padding: const EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
                   child: SingleChildScrollView(
                       child: Column(
                           children: [
@@ -216,6 +226,109 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                   )
                               ],
                             )]))))
-        ]));
+        ]),
+      resizeToAvoidBottomInset: false,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(top: 70.0),
+        child: SizedBox(
+          width: 56.0,
+          height: 56.0,
+          child: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CartScreen()),
+              );
+            },
+            backgroundColor: customBlue,
+            elevation: 10,
+            child: Image.asset(
+              "assets/icons/bag_ic.png",
+              width: 20.0,
+              height: 20.0,
+            ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        width: double.infinity,
+        height: 100,
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/images/bottomnav_bg.png"),
+                fit: BoxFit.fitWidth)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 30.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                InkWell(
+                  onTap: () {
+                    navigationIndex = 0;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage()),
+                    );
+                  },
+                  child: Image.asset("assets/icons/home_ic.png",
+                      width: 25,
+                      height: 25,
+                      color: navigationIndex == 0 ? customBlue : customGrey),
+                ),
+                InkWell(
+                  onTap: () {
+                    navigationIndex = 1;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const FavouriteScreen()),
+                    );
+                  },
+                  child: Image.asset("assets/icons/favourite_ic.png",
+                      width: 25,
+                      height: 25,
+                      color: navigationIndex == 1 ? customBlue : customGrey),
+                ),
+                const SizedBox(
+                  width: 60.0,
+                ),
+                InkWell(
+                  onTap: () {
+                    navigationIndex = 2;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const NotificationsScreen()),
+                    );
+                  },
+                  child: Image.asset("assets/icons/notify_ic.png",
+                      width: 25,
+                      height: 25,
+                      color: navigationIndex == 2 ? customBlue : customGrey),
+                ),
+                InkWell(
+                  onTap: () {
+                    navigationIndex = 3;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ProfileScreen()),
+                    );
+                  },
+                  child: Image.asset("assets/icons/user_ic.png",
+                      width: 25,
+                      height: 25,
+                      color: navigationIndex == 3 ? customBlue : customGrey),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),);
   }
 }
