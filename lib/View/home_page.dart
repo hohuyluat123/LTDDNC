@@ -47,6 +47,7 @@ class _HomePageState extends State<HomePage> {
         height: double.infinity,
         color: bgWhite,
         child: Padding(
+
           padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
           child: Column(
             children: [
@@ -269,14 +270,10 @@ class _HomePageState extends State<HomePage> {
                         height: 10.0,
                       ),
                       Container(
-                        color: Colors.lightBlueAccent,
+                        color: Colors.white,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(
-                              Icons.shopping_cart_outlined,
-                              color: Colors.black,
-                            ),
                             Text(
                               "TOP SELLER",
                               style: textStyle4,
@@ -329,16 +326,13 @@ class _HomePageState extends State<HomePage> {
                         height: 10.0,
                       ),
                       Container(
-                        color: Colors.lightBlueAccent,
+                        color: Colors.white,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(
-                              Icons.newspaper,
-                              color: Colors.black,
-                            ),
+
                             Text(
-                              "Sản phẩm mới",
+                              "SẢN PHẨM MỚI",
                               style: textStyle4,
                             ),
                             TextButton(
@@ -375,7 +369,7 @@ class _HomePageState extends State<HomePage> {
                                                 onTap: () {},
                                                 child: Container(
                                                     width: double.infinity,
-                                                    height: 160,
+                                                    height: 165,
                                                     decoration: BoxDecoration(
                                                         borderRadius:BorderRadius.circular(16.0),
                                                         color: Colors.white),
@@ -397,32 +391,61 @@ class _HomePageState extends State<HomePage> {
                                                                 style:textStyle4,
                                                               ),
                                                               Text(''),
-                                                              LikeButton(
-                                                                size: 16,
-                                                                circleColor: CircleColor(start: Color(0xff00ddff),end: Color(0xff0099cc)),
-                                                                bubblesColor:BubblesColor(dotPrimaryColor:Color(0xff33b5e5),dotSecondaryColor:Color(0xff0099cc),
+
+                                                              Positioned(
+                                                                bottom: 0,
+                                                                right: 0,
+                                                                child: Bounce(
+                                                                  onPressed: () {},
+                                                                  duration: const Duration(milliseconds: 500),
+                                                                  child: Row(children: [
+                                                                    Container(
+                                                                      width: 34.0,
+                                                                      height: 34.0,
+                                                                      decoration: BoxDecoration(
+                                                                        color: customBlue,
+                                                                        borderRadius: const BorderRadius.only(
+                                                                            topLeft: Radius.circular(20.0),
+                                                                            bottomRight: Radius.circular(16.0)),
+                                                                      ),
+                                                                      child: TextButton(
+                                                                        style: TextButton.styleFrom(
+                                                                          backgroundColor: Colors.blueAccent, // background
+                                                                          foregroundColor: Colors.white, // foreground
+                                                                        ),
+                                                                        child: Icon(Icons.add),
+                                                                        onPressed: () async {
+
+                                                                        },
+                                                                      )
+                                                                  ), SizedBox(width: 70,),LikeButton(
+                                                                      size: 16,
+                                                                      circleColor: CircleColor(start: Color(0xff00ddff),end: Color(0xff0099cc)),
+                                                                      bubblesColor:BubblesColor(dotPrimaryColor:Color(0xff33b5e5),dotSecondaryColor:Color(0xff0099cc),
+                                                                      ),
+                                                                      likeBuilder: (bool isLiked) {
+                                                                        return Icon(
+                                                                          Icons.favorite,
+                                                                          color: isLiked ? Colors.deepOrange: Colors.grey,
+                                                                          size: 16,
+                                                                        );
+                                                                      },
+                                                                      likeCount: 0,
+                                                                      countBuilder: (count, bool isLiked, String text) {
+                                                                        var color = isLiked ? Colors.deepOrange : Colors.grey;
+                                                                        Widget result;
+                                                                        if (count == 0) {
+                                                                          result = Text("Love",
+                                                                            style:textStyle4,);
+                                                                        } else
+                                                                          result = Text(text,
+                                                                            style:textStyle5,
+                                                                          );
+                                                                        return result;
+                                                                      },
+                                                                    ),],),
                                                                 ),
-                                                                likeBuilder: (bool isLiked) {
-                                                                  return Icon(
-                                                                    Icons.favorite,
-                                                                    color: isLiked ? Colors.deepOrange: Colors.grey,
-                                                                    size: 16,
-                                                                  );
-                                                                },
-                                                                likeCount: 0,
-                                                                countBuilder: (count, bool isLiked, String text) {
-                                                                  var color = isLiked ? Colors.deepOrange : Colors.grey;
-                                                                  Widget result;
-                                                                  if (count == 0) {
-                                                                    result = Text("Love",
-                                                                      style:textStyle4,);
-                                                                  } else
-                                                                    result = Text(text,
-                                                                      style:textStyle5,
-                                                                    );
-                                                                  return result;
-                                                                },
-                                                              ),
+                                                              )
                                                             ]),
                                                       )),
                                                       Expanded(
@@ -430,6 +453,7 @@ class _HomePageState extends State<HomePage> {
                                                               width: double.infinity,
                                                               height: double.infinity,
                                                               child: Image.network(laptop.image))),
+
                                                     ])))))
                                         .toList() ??
                                     []);

@@ -118,6 +118,7 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             const SizedBox(
               width: double.infinity,
+
               height: 50.0,
               child: Brands(),
             ),
