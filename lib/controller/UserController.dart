@@ -15,6 +15,20 @@ class UserController extends GetxController {
           isSeller: false).obs;
   var currentCart = <String>[].obs;
 
+  Future<int?> register(String name, String phoneNumber, String email, String password) async {
+    final dio = Dio();
+    final response = await dio.post(
+        "http://$HOST_URL:8000/auth/register",
+      data: '{ "name": "$name", "phoneNumber": "$phoneNumber", "email": "$email", "password": "$password" }',
+        options: Options(
+          followRedirects: false,
+          validateStatus: (status) {
+            return status! < 500;
+          },
+        ));
+    return response.statusCode;
+  }
+
   Future<void> fetchCartProductId() async {
     final dio = Dio();
     dio.options.headers["Authorization"] = "Bearer ${currentUser.value.accessToken}";

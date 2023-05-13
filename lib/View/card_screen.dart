@@ -30,8 +30,7 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   final orderController = Get.find<OrderController>(tag: "orderController");
   final userController = Get.find<UserController>(tag: "userController");
-  bool isChecked = false;
-  int navigationIndex = 0;
+  final laptopController = Get.find<LaptopController>(tag: "laptopController");
 
   setBottomBarIndex(index) {
     setState(() {
@@ -416,7 +415,7 @@ class _CartScreenState extends State<CartScreen> {
                                                     BorderRadius.circular(16.0),
                                                 color: Colors.white),
                                             child: FutureBuilder<Laptop>(
-                                              future: LaptopController
+                                              future: laptopController
                                                   .fetchLaptopByProductId(
                                                       order.product),
                                               builder: (context, snapshot) {
@@ -556,7 +555,7 @@ class _CartScreenState extends State<CartScreen> {
                                                     BorderRadius.circular(16.0),
                                                 color: Colors.white),
                                             child: FutureBuilder<Laptop>(
-                                              future: LaptopController
+                                              future: laptopController
                                                   .fetchLaptopByProductId(
                                                       order.product),
                                               builder: (context, snapshot) {
@@ -696,7 +695,7 @@ class _CartScreenState extends State<CartScreen> {
                                                     BorderRadius.circular(16.0),
                                                 color: Colors.white),
                                             child: FutureBuilder<Laptop>(
-                                              future: LaptopController
+                                              future: laptopController
                                                   .fetchLaptopByProductId(
                                                       order.product),
                                               builder: (context, snapshot) {
@@ -836,7 +835,7 @@ class _CartScreenState extends State<CartScreen> {
                                                     BorderRadius.circular(16.0),
                                                 color: Colors.white),
                                             child: FutureBuilder<Laptop>(
-                                              future: LaptopController
+                                              future: laptopController
                                                   .fetchLaptopByProductId(
                                                       order.product),
                                               builder: (context, snapshot) {

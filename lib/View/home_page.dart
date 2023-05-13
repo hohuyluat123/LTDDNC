@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ltddnc_nhom04_k19/View/price.dart';
 import 'package:ltddnc_nhom04_k19/View/profile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -31,6 +33,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int navigationIndex = 0;
+  final laptopController = Get.find<LaptopController>(tag: "laptopController");
 
   setBottomBarIndex(index) {
     setState(() {
@@ -190,7 +193,7 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(
                 width: double.infinity,
-                height: 50.0,
+                height: 150.0,
                 child: Price(),
               ),
               ButtonBar(
@@ -301,7 +304,7 @@ class _HomePageState extends State<HomePage> {
                         height: 200.0,
                         child: FutureBuilder<List<Laptop>>(
                           future:
-                              LaptopController.fetchLaptopByOrder("dateAdded"),
+                          laptopController.fetchLaptopByOrder("dateAdded"),
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
                               return Center(
@@ -359,7 +362,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       FutureBuilder<List<Laptop>>(
                         future:
-                            LaptopController.fetchLaptopByOrder("dateAdded"),
+                        laptopController.fetchLaptopByOrder("dateAdded"),
                         builder: (context, snapshot) {
                           if (snapshot.hasError) {
                             return Center(
