@@ -171,48 +171,58 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   )),
-              const SizedBox(
-                height: 20.0,
-              ),
-              const SizedBox(
-                width: double.infinity,
-                height: 50.0,
-                child: Brands(),
-              ),
-              const SizedBox(
-                height: 20.0,
-              ),
-              const SizedBox(
-                width: double.infinity,
-                height: 50.0,
-                child: Price(),
-              ),
-              ButtonBar(
-                alignment: MainAxisAlignment.start,
-                buttonPadding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                children: [
-                  ElevatedButton(
-                    child: Row(
+              Visibility(
+                maintainSize: true,
+                maintainAnimation: true,
+                maintainState: true,
+                visible: true,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    const SizedBox(
+                      width: double.infinity,
+                      height: 50.0,
+                      child: Brands(),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    const SizedBox(
+                      width: double.infinity,
+                      height: 50.0,
+                      child: Price(),
+                    ),
+                    ButtonBar(
+                      alignment: MainAxisAlignment.start,
+                      buttonPadding:
+                          const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       children: [
-                        Icon(Icons.filter_alt),
-                        Text("Lọc sản phẩm"),
+                        ElevatedButton(
+                          child: Row(
+                            children: [
+                              Icon(Icons.filter_alt),
+                              Text("Lọc sản phẩm"),
+                            ],
+                          ),
+                          onPressed: () async {
+                            await laptopController.fetchLaptopByFilter(
+                                keyword,
+                                searchController.brandName.value,
+                                searchController.minPrice.value,
+                                searchController.maxPrice.value);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SearchScreen()),
+                            );
+                          },
+                        )
                       ],
                     ),
-                    onPressed: () async {
-                      await laptopController.fetchLaptopByFilter(
-                          keyword,
-                          searchController.brandName.value,
-                          searchController.minPrice.value,
-                          searchController.maxPrice.value);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SearchScreen()),
-                      );
-                    },
-                  )
-                ],
+                  ],
+                ),
               ),
               Expanded(
                 child: SingleChildScrollView(
@@ -287,6 +297,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                             TextButton(
                                 onPressed: () {
+                                  searchController.brandName.value = "";
+                                  searchController.minPrice.value = "";
+                                  searchController.maxPrice.value = "";
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -351,6 +364,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                             TextButton(
                                 onPressed: () {
+                                  searchController.brandName.value = "";
+                                  searchController.minPrice.value = "";
+                                  searchController.maxPrice.value = "";
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(

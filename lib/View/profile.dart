@@ -121,11 +121,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontSize: 15,
                           fontWeight: FontWeight.bold),
                     )),
-                const Positioned(
+                Positioned(
                     bottom: 0,
                     left: 5,
                     child: Text(
-                      'Huy Luật',
+                      userController.currentUser.value.name,
                       style: TextStyle(
                           color: Colors.blue,
                           fontSize: 24,
