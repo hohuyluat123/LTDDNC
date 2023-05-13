@@ -30,8 +30,10 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   final orderController = Get.find<OrderController>(tag: "orderController");
   final userController = Get.find<UserController>(tag: "userController");
-  bool isChecked = false;
+  final laptopController = Get.find<LaptopController>(tag: "laptopController");
+
   int navigationIndex = 0;
+
 
   setBottomBarIndex(index) {
     setState(() {
@@ -56,48 +58,6 @@ class _CartScreenState extends State<CartScreen> {
         body: Column(
             children: [
               Obx(() =>
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 10),
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: [
-          //       InkWell(
-          //         onTap: () {
-          //           Navigator.pop(context);
-          //         },
-          //         child: Container(
-          //           width: 45,
-          //           height: 45,
-          //           decoration: BoxDecoration(
-          //             color: Colors.white,
-          //             borderRadius: BorderRadius.circular(30.0),
-          //             image: const DecorationImage(
-          //               image: AssetImage("assets/icons/back_ic.png"),
-          //               fit: BoxFit.cover,
-          //             ),
-          //           ),
-          //         ),
-          //       ),
-          //       const Text(
-          //         'Cart',
-          //         style: TextStyle(
-          //             color: Colors.black,
-          //             fontSize: 16,
-          //             fontWeight: FontWeight.w500),
-          //       ),
-          //       InkWell(
-          //         child: Container(
-          //           width: 45,
-          //           height: 45,
-          //           decoration: BoxDecoration(
-          //             color: Colors.white,
-          //             borderRadius: BorderRadius.circular(30.0),
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
           Expanded(
               child: Padding(
                   padding:
@@ -152,7 +112,7 @@ class _CartScreenState extends State<CartScreen> {
                                                                                 BorderRadius.circular(16.0),
                                                                             color: Colors.white),
                                                                         child: FutureBuilder<Laptop>(
-                                                                          future: LaptopController
+                                                                          future: laptopController
                                                                               .fetchLaptopByProductId(
                                                                                   jsonDecode(cartItem)[
                                                                                       'productId']),
@@ -163,6 +123,7 @@ class _CartScreenState extends State<CartScreen> {
                                                                                     "${snapshot.error}"),
                                                                               );
                                                                             } else if (snapshot.hasData) {
+                                                                              int index = userController.currentCart.value.indexOf(cartItem);
                                                                               return Row(
                                                                                 children: [
                                                                                   Expanded(
@@ -275,16 +236,15 @@ class _CartScreenState extends State<CartScreen> {
                                                                                         ),
                                                                                         Expanded(
                                                                                           child:  ListTile(
-
                                                                                             selectedTileColor: Colors.black26,
                                                                                             minLeadingWidth: 25,
                                                                                             leading: Checkbox(
                                                                                               checkColor: Colors.white,
                                                                                               fillColor: MaterialStateProperty.resolveWith(getColor),
-                                                                                              value: isChecked,
+                                                                                              value: userController.isCheckedCartItem.value[index],
                                                                                               onChanged: (bool? value) {
                                                                                                 setState(() {
-                                                                                                  isChecked = value!;
+                                                                                                  userController.isCheckedCartItem.value[index] = value!;
                                                                                                 });
                                                                                               },
                                                                                             ),
@@ -311,7 +271,12 @@ class _CartScreenState extends State<CartScreen> {
                                                                                 ],
                                                                               );
                                                                             } else {
-                                                                              return LinearProgressIndicator();
+                                                                              return const Center(
+                                                                                  child: SizedBox(
+                                                                                    height: 7,
+                                                                                    child: LinearProgressIndicator(),
+                                                                                  )
+                                                                              );
                                                                             }
                                                                           },
                                                                         ),
@@ -416,7 +381,7 @@ class _CartScreenState extends State<CartScreen> {
                                                     BorderRadius.circular(16.0),
                                                 color: Colors.white),
                                             child: FutureBuilder<Laptop>(
-                                              future: LaptopController
+                                              future: laptopController
                                                   .fetchLaptopByProductId(
                                                       order.product),
                                               builder: (context, snapshot) {
@@ -527,7 +492,12 @@ class _CartScreenState extends State<CartScreen> {
                                                     ],
                                                   );
                                                 } else {
-                                                  return LinearProgressIndicator();
+                                                  return const Center(
+                                                      child: SizedBox(
+                                                        height: 7,
+                                                        child: LinearProgressIndicator(),
+                                                      )
+                                                  );
                                                 }
                                               },
                                             ),
@@ -556,7 +526,7 @@ class _CartScreenState extends State<CartScreen> {
                                                     BorderRadius.circular(16.0),
                                                 color: Colors.white),
                                             child: FutureBuilder<Laptop>(
-                                              future: LaptopController
+                                              future: laptopController
                                                   .fetchLaptopByProductId(
                                                       order.product),
                                               builder: (context, snapshot) {
@@ -667,7 +637,12 @@ class _CartScreenState extends State<CartScreen> {
                                                     ],
                                                   );
                                                 } else {
-                                                  return LinearProgressIndicator();
+                                                  return const Center(
+                                                      child: SizedBox(
+                                                        height: 7,
+                                                        child: LinearProgressIndicator(),
+                                                      )
+                                                  );
                                                 }
                                               },
                                             ),
@@ -696,7 +671,7 @@ class _CartScreenState extends State<CartScreen> {
                                                     BorderRadius.circular(16.0),
                                                 color: Colors.white),
                                             child: FutureBuilder<Laptop>(
-                                              future: LaptopController
+                                              future: laptopController
                                                   .fetchLaptopByProductId(
                                                       order.product),
                                               builder: (context, snapshot) {
@@ -807,7 +782,12 @@ class _CartScreenState extends State<CartScreen> {
                                                     ],
                                                   );
                                                 } else {
-                                                  return LinearProgressIndicator();
+                                                  return const Center(
+                                                      child: SizedBox(
+                                                        height: 7,
+                                                        child: LinearProgressIndicator(),
+                                                      )
+                                                  );
                                                 }
                                               },
                                             ),
@@ -836,7 +816,7 @@ class _CartScreenState extends State<CartScreen> {
                                                     BorderRadius.circular(16.0),
                                                 color: Colors.white),
                                             child: FutureBuilder<Laptop>(
-                                              future: LaptopController
+                                              future: laptopController
                                                   .fetchLaptopByProductId(
                                                       order.product),
                                               builder: (context, snapshot) {
@@ -947,7 +927,12 @@ class _CartScreenState extends State<CartScreen> {
                                                     ],
                                                   );
                                                 } else {
-                                                  return LinearProgressIndicator();
+                                                  return const Center(
+                                                      child: SizedBox(
+                                                        height: 7,
+                                                        child: LinearProgressIndicator(),
+                                                      )
+                                                  );
                                                 }
                                               },
                                             ),

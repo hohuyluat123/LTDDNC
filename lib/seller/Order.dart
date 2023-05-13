@@ -25,6 +25,7 @@ class OrderScreen extends StatefulWidget {
 class _OrderScreenState extends State<OrderScreen> {
   final orderController = Get.find<OrderController>(tag: "orderController");
   final userController = Get.find<UserController>(tag: "userController");
+  final laptopController = Get.find<LaptopController>(tag: "laptopController");
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +118,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                                 BorderRadius.circular(16.0),
                                                 color: Colors.white),
                                             child: FutureBuilder<Laptop>(
-                                              future: LaptopController
+                                              future: laptopController
                                                   .fetchLaptopByProductId(
                                                   order.product),
                                               builder: (context, snapshot) {
@@ -228,7 +229,12 @@ class _OrderScreenState extends State<OrderScreen> {
                                                     ],
                                                   );
                                                 } else {
-                                                  return LinearProgressIndicator();
+                                                  return const Center(
+                                                      child: SizedBox(
+                                                        height: 7,
+                                                        child: LinearProgressIndicator(),
+                                                      )
+                                                  );
                                                 }
                                               },
                                             ),
@@ -257,7 +263,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                                 BorderRadius.circular(16.0),
                                                 color: Colors.white),
                                             child: FutureBuilder<Laptop>(
-                                              future: LaptopController
+                                              future: laptopController
                                                   .fetchLaptopByProductId(
                                                   order.product),
                                               builder: (context, snapshot) {
@@ -368,7 +374,12 @@ class _OrderScreenState extends State<OrderScreen> {
                                                     ],
                                                   );
                                                 } else {
-                                                  return LinearProgressIndicator();
+                                                  return const Center(
+                                                      child: SizedBox(
+                                                        height: 7,
+                                                        child: LinearProgressIndicator(),
+                                                      )
+                                                  );
                                                 }
                                               },
                                             ),
@@ -397,7 +408,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                                 BorderRadius.circular(16.0),
                                                 color: Colors.white),
                                             child: FutureBuilder<Laptop>(
-                                              future: LaptopController
+                                              future: laptopController
                                                   .fetchLaptopByProductId(
                                                   order.product),
                                               builder: (context, snapshot) {
@@ -508,7 +519,12 @@ class _OrderScreenState extends State<OrderScreen> {
                                                     ],
                                                   );
                                                 } else {
-                                                  return LinearProgressIndicator();
+                                                  return const Center(
+                                                      child: SizedBox(
+                                                        height: 7,
+                                                        child: LinearProgressIndicator(),
+                                                      )
+                                                  );
                                                 }
                                               },
                                             ),
@@ -537,7 +553,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                                 BorderRadius.circular(16.0),
                                                 color: Colors.white),
                                             child: FutureBuilder<Laptop>(
-                                              future: LaptopController
+                                              future: laptopController
                                                   .fetchLaptopByProductId(
                                                   order.product),
                                               builder: (context, snapshot) {
@@ -648,7 +664,12 @@ class _OrderScreenState extends State<OrderScreen> {
                                                     ],
                                                   );
                                                 } else {
-                                                  return LinearProgressIndicator();
+                                                  return const Center(
+                                                      child: SizedBox(
+                                                        height: 7,
+                                                        child: LinearProgressIndicator(),
+                                                      )
+                                                  );
                                                 }
                                               },
                                             ),

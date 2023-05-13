@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ltddnc_nhom04_k19/View/address.dart';
 import 'package:ltddnc_nhom04_k19/View/card_screen.dart';
 import 'package:ltddnc_nhom04_k19/View/favourite_screen.dart';
@@ -7,6 +9,10 @@ import 'package:ltddnc_nhom04_k19/View/notifications_screen.dart';
 import 'package:ltddnc_nhom04_k19/main.dart';
 
 import '../Styles/color.dart';
+
+import '../controller/UserController.dart';
+import '../main.dart';
+import '../model/User.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -17,6 +23,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   int _counter = 0;
+  final userController = Get.find<UserController>(tag: "userController");
 
   void _incrementCounter() {
     setState(() {
@@ -114,11 +121,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontSize: 15,
                           fontWeight: FontWeight.bold),
                     )),
-                const Positioned(
+                Positioned(
                     bottom: 0,
                     left: 5,
                     child: Text(
-                      'Huy Luật',
+                      userController.currentUser.value.name,
                       style: TextStyle(
                           color: Colors.blue,
                           fontSize: 24,
@@ -204,11 +211,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           leading: Icon(Icons.lock_open),
           title:Text('Đăng xuất'),
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const MyApp()),
-            );
+            userController.currentUser.value = User(
+                accountId: -1,
+                name: "name",
+                accessToken: "accessToken",
+                refreshToken: "refreshToken",
+                isSeller: false);
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => LoginPage()));
           },
         ),
 

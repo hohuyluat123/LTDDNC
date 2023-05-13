@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ltddnc_nhom04_k19/View/price.dart';
 import 'package:ltddnc_nhom04_k19/View/profile.dart';
 
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
+import '../controller/LaptopController.dart';
+import '../controller/SearchController.dart';
+import '../controller/UserController.dart';
 import 'brands.dart';
 import 'card_screen.dart';
 import 'favourite_screen.dart';
@@ -38,8 +43,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomePage()),
+                      MaterialPageRoute(builder: (context) => const HomePage()),
                     );
                   },
                   child: Container(
@@ -75,9 +79,7 @@ class _SearchScreenState extends State<SearchScreen> {
               ],
             ),
           ),
-        Expanded(
-          child: Padding(
-              padding: const EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
+          Expanded(
               child: SingleChildScrollView(
           child: Column(
           children: [

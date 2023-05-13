@@ -2,21 +2,22 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
+import '../controller/SearchController.dart';
 
 class Brands extends StatefulWidget {
   const Brands({Key? key}) : super(key: key);
 
   @override
-  State<Brands> createState() => _BrandsState();
+  State<Brands> createState() => BrandsState();
 }
 
-class _BrandsState extends State<Brands> {
-  int currentIndex = 0;
-  double _startValue =5;
-  double _endValue =25;
+class BrandsState extends State<Brands> {
+  final searchController = Get.find<SearchController>(tag: "searchController");
   final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,51 @@ class _BrandsState extends State<Brands> {
         Stack(
           children: [
             Visibility(
-              visible: currentIndex == 0,
+              visible: searchController.brandIndex.value == 0,
+              child: AnimatedContainer(
+                height: 44.0,
+                alignment: Alignment.centerRight,
+                decoration: BoxDecoration(
+                    color: customBlue,
+                    borderRadius: BorderRadius.circular(100.0)),
+                duration: const Duration(milliseconds: 1000),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 45, right: 10),
+                  child: Text(
+                    "All",
+                    style: textStyle3,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Bounce(
+                onPressed: () {
+                  searchController.brandIndex.value = 0;
+                  setState(() {
+                    searchController.brandName.value = "";
+                  });
+                },
+                duration: const Duration(milliseconds: 200),
+                child:
+                CircleAvatar(
+                  radius: 17,
+                  backgroundColor: Colors.white,
+                  child: Image.asset(
+                    "logos/all.png",
+                    width: searchController.brandIndex.value == 0 ? 24.0 : 24.0,
+                    height: searchController.brandIndex.value == 0 ? 24.0 : 34.0,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        Stack(
+          children: [
+            Visibility(
+              visible: searchController.brandIndex.value == 1,
               child: AnimatedContainer(
                 height: 44.0,
                 alignment: Alignment.centerRight,
@@ -47,8 +92,10 @@ class _BrandsState extends State<Brands> {
               padding: const EdgeInsets.all(5.0),
               child: Bounce(
                 onPressed: () {
-                  currentIndex = 0;
-                  setState(() {});
+                  searchController.brandIndex.value = 1;
+                  setState(() {
+                      searchController.brandName.value = "Dell";
+                  });
                 },
                 duration: const Duration(milliseconds: 200),
                 child:
@@ -57,8 +104,8 @@ class _BrandsState extends State<Brands> {
                   backgroundColor: Colors.white,
                   child: Image.asset(
                     "assets/logos/dell.png",
-                    width: currentIndex == 0 ? 24.0 : 24.0,
-                    height: currentIndex == 0 ? 24.0 : 34.0,
+                    width: searchController.brandIndex.value == 0 ? 24.0 : 24.0,
+                    height: searchController.brandIndex.value == 0 ? 24.0 : 34.0,
                   ),
                 ),
               ),
@@ -71,7 +118,7 @@ class _BrandsState extends State<Brands> {
         Stack(
           children: [
             Visibility(
-              visible: currentIndex == 1,
+              visible: searchController.brandIndex.value == 2,
               child: Container(
                 height: 44.0,
                 alignment: Alignment.centerRight,
@@ -91,8 +138,10 @@ class _BrandsState extends State<Brands> {
               padding: const EdgeInsets.all(5.0),
               child: Bounce(
                 onPressed: () {
-                  currentIndex = 1;
-                  setState(() {});
+                  searchController.brandIndex.value = 2;
+                  setState(() {
+                    searchController.brandName.value = "Asus";
+                  });
                 },
                 duration: const Duration(milliseconds: 200),
                 child:
@@ -101,8 +150,8 @@ class _BrandsState extends State<Brands> {
                   backgroundColor: Colors.white,
                   child: Image.asset(
                     "assets/logos/asus.png",
-                    width: currentIndex == 1 ? 24.0 : 24.0,
-                    height: currentIndex == 1 ? 24.0 : 34.0,
+                    width: searchController.brandIndex.value == 1 ? 24.0 : 24.0,
+                    height: searchController.brandIndex.value == 1 ? 24.0 : 34.0,
                   ),
                 ),
               ),
@@ -115,7 +164,7 @@ class _BrandsState extends State<Brands> {
         Stack(
           children: [
             Visibility(
-              visible: currentIndex == 2,
+              visible: searchController.brandIndex.value == 3,
               child: Container(
                 height: 44.0,
                 alignment: Alignment.centerRight,
@@ -135,8 +184,10 @@ class _BrandsState extends State<Brands> {
               padding: const EdgeInsets.all(5.0),
               child: Bounce(
                 onPressed: () {
-                  currentIndex = 2;
-                  setState(() {});
+                  searchController.brandIndex.value = 3;
+                  setState(() {
+                    searchController.brandName.value = "Acer";
+                  });
                 },
                 duration: const Duration(milliseconds: 200),
                 child:
@@ -145,8 +196,8 @@ class _BrandsState extends State<Brands> {
                   backgroundColor: Colors.white,
                   child: Image.asset(
                     "assets/logos/acer.png",
-                    width: currentIndex == 2 ? 24.0 : 24.0,
-                    height: currentIndex == 2 ? 24.0 : 34.0,
+                    width: searchController.brandIndex.value == 2 ? 24.0 : 24.0,
+                    height: searchController.brandIndex.value == 2 ? 24.0 : 34.0,
                   ),
                 ),
               ),
@@ -159,7 +210,7 @@ class _BrandsState extends State<Brands> {
         Stack(
           children: [
             Visibility(
-              visible: currentIndex == 3,
+              visible: searchController.brandIndex.value == 4,
               child: Container(
                 height: 44.0,
                 alignment: Alignment.centerRight,
@@ -179,8 +230,10 @@ class _BrandsState extends State<Brands> {
               padding: const EdgeInsets.all(5.0),
               child: Bounce(
                 onPressed: () {
-                  currentIndex = 3;
-                  setState(() {});
+                  searchController.brandIndex.value = 4;
+                  setState(() {
+                    searchController.brandName.value = "HP";
+                  });
                 },
                 duration: const Duration(milliseconds: 200),
                 child:
@@ -189,8 +242,8 @@ class _BrandsState extends State<Brands> {
                   backgroundColor: Colors.black,
                   child: Image.asset(
                     "assets/logos/HP.png",
-                    width: currentIndex == 3 ? 24.0 : 24.0,
-                    height: currentIndex == 3 ? 24.0 : 24.0,
+                    width: searchController.brandIndex.value == 3 ? 24.0 : 24.0,
+                    height: searchController.brandIndex.value == 3 ? 24.0 : 24.0,
                   ),
                 ),
               ),
@@ -203,7 +256,7 @@ class _BrandsState extends State<Brands> {
         Stack(
           children: [
             Visibility(
-              visible: currentIndex == 4,
+              visible: searchController.brandIndex.value == 5,
               child: Container(
                 height: 44.0,
                 alignment: Alignment.centerRight,
@@ -223,8 +276,10 @@ class _BrandsState extends State<Brands> {
               padding: const EdgeInsets.all(5.0),
               child: Bounce(
                 onPressed: () {
-                  currentIndex = 4;
-                  setState(() {});
+                  searchController.brandIndex.value = 5;
+                  setState(() {
+                    searchController.brandName.value = "Macbook";
+                  });
                 },
                 duration: const Duration(milliseconds: 200),
                 child:
@@ -233,8 +288,8 @@ class _BrandsState extends State<Brands> {
                   backgroundColor: Colors.white,
                   child: Image.asset(
                     "assets/logos/mac.png",
-                    width: currentIndex == 4 ? 24.0 : 24.0,
-                    height: currentIndex == 4 ? 24.0 : 34.0,
+                    width: searchController.brandIndex.value == 4 ? 24.0 : 24.0,
+                    height: searchController.brandIndex.value == 4 ? 24.0 : 34.0,
                   ),
                 ),
               ),
