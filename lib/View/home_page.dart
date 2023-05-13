@@ -53,6 +53,7 @@ class _HomePageState extends State<HomePage> {
         height: double.infinity,
         color: bgWhite,
         child: Padding(
+
           padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
           child: Column(
             children: [
@@ -283,14 +284,10 @@ class _HomePageState extends State<HomePage> {
                         height: 10.0,
                       ),
                       Container(
-                        color: Colors.lightBlueAccent,
+                        color: Colors.white,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(
-                              Icons.shopping_cart_outlined,
-                              color: Colors.black,
-                            ),
                             Text(
                               "TOP SELLER",
                               style: textStyle4,
@@ -350,16 +347,13 @@ class _HomePageState extends State<HomePage> {
                         height: 10.0,
                       ),
                       Container(
-                        color: Colors.lightBlueAccent,
+                        color: Colors.white,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(
-                              Icons.newspaper,
-                              color: Colors.black,
-                            ),
+
                             Text(
-                              "Sản phẩm mới",
+                              "SẢN PHẨM MỚI",
                               style: textStyle4,
                             ),
                             TextButton(
@@ -407,7 +401,7 @@ class _HomePageState extends State<HomePage> {
                                                 },
                                                 child: Container(
                                                     width: double.infinity,
-                                                    height: 160,
+                                                    height: 165,
                                                     decoration: BoxDecoration(
                                                         borderRadius:
                                                             BorderRadius

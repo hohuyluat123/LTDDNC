@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:ltddnc_nhom04_k19/ResetPassword.dart';
 import 'package:ltddnc_nhom04_k19/main.dart';
 
 class OTPScreen extends StatelessWidget {
@@ -84,7 +85,7 @@ class OTPScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const MyApp()),
+                      MaterialPageRoute(builder: (context) => const ResetPassword()),
                     );
                   },)],
             ),

@@ -37,7 +37,7 @@ class _BookScreenState extends State<BookScreen> {
   Widget build(BuildContext context) {
 
     String dropdownvalue = "Giao hàng nhanh";
-    _controller.text = dropdownvalue;
+    // _controller.text = dropdownvalue;
     // List of items in our dropdown menu
     var items = [
       'Giao hàng nhanh',
@@ -45,7 +45,7 @@ class _BookScreenState extends State<BookScreen> {
     ];
 
     String dropdownvaluePay = "Thanh toán khi nhận hàng";
-    _controllerPay.text = dropdownvaluePay;
+    // _controllerPay.text = dropdownvaluePay;
     // List of items in our dropdown menu
     var itemsPay = [
       'Thanh toán khi nhận hàng',
@@ -64,251 +64,9 @@ class _BookScreenState extends State<BookScreen> {
             onTap: () {},
             child: Container(
               width: double.infinity,
-              height: 150,
+              height: 810,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.0),
-                  color: Colors.white),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment:
-                      CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Địa chỉ",
-                          style: textStyle6,
-                        ),const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "Hồ Huy Luật",
-                          style: textStyle4,
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "0123456789",
-                          style: textStyle4,
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "12/A , Phạm Ngũ Lão, phường 6, quận 5, TP.HCM",
-                          style: textStyle4,
-                        ),
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            border: UnderlineInputBorder(),
-                            labelText: 'Nhập yêu cầu KH',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-            const SizedBox(
-              height: 10,
-            ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 5.0),
-          child: InkWell(
-            onTap: () {},
-            child: Container(
-              width: double.infinity,
-              height: 90,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.0),
-                  color: Colors.white),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Column(
-                          crossAxisAlignment:
-                          CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child:   DropdownButtonFormField(
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue, width: 2),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.blueAccent,
-                                ),
-                                validator: (value) => value == null ? "Chọn phương thức vẫn chuyển" : null,
-                                dropdownColor: Colors.blueAccent,
-                                // Initial Value
-                                value: dropdownvalue,
-
-                                // Down Arrow Icon
-                                icon: const Icon(Icons.keyboard_arrow_down),
-
-                                // Array list of items
-                                items: items.map((String items) {
-                                  return DropdownMenuItem(
-                                    value: items,
-                                    child: Text(items),
-                                  );
-                                }).toList(),
-                                // After selecting the desired option,it will
-                                // change button value to selected value
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    dropdownvalue = newValue!;
-                                    _controller.text= newValue;
-                                  });
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      )),
-                  Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Column(
-                          crossAxisAlignment:
-                          CrossAxisAlignment.start,
-                          children: [
-                            TextFormField(
-                                readOnly: true,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-
-                                controller: _controller,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Phương thức vận chuyển',
-                                  floatingLabelAlignment: FloatingLabelAlignment.start,
-                                  floatingLabelStyle: TextStyle(
-                                    color: Colors.amber,
-                                    fontSize: 8,
-                                  ),
-                                )
-                            )
-                          ],
-                        ),
-                      )),
-                ],
-              ),
-            ),
-          ),
-        ),
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 5.0),
-              child: InkWell(
-                onTap: () {},
-                child: Container(
-                  width: double.infinity,
-                  height: 90,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16.0),
-                      color: Colors.white),
-                  child: Row(
-                    children: [
-                            Expanded(
-                              child:   DropdownButtonFormField(
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue, width: 2),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.blueAccent,
-                                ),
-                                validator: (value) => value == null ? "Chọn phương thức thanh toán" : null,
-                                dropdownColor: Colors.blueAccent,
-                                // Initial Value
-                                value: dropdownvaluePay,
-
-                                // Down Arrow Icon
-                                icon: const Icon(Icons.keyboard_arrow_down),
-
-                                // Array list of items
-                                items: itemsPay.map((String items) {
-                                  return DropdownMenuItem(
-                                    value: items,
-                                    child: Text(items),
-                                  );
-                                }).toList(),
-                                // After selecting the desired option,it will
-                                // change button value to selected value
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    dropdownvaluePay = newValue!;
-                                    _controllerPay.text= newValue;
-                                  });
-                                },
-                              ),
-                            ),
-                      Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: [
-                                TextFormField(
-                                    readOnly: true,
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-
-                                    controller: _controllerPay,
-                                    decoration: const InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: 'Phương thức thanh toán',
-                                      floatingLabelAlignment: FloatingLabelAlignment.start,
-                                      floatingLabelStyle: TextStyle(
-                                        color: Colors.amber,
-                                        fontSize: 8,
-                                      ),
-                                    )
-                                )
-                              ],
-                            ),
-                          )),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 5.0),
-          child: InkWell(
-            onTap: () {},
-            child: Container(
-              width: double.infinity,
-              height: 350,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.0),
+                  borderRadius: BorderRadius.circular(5.0),
                   color: Colors.white),
               child: Row(
                 children: [
@@ -318,8 +76,7 @@ class _BookScreenState extends State<BookScreen> {
                           height: double.infinity,
                           child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-                              child: SingleChildScrollView(
-                                  child: Column(children: [
+                              child: Column(children: [
                                     Column(
                                       children: userController.currentCart.value
                                           .map((cartItem) => Padding(
@@ -413,13 +170,258 @@ class _BookScreenState extends State<BookScreen> {
                                       ))
                                           .toList(),
                                     )
-                                  ])))),),
+                                  ]))),),
 
                 ],
               ),
             ),
           ),
         ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 5.0),
+              child: InkWell(
+                onTap: () {},
+                child: Container(
+                  width: double.infinity,
+                  height: 150,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16.0),
+                      color: Colors.white),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment:
+                          CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Địa chỉ",
+                              style: textStyle6,
+                            ),const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "Hồ Huy Luật",
+                              style: textStyle4,
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "0123456789",
+                              style: textStyle4,
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "12/A , Phạm Ngũ Lão, phường 6, quận 5, TP.HCM",
+                              style: textStyle4,
+                            ),
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                border: UnderlineInputBorder(),
+                                labelText: 'Nhập yêu cầu KH',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 5.0),
+              child: InkWell(
+                onTap: () {},
+                child: Container(
+                  width: double.infinity,
+                  height: 90,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.0),
+                      color: Colors.white),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Column(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child:   DropdownButtonFormField(
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: Colors.white54, width: 2),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(color: Colors.white54, width: 2),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white54,
+                                    ),
+                                    validator: (value) => value == null ? "Chọn phương thức vẫn chuyển" : null,
+                                    dropdownColor: Colors.white,
+                                    // Initial Value
+                                    value: dropdownvalue,
+
+                                    // Down Arrow Icon
+                                    icon: const Icon(Icons.keyboard_arrow_down),
+
+                                    // Array list of items
+                                    items: items.map((String items) {
+                                      return DropdownMenuItem(
+                                        value: items,
+                                        child: Text(items),
+                                      );
+                                    }).toList(),
+                                    // After selecting the desired option,it will
+                                    // change button value to selected value
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        dropdownvalue = newValue!;
+                                        _controller.text= '$dropdownvalue';
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Column(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                              children: [
+                                TextFormField(
+                                    readOnly: true,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+
+                                    controller: _controller,
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'Phương thức vận chuyển',
+                                      floatingLabelAlignment: FloatingLabelAlignment.start,
+                                      floatingLabelStyle: TextStyle(
+                                        color: Colors.amber,
+                                        fontSize: 8,
+                                      ),
+                                    )
+                                )
+                              ],
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 5.0),
+              child: InkWell(
+                onTap: () {},
+                child: Container(
+                  width: double.infinity,
+                  height: 90,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.0),
+                      color: Colors.white),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child:   DropdownButtonFormField(
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white54, width: 2),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white54, width: 2),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            filled: true,
+                            fillColor: Colors.white54,
+                          ),
+                          validator: (value) => value == null ? "Chọn phương thức thanh toán" : null,
+                          dropdownColor: Colors.white,
+                          // Initial Value
+                          value: dropdownvaluePay,
+
+                          // Down Arrow Icon
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          // Array list of items
+                          items: itemsPay.map((String items) {
+                            return DropdownMenuItem(
+                              value: items,
+                              child: Text(items),
+                            );
+                          }).toList(),
+                          // After selecting the desired option,it will
+                          // change button value to selected value
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownvaluePay = newValue!;
+
+                              _controllerPay.text= '$dropdownvaluePay';
+                            });
+                          },
+                        ),
+                      ),
+                      Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Column(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                              children: [
+                                TextFormField(
+                                    readOnly: true,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+
+                                    controller: _controllerPay,
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'Phương thức thanh toán',
+                                      floatingLabelAlignment: FloatingLabelAlignment.start,
+                                      floatingLabelStyle: TextStyle(
+                                        color: Colors.amber,
+                                        fontSize: 8,
+                                      ),
+                                    )
+                                )
+                              ],
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             Padding(
               padding: const EdgeInsets.only(bottom: 5.0),
               child: InkWell(
@@ -472,7 +474,7 @@ class _BookScreenState extends State<BookScreen> {
                                   style: textStyle12,
                                 ), Text(''),
                                 Text(
-                                  "20.000VNĐ",
+                                  "10.020.000VNĐ",
                                   style: textStyle6
                                 )
                               ],
@@ -571,7 +573,7 @@ class _BookScreenState extends State<BookScreen> {
                     style: textStyle1,
                   ),
                   Text(
-                    "0 VNĐ",
+                    "10.020.000 VNĐ",
                     style: textStyle4,
                   ),
                 ],
@@ -604,6 +606,11 @@ class _BookScreenState extends State<BookScreen> {
                             fontFamily: "airbnb"),
                       ),
                       onPressed: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage()),
+                        );
                         // int? statusCode = await userController.addToCart(laptop.productId, 1);
                         // if (statusCode == 200) {
                         //   _showAlertDialog(
