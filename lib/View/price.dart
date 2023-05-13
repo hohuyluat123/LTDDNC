@@ -2,21 +2,26 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
+import '../controller/SearchController.dart';
 
 class Price extends StatefulWidget {
   const Price({Key? key}) : super(key: key);
 
   @override
-  State<Price> createState() => _PriceState();
+  State<Price> createState() => PriceState();
 }
 
-class _PriceState extends State<Price> {
+class PriceState extends State<Price> {
   int currentIndex = 0;
-  double _startValue =5;
-  double _endValue =25;
+  double startValue = 5;
+  double endValue = 25;
+  final searchController = Get.find<SearchController>(tag: "searchController");
+
   final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -53,16 +58,18 @@ class _PriceState extends State<Price> {
             max: 30.0,
             divisions: 5,
             labels: RangeLabels(
-              _startValue.round().toString() + ' Triệu',
-              _endValue.round().toString() + ' Triệu',
+              startValue.round().toString() + ' Triệu',
+              endValue.round().toString() + ' Triệu',
             ),
-            values: RangeValues(_startValue , _endValue ),
+            values: RangeValues(startValue , endValue ),
             onChanged: (values) {
               setState(() {
-                _startValue = values.start ;
-                _endValue = values.end ;
-                _controller.text = ' $_startValue - $_endValue Triệu';
+                startValue = values.start ;
+                endValue = values.end ;
+                _controller.text = ' $startValue - $endValue Triệu';
               });
+              searchController.minPrice.value = "${values.start}000000";
+              searchController.maxPrice.value = "${values.end}000000";
             },
           ),
         ),

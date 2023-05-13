@@ -268,47 +268,6 @@ class _ProductViewState extends State<ProductView> {
                                     "Màu",
                                     style: textStyle4,
                                   ),
-                                  // const Spacer(),
-                                  // Bounce(
-                                  //     onPressed: () {
-                                  //       countryIndext = 0;
-                                  //       setState(() {});
-                                  //     },
-                                  //     duration: const Duration(milliseconds: 200),
-                                  //     child: Text(
-                                  //       "EU",
-                                  //       style: countryIndext == 0
-                                  //           ? textStyle4
-                                  //           : textStyle5,
-                                  //     )),
-                                  // const SizedBox(
-                                  //   width: 5.0,
-                                  // ),
-                                  // Bounce(
-                                  //     onPressed: () {
-                                  //       countryIndext = 1;
-                                  //       setState(() {});
-                                  //     },
-                                  //     duration: const Duration(milliseconds: 200),
-                                  //     child: Text(
-                                  //       "US",
-                                  //       style: countryIndext == 1
-                                  //           ? textStyle4
-                                  //           : textStyle5,
-                                  //     )),
-                                  // const SizedBox(
-                                  //   width: 5.0,
-                                  // ),
-                                  // Bounce(
-                                  //     onPressed: () {
-                                  //       countryIndext = 2;
-                                  //       setState(() {});
-                                  //     },
-                                  //     duration: const Duration(milliseconds: 200),
-                                  //     child: Text("UK",
-                                  //         style: countryIndext == 2
-                                  //             ? textStyle4
-                                  //             : textStyle5))
                                 ],
                               ),
                               const SizedBox(
@@ -369,57 +328,6 @@ class _ProductViewState extends State<ProductView> {
                                       ),
                                     ),
                                   ),
-                                  // Bounce(
-                                  //   onPressed: () {
-                                  //     sizeIndex = 3;
-                                  //     setState(() {});
-                                  //   },
-                                  //   duration: const Duration(milliseconds: 200),
-                                  //   child: CircleAvatar(
-                                  //     radius: 18,
-                                  //     backgroundColor:
-                                  //         sizeIndex == 3 ? customBlue : bgWhite,
-                                  //     child: Text(
-                                  //       "41",
-                                  //       style:
-                                  //           sizeIndex == 3 ? textStyle8 : textStyle1,
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  // Bounce(
-                                  //   onPressed: () {
-                                  //     sizeIndex = 4;
-                                  //     setState(() {});
-                                  //   },
-                                  //   duration: const Duration(milliseconds: 200),
-                                  //   child: CircleAvatar(
-                                  //     radius: 18,
-                                  //     backgroundColor:
-                                  //         sizeIndex == 4 ? customBlue : bgWhite,
-                                  //     child: Text(
-                                  //       "41",
-                                  //       style:
-                                  //           sizeIndex == 4 ? textStyle8 : textStyle1,
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  // Bounce(
-                                  //   onPressed: () {
-                                  //     sizeIndex = 5;
-                                  //     setState(() {});
-                                  //   },
-                                  //   duration: const Duration(milliseconds: 200),
-                                  //   child: CircleAvatar(
-                                  //     radius: 18,
-                                  //     backgroundColor:
-                                  //         sizeIndex == 5 ? customBlue : bgWhite,
-                                  //     child: Text(
-                                  //       "41",
-                                  //       style:
-                                  //           sizeIndex == 5 ? textStyle8 : textStyle1,
-                                  //     ),
-                                  //   ),
-                                  // ),
                                 ],
                               )
                             ],
@@ -518,7 +426,15 @@ class _ProductViewState extends State<ProductView> {
             ),
           );
         } else {
-          return CircularProgressIndicator();
+          return const Center(
+              child: SizedBox(
+                height: 10,
+                width: 10,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                ),
+              )
+          );
         }
       },
     );

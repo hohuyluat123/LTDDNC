@@ -1,12 +1,11 @@
 // ignore_for_file: depend_on_referenced_packages
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ltddnc_nhom04_k19/View/price.dart';
+import 'package:ltddnc_nhom04_k19/View/product_view.dart';
 import 'package:ltddnc_nhom04_k19/View/profile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ltddnc_nhom04_k19/controller/LaptopController.dart';
@@ -15,7 +14,8 @@ import 'package:ltddnc_nhom04_k19/View/search_sreen.dart';
 
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
-import '../main.dart';
+import '../controller/SearchController.dart';
+import '../controller/UserController.dart';
 import '../model/Laptop.dart';
 import 'brands.dart';
 import 'card_screen.dart';
@@ -34,6 +34,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int navigationIndex = 0;
   final laptopController = Get.find<LaptopController>(tag: "laptopController");
+  final userController = Get.find<UserController>(tag: "userController");
+  final searchController = Get.put(SearchController(), tag: "searchController");
+  String keyword = "";
 
   setBottomBarIndex(index) {
     setState(() {
@@ -90,20 +93,6 @@ class _HomePageState extends State<HomePage> {
                           style: textStyle1,
                           selectionColor: Colors.cyan,
                         ),
-
-                        // Row(
-                        //   children: [
-                        //     Image.asset(
-                        //       "assets/icons/location_ic.png",
-                        //       width: 14,
-                        //       height: 14.0,
-                        //     ),
-                        //     const SizedBox(
-                        //       width: 5.0,
-                        //     ),
-                        //     Text("Mondolibug, Sylhet", style: textStyle2),
-                        //   ],
-                        // )
                       ],
                     ),
                     const Spacer(),
@@ -141,30 +130,32 @@ class _HomePageState extends State<HomePage> {
                     cursorColor: customBlue,
                     cursorWidth: 2.5,
                     style: textStyle1,
+                    onChanged: (value) {
+                      keyword = value;
+                    },
                     decoration: InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
                       contentPadding: EdgeInsets.zero,
                       hintText: "Tìm kiếm",
                       prefixIcon: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            backgroundColor: Colors.white, // background
-                            foregroundColor: Colors.grey, // foreground
-                          ),
-                          child: Icon(Icons.search),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SearchScreen()),
-                            );
-                          },
-                        )
-                        //Image.asset("assets/icons/search_ic.png"),
-
-                      ),
+                          padding: const EdgeInsets.all(15.0),
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              backgroundColor: Colors.white, // background
+                              foregroundColor: Colors.grey, // foreground
+                            ),
+                            child: Icon(Icons.search),
+                            onPressed: () async {
+                              await laptopController.fetchLaptopByFilter(
+                                  keyword, "", "", "");
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SearchScreen()),
+                              );
+                            },
+                          )),
                       hintStyle: textStyle1,
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(
@@ -180,38 +171,58 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   )),
-              const SizedBox(
-                height: 20.0,
-              ),
-              const SizedBox(
-                width: double.infinity,
-                height: 50.0,
-                child: Brands(),
-              ),
-              const SizedBox(
-                height: 20.0,
-              ),
-              const SizedBox(
-                width: double.infinity,
-                height: 150.0,
-                child: Price(),
-              ),
-              ButtonBar(
-                alignment: MainAxisAlignment.start,
-                buttonPadding:
-                const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                children: [
-                  ElevatedButton(  child: Row (
-                    children: [
-                      Icon(Icons.search_off_rounded),
-                      Text("Lọc sản phẩm"),
-
-                    ],
-                  ) ,
-                    onPressed: () {
-
-                    },)
-                ],
+              Visibility(
+                maintainSize: true,
+                maintainAnimation: true,
+                maintainState: true,
+                visible: true,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    const SizedBox(
+                      width: double.infinity,
+                      height: 50.0,
+                      child: Brands(),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    const SizedBox(
+                      width: double.infinity,
+                      height: 50.0,
+                      child: Price(),
+                    ),
+                    ButtonBar(
+                      alignment: MainAxisAlignment.start,
+                      buttonPadding:
+                          const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                      children: [
+                        ElevatedButton(
+                          child: Row(
+                            children: [
+                              Icon(Icons.filter_alt),
+                              Text("Lọc sản phẩm"),
+                            ],
+                          ),
+                          onPressed: () async {
+                            await laptopController.fetchLaptopByFilter(
+                                keyword,
+                                searchController.brandName.value,
+                                searchController.minPrice.value,
+                                searchController.maxPrice.value);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SearchScreen()),
+                            );
+                          },
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
               Expanded(
                 child: SingleChildScrollView(
@@ -286,6 +297,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                             TextButton(
                                 onPressed: () {
+                                  searchController.brandName.value = "";
+                                  searchController.minPrice.value = "";
+                                  searchController.maxPrice.value = "";
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -304,7 +318,7 @@ class _HomePageState extends State<HomePage> {
                         height: 200.0,
                         child: FutureBuilder<List<Laptop>>(
                           future:
-                          laptopController.fetchLaptopByOrder("dateAdded"),
+                              laptopController.fetchLaptopByOrder("dateAdded"),
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
                               return Center(
@@ -323,7 +337,11 @@ class _HomePageState extends State<HomePage> {
                                     );
                                   });
                             } else {
-                              return LinearProgressIndicator();
+                              return const Center(
+                                  child: SizedBox(
+                                height: 7,
+                                child: LinearProgressIndicator(),
+                              ));
                             }
                           },
                         ),
@@ -346,6 +364,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                             TextButton(
                                 onPressed: () {
+                                  searchController.brandName.value = "";
+                                  searchController.minPrice.value = "";
+                                  searchController.maxPrice.value = "";
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -362,7 +383,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       FutureBuilder<List<Laptop>>(
                         future:
-                        laptopController.fetchLaptopByOrder("dateAdded"),
+                            laptopController.fetchLaptopByOrder("dateAdded"),
                         builder: (context, snapshot) {
                           if (snapshot.hasError) {
                             return Center(
@@ -375,69 +396,126 @@ class _HomePageState extends State<HomePage> {
                                             padding: const EdgeInsets.only(
                                                 bottom: 5.0),
                                             child: InkWell(
-                                                onTap: () {},
+                                                onTap: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ProductView(
+                                                                  productId: laptop
+                                                                      .productId)));
+                                                },
                                                 child: Container(
                                                     width: double.infinity,
                                                     height: 160,
                                                     decoration: BoxDecoration(
-                                                        borderRadius:BorderRadius.circular(16.0),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(16.0),
                                                         color: Colors.white),
                                                     child: Row(children: [
                                                       Expanded(
                                                           child: Padding(
-                                                        padding:const EdgeInsets.all(15.0),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(15.0),
                                                         child: Column(
-                                                            crossAxisAlignment:CrossAxisAlignment.start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
                                                             children: [
-                                                              Text("BEST CHOISE",
-                                                                style:textStyle6,),
-                                                              const SizedBox(height: 5,),
-                                                              Text(laptop.name,
-                                                                style:textStyle4,
+                                                              Text(
+                                                                "BEST CHOISE",
+                                                                style:
+                                                                    textStyle6,
                                                               ),
-                                                              const SizedBox(height: 10,),
-                                                              Text("${laptop.price} VNĐ",
-                                                                style:textStyle4,
+                                                              const SizedBox(
+                                                                height: 5,
+                                                              ),
+                                                              Text(
+                                                                laptop.name,
+                                                                style:
+                                                                    textStyle4,
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              Text(
+                                                                "${laptop.price} VNĐ",
+                                                                style:
+                                                                    textStyle4,
                                                               ),
                                                               Text(''),
-                                                              LikeButton(
-                                                                size: 16,
-                                                                circleColor: CircleColor(start: Color(0xff00ddff),end: Color(0xff0099cc)),
-                                                                bubblesColor:BubblesColor(dotPrimaryColor:Color(0xff33b5e5),dotSecondaryColor:Color(0xff0099cc),
-                                                                ),
-                                                                likeBuilder: (bool isLiked) {
-                                                                  return Icon(
-                                                                    Icons.favorite,
-                                                                    color: isLiked ? Colors.deepOrange: Colors.grey,
+                                                              Obx(() =>
+                                                                  LikeButton(
                                                                     size: 16,
-                                                                  );
-                                                                },
-                                                                likeCount: 0,
-                                                                countBuilder: (count, bool isLiked, String text) {
-                                                                  var color = isLiked ? Colors.deepOrange : Colors.grey;
-                                                                  Widget result;
-                                                                  if (count == 0) {
-                                                                    result = Text("Love",
-                                                                      style:textStyle4,);
-                                                                  } else
-                                                                    result = Text(text,
-                                                                      style:textStyle5,
-                                                                    );
-                                                                  return result;
-                                                                },
-                                                              ),
+                                                                    circleColor: CircleColor(
+                                                                        start: Color(
+                                                                            0xff00ddff),
+                                                                        end: Color(
+                                                                            0xff0099cc)),
+                                                                    bubblesColor:
+                                                                        BubblesColor(
+                                                                      dotPrimaryColor:
+                                                                          Color(
+                                                                              0xff33b5e5),
+                                                                      dotSecondaryColor:
+                                                                          Color(
+                                                                              0xff0099cc),
+                                                                    ),
+                                                                    likeBuilder:
+                                                                        (bool
+                                                                            isLiked) {
+                                                                      return Icon(
+                                                                        Icons
+                                                                            .favorite,
+                                                                        color: isLiked
+                                                                            ? Colors.deepOrange
+                                                                            : Colors.grey,
+                                                                        size:
+                                                                            16,
+                                                                      );
+                                                                    },
+                                                                    isLiked: userController
+                                                                        .currentFavorite
+                                                                        .value
+                                                                        .contains(
+                                                                            laptop.productId),
+                                                                    onTap: (bool
+                                                                        isLiked) async {
+                                                                      if (isLiked) {
+                                                                        await userController
+                                                                            .deleteFromFavorite(laptop.productId);
+                                                                        await userController
+                                                                            .fetchFavoriteList();
+                                                                      } else {
+                                                                        await userController
+                                                                            .addToFavorite(laptop.productId);
+                                                                        await userController
+                                                                            .fetchFavoriteList();
+                                                                      }
+                                                                    },
+                                                                  )),
                                                             ]),
                                                       )),
                                                       Expanded(
                                                           child: SizedBox(
-                                                              width: double.infinity,
-                                                              height: double.infinity,
-                                                              child: Image.network(laptop.image))),
+                                                              width: double
+                                                                  .infinity,
+                                                              height: double
+                                                                  .infinity,
+                                                              child: Image
+                                                                  .network(laptop
+                                                                      .image))),
                                                     ])))))
                                         .toList() ??
                                     []);
                           } else {
-                            return LinearProgressIndicator();
+                            return const Center(
+                                child: SizedBox(
+                              height: 7,
+                              child: LinearProgressIndicator(),
+                            ));
                           }
                         },
                       ),

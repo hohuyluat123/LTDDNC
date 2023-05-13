@@ -229,7 +229,12 @@ class _OrderScreenState extends State<OrderScreen> {
                                                     ],
                                                   );
                                                 } else {
-                                                  return LinearProgressIndicator();
+                                                  return const Center(
+                                                      child: SizedBox(
+                                                        height: 7,
+                                                        child: LinearProgressIndicator(),
+                                                      )
+                                                  );
                                                 }
                                               },
                                             ),
@@ -369,7 +374,12 @@ class _OrderScreenState extends State<OrderScreen> {
                                                     ],
                                                   );
                                                 } else {
-                                                  return LinearProgressIndicator();
+                                                  return const Center(
+                                                      child: SizedBox(
+                                                        height: 7,
+                                                        child: LinearProgressIndicator(),
+                                                      )
+                                                  );
                                                 }
                                               },
                                             ),
@@ -509,7 +519,12 @@ class _OrderScreenState extends State<OrderScreen> {
                                                     ],
                                                   );
                                                 } else {
-                                                  return LinearProgressIndicator();
+                                                  return const Center(
+                                                      child: SizedBox(
+                                                        height: 7,
+                                                        child: LinearProgressIndicator(),
+                                                      )
+                                                  );
                                                 }
                                               },
                                             ),
@@ -649,7 +664,12 @@ class _OrderScreenState extends State<OrderScreen> {
                                                     ],
                                                   );
                                                 } else {
-                                                  return LinearProgressIndicator();
+                                                  return const Center(
+                                                      child: SizedBox(
+                                                        height: 7,
+                                                        child: LinearProgressIndicator(),
+                                                      )
+                                                  );
                                                 }
                                               },
                                             ),
