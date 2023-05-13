@@ -17,7 +17,6 @@ class Brands extends StatefulWidget {
 }
 
 class BrandsState extends State<Brands> {
-  int currentIndex = 0;
   final searchController = Get.find<SearchController>(tag: "searchController");
   final TextEditingController _controller = TextEditingController();
   @override
@@ -28,7 +27,7 @@ class BrandsState extends State<Brands> {
         Stack(
           children: [
             Visibility(
-              visible: currentIndex == 0,
+              visible: searchController.brandIndex.value == 0,
               child: AnimatedContainer(
                 height: 44.0,
                 alignment: Alignment.centerRight,
@@ -49,7 +48,7 @@ class BrandsState extends State<Brands> {
               padding: const EdgeInsets.all(5.0),
               child: Bounce(
                 onPressed: () {
-                  currentIndex = 0;
+                  searchController.brandIndex.value = 0;
                   setState(() {
                     searchController.brandName.value = "";
                   });
@@ -61,8 +60,8 @@ class BrandsState extends State<Brands> {
                   backgroundColor: Colors.white,
                   child: Image.asset(
                     "logos/all.png",
-                    width: currentIndex == 0 ? 24.0 : 24.0,
-                    height: currentIndex == 0 ? 24.0 : 34.0,
+                    width: searchController.brandIndex.value == 0 ? 24.0 : 24.0,
+                    height: searchController.brandIndex.value == 0 ? 24.0 : 34.0,
                   ),
                 ),
               ),
@@ -72,7 +71,7 @@ class BrandsState extends State<Brands> {
         Stack(
           children: [
             Visibility(
-              visible: currentIndex == 1,
+              visible: searchController.brandIndex.value == 1,
               child: AnimatedContainer(
                 height: 44.0,
                 alignment: Alignment.centerRight,
@@ -93,7 +92,7 @@ class BrandsState extends State<Brands> {
               padding: const EdgeInsets.all(5.0),
               child: Bounce(
                 onPressed: () {
-                  currentIndex = 1;
+                  searchController.brandIndex.value = 1;
                   setState(() {
                       searchController.brandName.value = "Dell";
                   });
@@ -105,8 +104,8 @@ class BrandsState extends State<Brands> {
                   backgroundColor: Colors.white,
                   child: Image.asset(
                     "assets/logos/dell.png",
-                    width: currentIndex == 0 ? 24.0 : 24.0,
-                    height: currentIndex == 0 ? 24.0 : 34.0,
+                    width: searchController.brandIndex.value == 0 ? 24.0 : 24.0,
+                    height: searchController.brandIndex.value == 0 ? 24.0 : 34.0,
                   ),
                 ),
               ),
@@ -119,7 +118,7 @@ class BrandsState extends State<Brands> {
         Stack(
           children: [
             Visibility(
-              visible: currentIndex == 2,
+              visible: searchController.brandIndex.value == 2,
               child: Container(
                 height: 44.0,
                 alignment: Alignment.centerRight,
@@ -139,7 +138,7 @@ class BrandsState extends State<Brands> {
               padding: const EdgeInsets.all(5.0),
               child: Bounce(
                 onPressed: () {
-                  currentIndex = 2;
+                  searchController.brandIndex.value = 2;
                   setState(() {
                     searchController.brandName.value = "Asus";
                   });
@@ -151,8 +150,8 @@ class BrandsState extends State<Brands> {
                   backgroundColor: Colors.white,
                   child: Image.asset(
                     "assets/logos/asus.png",
-                    width: currentIndex == 1 ? 24.0 : 24.0,
-                    height: currentIndex == 1 ? 24.0 : 34.0,
+                    width: searchController.brandIndex.value == 1 ? 24.0 : 24.0,
+                    height: searchController.brandIndex.value == 1 ? 24.0 : 34.0,
                   ),
                 ),
               ),
@@ -165,7 +164,7 @@ class BrandsState extends State<Brands> {
         Stack(
           children: [
             Visibility(
-              visible: currentIndex == 3,
+              visible: searchController.brandIndex.value == 3,
               child: Container(
                 height: 44.0,
                 alignment: Alignment.centerRight,
@@ -185,7 +184,7 @@ class BrandsState extends State<Brands> {
               padding: const EdgeInsets.all(5.0),
               child: Bounce(
                 onPressed: () {
-                  currentIndex = 3;
+                  searchController.brandIndex.value = 3;
                   setState(() {
                     searchController.brandName.value = "Acer";
                   });
@@ -197,8 +196,8 @@ class BrandsState extends State<Brands> {
                   backgroundColor: Colors.white,
                   child: Image.asset(
                     "assets/logos/acer.png",
-                    width: currentIndex == 2 ? 24.0 : 24.0,
-                    height: currentIndex == 2 ? 24.0 : 34.0,
+                    width: searchController.brandIndex.value == 2 ? 24.0 : 24.0,
+                    height: searchController.brandIndex.value == 2 ? 24.0 : 34.0,
                   ),
                 ),
               ),
@@ -211,7 +210,7 @@ class BrandsState extends State<Brands> {
         Stack(
           children: [
             Visibility(
-              visible: currentIndex == 4,
+              visible: searchController.brandIndex.value == 4,
               child: Container(
                 height: 44.0,
                 alignment: Alignment.centerRight,
@@ -231,7 +230,7 @@ class BrandsState extends State<Brands> {
               padding: const EdgeInsets.all(5.0),
               child: Bounce(
                 onPressed: () {
-                  currentIndex = 4;
+                  searchController.brandIndex.value = 4;
                   setState(() {
                     searchController.brandName.value = "HP";
                   });
@@ -243,8 +242,8 @@ class BrandsState extends State<Brands> {
                   backgroundColor: Colors.black,
                   child: Image.asset(
                     "assets/logos/HP.png",
-                    width: currentIndex == 3 ? 24.0 : 24.0,
-                    height: currentIndex == 3 ? 24.0 : 24.0,
+                    width: searchController.brandIndex.value == 3 ? 24.0 : 24.0,
+                    height: searchController.brandIndex.value == 3 ? 24.0 : 24.0,
                   ),
                 ),
               ),
@@ -257,7 +256,7 @@ class BrandsState extends State<Brands> {
         Stack(
           children: [
             Visibility(
-              visible: currentIndex == 5,
+              visible: searchController.brandIndex.value == 5,
               child: Container(
                 height: 44.0,
                 alignment: Alignment.centerRight,
@@ -277,7 +276,7 @@ class BrandsState extends State<Brands> {
               padding: const EdgeInsets.all(5.0),
               child: Bounce(
                 onPressed: () {
-                  currentIndex = 5;
+                  searchController.brandIndex.value = 5;
                   setState(() {
                     searchController.brandName.value = "Macbook";
                   });
@@ -289,8 +288,8 @@ class BrandsState extends State<Brands> {
                   backgroundColor: Colors.white,
                   child: Image.asset(
                     "assets/logos/mac.png",
-                    width: currentIndex == 4 ? 24.0 : 24.0,
-                    height: currentIndex == 4 ? 24.0 : 34.0,
+                    width: searchController.brandIndex.value == 4 ? 24.0 : 24.0,
+                    height: searchController.brandIndex.value == 4 ? 24.0 : 34.0,
                   ),
                 ),
               ),

@@ -5,4 +5,5 @@ class SearchController extends GetxController {
   var brandName = "".obs;
   var minPrice = "".obs;
   var maxPrice = "".obs;
+  var brandIndex = 0.obs;
 }
