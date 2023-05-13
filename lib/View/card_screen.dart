@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:like_button/like_button.dart';
+import 'package:ltddnc_nhom04_k19/View/bookOrder.dart';
 import 'package:ltddnc_nhom04_k19/View/product_view.dart';
 import 'package:ltddnc_nhom04_k19/View/profile.dart';
 import 'package:ltddnc_nhom04_k19/controller/UserController.dart';
@@ -383,19 +384,10 @@ class _CartScreenState extends State<CartScreen> {
                                                         fontFamily: "airbnb"),
                                                   ),
                                                   onPressed: () async {
-                                                    // int? statusCode = await userController.addToCart(laptop.productId, 1);
-                                                    // if (statusCode == 200) {
-                                                    //   _showAlertDialog(
-                                                    //       "Thêm sản phẩm thành công");
-                                                    // }
-                                                    // else if (statusCode == 409) {
-                                                    //   _showAlertDialog(
-                                                    //       "Sản phẩm đã có trong giỏ hàng");
-                                                    // }
-                                                    // else {
-                                                    //   _showAlertDialog(
-                                                    //       "Thêm sản phẩm thất bại");
-                                                    // }
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(builder: (context) => const BookScreen()),
+                                                    );
                                                   },
                                                 )
                                             ),
