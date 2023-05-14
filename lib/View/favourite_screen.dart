@@ -166,7 +166,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                   onTap: () {},
                                   child: Container(
                                     width: double.infinity,
-                                    height: 150,
+                                    height: 165,
                                     decoration: BoxDecoration(
                                         borderRadius:
                                             BorderRadius.circular(16.0),
@@ -253,7 +253,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
 
                                                 ),
                                               ),
-
                                             ],
                                           ),
                                         )),

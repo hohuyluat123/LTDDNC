@@ -25,8 +25,6 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   int navigationIndex = 0;
-  double _startValue = 5;
-  double _endValue = 10;
   final laptopController = Get.find<LaptopController>(tag: "laptopController");
   final userController = Get.find<UserController>(tag: "userController");
   final searchController = Get.put(SearchController(), tag: "searchController");
@@ -88,7 +86,7 @@ class _SearchScreenState extends State<SearchScreen> {
         Expanded(
             child: Padding(
                 padding:
-                    const EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
+                    const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
                 child: SingleChildScrollView(
                     child: Column(children: [
                       SizedBox(

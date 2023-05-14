@@ -128,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       userController.currentUser.value.name,
                       style: TextStyle(
                           color: Colors.blue,
-                          fontSize: 24,
+                          fontSize: 15,
                           fontWeight: FontWeight.w500),
                     )),
 
