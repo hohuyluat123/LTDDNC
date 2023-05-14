@@ -25,6 +25,7 @@ class BookScreen extends StatefulWidget {
 class _BookScreenState extends State<BookScreen> {
 
   final userController = Get.find<UserController>(tag: "userController");
+  final laptopController = Get.find<LaptopController>(tag: "laptopController");
   int navigationIndex = 0;
   final TextEditingController _controller = TextEditingController();
   final TextEditingController _controllerPay = TextEditingController();
@@ -92,7 +93,7 @@ class _BookScreenState extends State<BookScreen> {
                                                 BorderRadius.circular(16.0),
                                                 color: Colors.white),
                                             child: FutureBuilder<Laptop>(
-                                              future: LaptopController
+                                              future: laptopController
                                                   .fetchLaptopByProductId(
                                                   jsonDecode(cartItem)[
                                                   'productId']),
