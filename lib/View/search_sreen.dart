@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ltddnc_nhom04_k19/View/price.dart';
 import 'package:ltddnc_nhom04_k19/View/profile.dart';
-
+import 'package:flutter_bounce/flutter_bounce.dart';
 import '../Styles/color.dart';
 import '../Styles/font_styles.dart';
+import '../controller/LaptopController.dart';
+import '../controller/SearchController.dart';
+import '../controller/UserController.dart';
 import 'brands.dart';
 import 'card_screen.dart';
 import 'favourite_screen.dart';
 import 'home_page.dart';
 import 'notifications_screen.dart';
+import 'package:like_button/like_button.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -21,7 +27,11 @@ class _SearchScreenState extends State<SearchScreen> {
   int navigationIndex = 0;
   double _startValue = 5;
   double _endValue = 10;
-
+  final laptopController = Get.find<LaptopController>(tag: "laptopController");
+  final userController = Get.find<UserController>(tag: "userController");
+  final searchController = Get.put(SearchController(), tag: "searchController");
+  bool visibility = false;
+  String keyword = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,53 +91,123 @@ class _SearchScreenState extends State<SearchScreen> {
                     const EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
                 child: SingleChildScrollView(
                     child: Column(children: [
-                  SizedBox(
-                      width: double.infinity,
-                      height: 50.0,
-                      child: TextFormField(
-                        cursorColor: customBlue,
-                        cursorWidth: 2.5,
-                        style: textStyle1,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
-                          contentPadding: EdgeInsets.zero,
-                          hintText: "Tìm kiếm",
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Image.asset("assets/icons/search_ic.png"),
-                          ),
-                          hintStyle: textStyle1,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.white,
+                      SizedBox(
+                          width: double.infinity,
+                          height: 100.0,
+                          child: Column(
+                            children:[ TextFormField(
+                              cursorColor: customBlue,
+                              cursorWidth: 2.5,
+                              style: textStyle1,
+                              onChanged: (value) {
+                                keyword = value;
+                              },
+                              decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                filled: true,
+                                contentPadding: EdgeInsets.zero,
+                                hintText: "Tìm kiếm",
+                                prefixIcon: Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: TextButton(
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: Colors.white, // background
+                                        foregroundColor: Colors.grey, // foreground
+                                      ),
+                                      child: Icon(Icons.search),
+                                      onPressed: () async {
+                                        await laptopController.fetchLaptopByFilter(
+                                            keyword, "", "", "");
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => const SearchScreen()),
+                                        );
+                                      },
+                                    )),
+                                hintStyle: textStyle1,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.white,
+                                  ),
+                                  borderRadius: BorderRadius.circular(100.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.blue,
+                                  ),
+                                  borderRadius: BorderRadius.circular(100.0),
+                                ),
+                              ),
                             ),
-                            borderRadius: BorderRadius.circular(100.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.blue,
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text("Lọc Sản phẩm", style: TextStyle(color: Colors.lightBlueAccent, fontSize: 16), textAlign: TextAlign.justify,),
+                                    Switch(
+                                      value: visibility,
+
+                                      onChanged: (value) {
+                                        visibility = !visibility;
+                                        setState(() {
+
+                                        });
+                                      },
+                                    )])], )),
+                      Visibility(
+                        maintainSize: visibility,
+                        maintainAnimation: visibility,
+                        maintainState: visibility,
+                        visible: visibility,
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 20.0,
                             ),
-                            borderRadius: BorderRadius.circular(100.0),
-                          ),
+                            const SizedBox(
+                              width: double.infinity,
+                              height: 50.0,
+                              child: Brands(),
+                            ),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            const SizedBox(
+                              width: double.infinity,
+                              height: 50.0,
+                              child: Price(),
+                            ),
+                            ButtonBar(
+                              alignment: MainAxisAlignment.start,
+                              buttonPadding:
+                              const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                              children: [
+                                ElevatedButton(
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.filter_alt),
+                                      Text("Lọc sản phẩm"),
+                                    ],
+                                  ),
+                                  onPressed: () async {
+                                    await laptopController.fetchLaptopByFilter(
+                                        keyword,
+                                        searchController.brandName.value,
+                                        searchController.minPrice.value,
+                                        searchController.maxPrice.value);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const SearchScreen()),
+                                    );
+                                  },
+                                )
+                              ],
+                            )
+                          ],
                         ),
-                      )),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                  const SizedBox(
-                    width: double.infinity,
-                    height: 50.0,
-                    child: Brands(),
-                  ),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                  const SizedBox(
-                    width: double.infinity,
-                    height: 50.0,
-                    child: Price(),
-                  ),
+                      ),
                   // RangeSlider(
                   //   min: 0.0,
                   //   max: 100.0,
@@ -145,14 +225,10 @@ class _SearchScreenState extends State<SearchScreen> {
                   //   },
                   // ),
                   Container(
-                    color: Colors.lightBlue,
+                    color: Colors.white,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(
-                          Icons.newspaper,
-                          color: Colors.black,
-                        ),
                         Text(
                           "Sản phẩm",
                           style: textStyle4,
@@ -175,7 +251,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             onTap: () {},
                             child: Container(
                               width: double.infinity,
-                              height: 120,
+                              height: 135,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(16.0),
                                   color: Colors.white),
@@ -205,6 +281,60 @@ class _SearchScreenState extends State<SearchScreen> {
                                         Text(
                                           "15.990.000 VNĐ",
                                           style: textStyle4,
+                                        ),
+                                        Positioned(
+                                          bottom: 0,
+                                          right: 0,
+                                          child: Bounce(
+                                              onPressed: () {},
+                                              duration: const Duration(milliseconds: 500),
+                                              child: Row(children: [
+                                                Container(
+                                                    width: 34.0,
+                                                    height: 34.0,
+                                                    decoration: BoxDecoration(
+                                                      color: customBlue,
+                                                      borderRadius: const BorderRadius.only(
+                                                          topLeft: Radius.circular(20.0),
+                                                          bottomRight: Radius.circular(16.0)),
+                                                    ),
+                                                    child: TextButton(
+                                                      style: TextButton.styleFrom(
+                                                        backgroundColor: Colors.blueAccent, // background
+                                                        foregroundColor: Colors.white, // foreground
+                                                      ),
+                                                      child: Icon(Icons.add),
+                                                      onPressed: () async {
+
+                                                      },
+                                                    )
+                                                ), SizedBox(width: 70,),
+                                                LikeButton(
+                                                  size: 16,
+                                                  circleColor: CircleColor(start: Color(0xff00ddff),end: Color(0xff0099cc)),
+                                                  bubblesColor:BubblesColor(dotPrimaryColor:Color(0xff33b5e5),dotSecondaryColor:Color(0xff0099cc),
+                                                  ),
+                                                  likeBuilder: (bool isLiked) {
+                                                    return Icon(
+                                                      Icons.favorite,
+                                                      color: isLiked ? Colors.deepOrange: Colors.grey,
+                                                      size: 16,
+                                                    );
+                                                  },
+                                                  isLiked: true,
+                                                  onTap: (bool isLiked) async {
+                                                    if (isLiked){
+                                                      await userController.deleteFromFavorite(1);
+                                                      await userController.fetchFavoriteList();
+                                                    }
+                                                    else{
+                                                      await userController.addToFavorite(1);
+                                                      await userController.fetchFavoriteList();
+                                                    }
+                                                  },
+                                                ),],)
+
+                                          ),
                                         ),
                                       ],
                                     ),

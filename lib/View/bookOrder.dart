@@ -59,13 +59,56 @@ class _BookScreenState extends State<BookScreen> {
         const SizedBox(
           height: 10,
         ),
+            SizedBox(
+              height: 20,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => CartScreen()));
+                    },
+                    child: Container(
+                      width: 45,
+                      height: 45,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30.0),
+                        image: const DecorationImage(
+                          image: AssetImage("assets/icons/back_ic.png"),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Text(
+                    'Đặt hàng',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  InkWell(
+                    child: Container(
+                      width: 45,
+                      height: 45,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
         Padding(
           padding: const EdgeInsets.only(bottom: 5.0),
           child: InkWell(
             onTap: () {},
             child: Container(
               width: double.infinity,
-              height: 810,
+              height: 220,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5.0),
                   color: Colors.white),
@@ -77,7 +120,8 @@ class _BookScreenState extends State<BookScreen> {
                           height: double.infinity,
                           child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-                              child: Column(children: [
+                              child: SingleChildScrollView(
+                                  child: Column(children: [
                                     Column(
                                       children: userController.currentCart.value
                                           .map((cartItem) => Padding(
@@ -171,7 +215,7 @@ class _BookScreenState extends State<BookScreen> {
                                       ))
                                           .toList(),
                                     )
-                                  ]))),),
+                                  ])))),),
 
                 ],
               ),
