@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   final userController = Get.find<UserController>(tag: "userController");
   final searchController = Get.put(SearchController(), tag: "searchController");
   String keyword = "";
-
+  bool visibility = false;
   setBottomBarIndex(index) {
     setState(() {
       navigationIndex = index;
@@ -126,8 +126,9 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(
                   width: double.infinity,
-                  height: 50.0,
-                  child: TextFormField(
+                  height: 100.0,
+                  child: Column(
+                      children:[ TextFormField(
                     cursorColor: customBlue,
                     cursorWidth: 2.5,
                     style: textStyle1,
@@ -171,12 +172,27 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(100.0),
                       ),
                     ),
-                  )),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text("Lọc Sản phẩm", style: TextStyle(color: Colors.lightBlueAccent, fontSize: 16), textAlign: TextAlign.justify,),
+                      Switch(
+                      value: visibility,
+
+                      onChanged: (value) {
+                        visibility = !visibility;
+                        setState(() {
+
+                        });
+                      },
+                    )])], )),
               Visibility(
-                maintainSize: true,
-                maintainAnimation: true,
-                maintainState: true,
-                visible: true,
+                maintainSize: visibility,
+                maintainAnimation: visibility,
+                maintainState: visibility,
+                visible: visibility,
                 child: Column(
                   children: [
                     const SizedBox(
@@ -440,56 +456,86 @@ class _HomePageState extends State<HomePage> {
                                                                     textStyle4,
                                                               ),
                                                               Text(''),
-                                                              Obx(() =>
-                                                                  LikeButton(
-                                                                    size: 16,
-                                                                    circleColor: CircleColor(
-                                                                        start: Color(
-                                                                            0xff00ddff),
-                                                                        end: Color(
-                                                                            0xff0099cc)),
-                                                                    bubblesColor:
-                                                                        BubblesColor(
-                                                                      dotPrimaryColor:
-                                                                          Color(
-                                                                              0xff33b5e5),
-                                                                      dotSecondaryColor:
-                                                                          Color(
-                                                                              0xff0099cc),
-                                                                    ),
-                                                                    likeBuilder:
-                                                                        (bool
+                                                              Positioned(
+                                                                bottom: 0,
+                                                                right: 0,
+                                                                child: Bounce(
+                                                                    onPressed: () {},
+                                                                    duration: const Duration(milliseconds: 500),
+                                                                    child: Row(children: [
+                                                                      Container(
+                                                                          width: 34.0,
+                                                                          height: 34.0,
+                                                                          decoration: BoxDecoration(
+                                                                            color: customBlue,
+                                                                            borderRadius: const BorderRadius.only(
+                                                                                topLeft: Radius.circular(20.0),
+                                                                                bottomRight: Radius.circular(16.0)),
+                                                                          ),
+                                                                          child: TextButton(
+                                                                            style: TextButton.styleFrom(
+                                                                              backgroundColor: Colors.blueAccent, // background
+                                                                              foregroundColor: Colors.white, // foreground
+                                                                            ),
+                                                                            child: Icon(Icons.add),
+                                                                            onPressed: () async {
+
+                                                                            },
+                                                                          )
+                                                                      ), SizedBox(width: 70,),
+                                                                      Obx(() =>
+                                                                          LikeButton(
+                                                                            size: 16,
+                                                                            circleColor: CircleColor(
+                                                                                start: Color(
+                                                                                    0xff00ddff),
+                                                                                end: Color(
+                                                                                    0xff0099cc)),
+                                                                            bubblesColor:
+                                                                            BubblesColor(
+                                                                              dotPrimaryColor:
+                                                                              Color(
+                                                                                  0xff33b5e5),
+                                                                              dotSecondaryColor:
+                                                                              Color(
+                                                                                  0xff0099cc),
+                                                                            ),
+                                                                            likeBuilder:
+                                                                                (bool
                                                                             isLiked) {
-                                                                      return Icon(
-                                                                        Icons
-                                                                            .favorite,
-                                                                        color: isLiked
-                                                                            ? Colors.deepOrange
-                                                                            : Colors.grey,
-                                                                        size:
-                                                                            16,
-                                                                      );
-                                                                    },
-                                                                    isLiked: userController
-                                                                        .currentFavorite
-                                                                        .value
-                                                                        .contains(
-                                                                            laptop.productId),
-                                                                    onTap: (bool
-                                                                        isLiked) async {
-                                                                      if (isLiked) {
-                                                                        await userController
-                                                                            .deleteFromFavorite(laptop.productId);
-                                                                        await userController
-                                                                            .fetchFavoriteList();
-                                                                      } else {
-                                                                        await userController
-                                                                            .addToFavorite(laptop.productId);
-                                                                        await userController
-                                                                            .fetchFavoriteList();
-                                                                      }
-                                                                    },
-                                                                  )),
+                                                                              return Icon(
+                                                                                Icons
+                                                                                    .favorite,
+                                                                                color: isLiked
+                                                                                    ? Colors.deepOrange
+                                                                                    : Colors.grey,
+                                                                                size:
+                                                                                16,
+                                                                              );
+                                                                            },
+                                                                            isLiked: userController
+                                                                                .currentFavorite
+                                                                                .value
+                                                                                .contains(
+                                                                                laptop.productId),
+                                                                            onTap: (bool
+                                                                            isLiked) async {
+                                                                              if (isLiked) {
+                                                                                await userController
+                                                                                    .deleteFromFavorite(laptop.productId);
+                                                                                await userController
+                                                                                    .fetchFavoriteList();
+                                                                              } else {
+                                                                                await userController
+                                                                                    .addToFavorite(laptop.productId);
+                                                                                await userController
+                                                                                    .fetchFavoriteList();
+                                                                              }
+                                                                            },
+                                                                          )),],)
+
+                                                                    ),
+                                                              )
                                                             ]),
                                                       )),
                                                       Expanded(

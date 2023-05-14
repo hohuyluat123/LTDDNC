@@ -12,6 +12,7 @@ import '../model/Laptop.dart';
 import 'card_screen.dart';
 import 'home_page.dart';
 import 'notifications_screen.dart';
+import 'package:flutter_bounce/flutter_bounce.dart';
 
 class FavouriteScreen extends StatefulWidget {
   const FavouriteScreen({super.key});
@@ -198,30 +199,61 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                                 style: textStyle4,
                                               ),
                                               Text(''),
-                                              LikeButton(
-                                                size: 16,
-                                                circleColor: CircleColor(start: Color(0xff00ddff),end: Color(0xff0099cc)),
-                                                bubblesColor:BubblesColor(dotPrimaryColor:Color(0xff33b5e5),dotSecondaryColor:Color(0xff0099cc),
+                                              Positioned(
+                                                bottom: 0,
+                                                right: 0,
+                                                child: Bounce(
+                                                    onPressed: () {},
+                                                    duration: const Duration(milliseconds: 500),
+                                                    child: Row(children: [
+                                                      Container(
+                                                          width: 34.0,
+                                                          height: 34.0,
+                                                          decoration: BoxDecoration(
+                                                            color: customBlue,
+                                                            borderRadius: const BorderRadius.only(
+                                                                topLeft: Radius.circular(20.0),
+                                                                bottomRight: Radius.circular(16.0)),
+                                                          ),
+                                                          child: TextButton(
+                                                            style: TextButton.styleFrom(
+                                                              backgroundColor: Colors.blueAccent, // background
+                                                              foregroundColor: Colors.white, // foreground
+                                                            ),
+                                                            child: Icon(Icons.add),
+                                                            onPressed: () async {
+
+                                                            },
+                                                          )
+                                                      ), SizedBox(width: 70,),
+                                                      LikeButton(
+                                                        size: 16,
+                                                        circleColor: CircleColor(start: Color(0xff00ddff),end: Color(0xff0099cc)),
+                                                        bubblesColor:BubblesColor(dotPrimaryColor:Color(0xff33b5e5),dotSecondaryColor:Color(0xff0099cc),
+                                                        ),
+                                                        likeBuilder: (bool isLiked) {
+                                                          return Icon(
+                                                            Icons.favorite,
+                                                            color: isLiked ? Colors.deepOrange: Colors.grey,
+                                                            size: 16,
+                                                          );
+                                                        },
+                                                        isLiked: userController.currentFavorite.value.contains(snapshot.data!.productId),
+                                                        onTap: (bool isLiked) async {
+                                                          if (isLiked){
+                                                            await userController.deleteFromFavorite(snapshot.data!.productId);
+                                                            await userController.fetchFavoriteList();
+                                                          }
+                                                          else{
+                                                            await userController.addToFavorite(snapshot.data!.productId);
+                                                            await userController.fetchFavoriteList();
+                                                          }
+                                                        },
+                                                      ),],)
+
                                                 ),
-                                                likeBuilder: (bool isLiked) {
-                                                  return Icon(
-                                                    Icons.favorite,
-                                                    color: isLiked ? Colors.deepOrange: Colors.grey,
-                                                    size: 16,
-                                                  );
-                                                },
-                                                isLiked: userController.currentFavorite.value.contains(snapshot.data!.productId),
-                                                onTap: (bool isLiked) async {
-                                                  if (isLiked){
-                                                    await userController.deleteFromFavorite(snapshot.data!.productId);
-                                                    await userController.fetchFavoriteList();
-                                                  }
-                                                  else{
-                                                    await userController.addToFavorite(snapshot.data!.productId);
-                                                    await userController.fetchFavoriteList();
-                                                  }
-                                                },
                                               ),
+
                                             ],
                                           ),
                                         )),

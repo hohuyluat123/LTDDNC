@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:ltddnc_nhom04_k19/View/address.dart';
 import 'package:ltddnc_nhom04_k19/user/districts.dart';
 import 'package:ltddnc_nhom04_k19/user/nameAddress.dart';
 
@@ -67,7 +68,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
         backgroundColor: const Color(0xffF8F9FA),
         body: Column(children: [
           const SizedBox(
-            height: 50,
+            height: 20,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -160,7 +161,20 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                           ),
                         )),
                     Expanded(
-                      child: Obx(() => (  DropdownButton<AddressName>(
+                      child: Obx(() => ( DropdownButtonFormField<AddressName>(
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white54, width: 2),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white54, width: 2),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          filled: true,
+                          fillColor: Colors.white54,
+                        ),
+                        validator: (value) => value == null ? "Chọn phương thức vẫn chuyển" : null,
                         hint: Text(selectedProvice.value),
                         value: null,
                         onChanged: (AddressName? value) {
@@ -213,7 +227,20 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                           ),
                         )),
                     Expanded(
-                      child:  Obx(() => ( DropdownButton<AddressName>(
+                      child:  Obx(() => ( DropdownButtonFormField<AddressName>(
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white54, width: 2),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white54, width: 2),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          filled: true,
+                          fillColor: Colors.white54,
+                        ),
+                        validator: (value) => value == null ? "Chọn quận/ huyện" : null,
                         hint: Text(selectedDistrict.value),
                         value: null,
                         onChanged: (AddressName? value) {
@@ -266,7 +293,20 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                         )
                     ),
                     Expanded(
-                      child: Obx(() => ( DropdownButton<AddressName>(
+                      child: Obx(() => ( DropdownButtonFormField<AddressName>(
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white54, width: 2),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white54, width: 2),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          filled: true,
+                          fillColor: Colors.white54,
+                        ),
+                        validator: (value) => value == null ? "Chọn xã/ phường" : null,
                         hint: Text(selectedWard.value),
                         value: null,
                         onChanged: (AddressName? value) {
@@ -341,6 +381,10 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                     await addressController.addNewAddress("$houseNumber, $selectedWard, $selectedDistrict, $selectedProvice");
                     await addressController.fetchAddressList();
                     _showDialog("Success", "Đã thêm địa chỉ mới", context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddressScreen()),
+                    );
                 },),
 
             ])
